@@ -273,17 +273,17 @@ static NSMutableDictionary *_cushionTextAttributes;
                   childWidths: childWidths
                  rowsAreHoriz: &horizontalRows];
 
-    const int parentWidth = (int) /*roundf*/( horizontalRows ? NSWidth(_rect) : NSHeight(_rect) );
-    const int parentHeight = (int) /*roundf*/( horizontalRows ? NSHeight(_rect) : NSWidth(_rect) );
+    const NSInteger parentWidth = (NSInteger) /*roundf*/( horizontalRows ? NSWidth(_rect) : NSHeight(_rect) );
+    const NSInteger parentHeight = (NSInteger) /*roundf*/( horizontalRows ? NSHeight(_rect) : NSWidth(_rect) );
 
-    const int parentBottom = (int) /*roundf*/( horizontalRows ? NSMaxY(_rect) : NSMaxX(_rect) );
-    const int parentRight = (int) /*roundf*/( horizontalRows ? NSMaxX(_rect) : NSMaxY(_rect) );
-    const int parentLeft = (int) /*roundf*/( horizontalRows ? NSMinX(_rect) : NSMinY(_rect) );
+    const NSInteger parentBottom = (NSInteger) /*roundf*/( horizontalRows ? NSMaxY(_rect) : NSMaxX(_rect) );
+    const NSInteger parentRight = (NSInteger) /*roundf*/( horizontalRows ? NSMaxX(_rect) : NSMaxY(_rect) );
+    const NSInteger parentLeft = (NSInteger) /*roundf*/( horizontalRows ? NSMinX(_rect) : NSMinY(_rect) );
 
-    unsigned childIndex = 0;
-    unsigned row = 0;
+    NSUInteger childIndex = 0;
+    NSUInteger row = 0;
 
-    int top = horizontalRows ? NSMinY(_rect) : NSMinX(_rect);
+    NSInteger top = horizontalRows ? NSMinY(_rect) : NSMinX(_rect);
 
     for ( row = 0; row < rows.count; row++ )
     {
@@ -293,7 +293,7 @@ static NSMutableDictionary *_cushionTextAttributes;
         if ( bottom > parentBottom || row == rows.count - 1 )
             bottom = parentBottom;
 
-        int left = parentLeft;
+        NSInteger left = parentLeft;
 
         for ( column = 0; column < [childsPerRow[row] unsignedIntValue]; column++, childIndex++)
         {
@@ -341,10 +341,10 @@ static NSMutableDictionary *_cushionTextAttributes;
     if ( [self weight] == 0 )
     {
 		num = @1;
-        [rows addObject: num/*[NSNumber numberWithUnsignedInt: 1]*/];
+        [rows addObject: num];
 		
 		num = @(childCount);
-        [childsPerRow addObject: num/*[NSNumber numberWithUnsignedInt: childCount]*/];
+        [childsPerRow addObject: num];
 
         id standardWidth = @(1.0/childCount);
         for ( i = 0; i < childCount; i++ )
@@ -377,10 +377,10 @@ static NSMutableDictionary *_cushionTextAttributes;
                                       childWidths: childWidths];
 
 			num = @(rowHeight);
-            [rows addObject: num/*[NSNumber numberWithDouble: rowHeight]*/];
+            [rows addObject: num];
 			
 			num = @(childsUsed);
-            [childsPerRow addObject: num/*[NSNumber numberWithUnsignedInt: childsUsed]*/];
+            [childsPerRow addObject: num];
 
             i += childsUsed;
         }
@@ -456,7 +456,7 @@ static NSMutableDictionary *_cushionTextAttributes;
         //NSAssert(cw >= 0);
 
 		NSNumber *num = @(cw);
-        [childWidths addObject: num/*[NSNumber numberWithDouble: cw]*/];
+        [childWidths addObject: num];
     }
 
     return rowHeight;
@@ -465,11 +465,10 @@ static NSMutableDictionary *_cushionTextAttributes;
 - (void) createChildRenderers
 {
     NSUInteger childCount = [_dataSource treeMapView: _view numberOfChildrenOfItem: _item];
-    NSUInteger i;
 
     _childRenderers = [[NSMutableArray alloc] initWithCapacity: childCount];
 
-    for ( i = 0; i < childCount; i++ )
+    for ( NSUInteger i = 0; i < childCount; i++ )
     {
         id childItem = [_dataSource treeMapView: _view child: i ofItem: _item];
         NSAssert( childItem != nil, @"data source returned nil as child item" );

@@ -6,6 +6,8 @@
 //  Copyright 2004 Tjark Derlien. All rights reserved.
 //
 
+#include <math.h>
+#include <tgmath.h>
 #import "ZoomInfo.h"
 
 @interface NSApplication(Omni)
@@ -20,16 +22,16 @@
 			delegate: (id) delegate
 			selector: (SEL) selector
 {
-	self = [super init];
-	
-	_image = image;
-	
-	_delegate = delegate;
-	_delegateSelector = selector;
-	NSAssert( [delegate respondsToSelector: selector], @"delegate doesn't respond to given selector" );
-	
-	_leftStep = _topStep = _rightStep = _bottomStep = 0;
-	_rect = NSZeroRect;
+	if (self = [super init]) {
+		_image = image;
+		
+		_delegate = delegate;
+		_delegateSelector = selector;
+		NSAssert( [delegate respondsToSelector: selector], @"delegate doesn't respond to given selector" );
+		
+		_leftStep = _topStep = _rightStep = _bottomStep = 0;
+		_rect = NSZeroRect;
+	}
 	
 	return self;
 }
@@ -47,13 +49,13 @@
 	
 	_rect = zoomIn ? endRect: startRect;
 	
-	float maxPixelToZoom = fmaxf( fabs( NSWidth(endRect) - NSWidth(startRect) ),
+	CGFloat maxPixelToZoom = fmax(fabs( NSWidth(endRect) - NSWidth(startRect) ),
 								  fabs( NSHeight(endRect) - NSHeight(startRect) ) );
 	
-	float zoomStepCount = maxPixelToZoom / (shiftKeyPressed ? 10.0 : 40.0);
+	CGFloat zoomStepCount = maxPixelToZoom / (shiftKeyPressed ? 10.0 : 40.0);
 	
-	float zoomFactorX = zoomIn ? NSWidth(endRect) / NSWidth(startRect)	: NSWidth(startRect) / NSWidth(endRect);
-	float zoomFactorY = zoomIn ? NSHeight(endRect) / NSHeight(startRect): NSHeight(startRect) / NSHeight(endRect);
+	CGFloat zoomFactorX = zoomIn ? NSWidth(endRect) / NSWidth(startRect)	: NSWidth(startRect) / NSWidth(endRect);
+	CGFloat zoomFactorY = zoomIn ? NSHeight(endRect) / NSHeight(startRect): NSHeight(startRect) / NSHeight(endRect);
 	
 	_leftStep = ( NSMinX(startRect) - NSMinX(endRect) ) / zoomStepCount * zoomFactorX;
 	_topStep = ( NSMinY(startRect) - NSMinY(endRect) ) / zoomStepCount * zoomFactorY;

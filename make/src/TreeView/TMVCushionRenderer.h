@@ -19,7 +19,7 @@
 {
     NSRect _rect;
     NSColor *_color;
-    float _surface[4];
+    CGFloat _surface[4];
 }
 
 - (instancetype) init NS_DESIGNATED_INITIALIZER;
@@ -28,8 +28,8 @@
 @property NSRect rect;
 @property (strong) NSColor *color;
 
-- (float*) surface NS_RETURNS_INNER_POINTER;
-- (void) setSurface: (const float*) newsurface;
+- (CGFloat*) surface NS_RETURNS_INNER_POINTER;
+- (void) setSurface: (const CGFloat*) newsurface;
 
 - (void) addRidgeByHeightFactor: (CGFloat) heightFactor;
 

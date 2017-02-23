@@ -12,9 +12,9 @@
 {
 	__strong NSImage *_image; //retained
 	NSRect _rect;
-	unsigned _zoomStepsLeft;
+	NSUInteger _zoomStepsLeft;
 	CGFloat _leftStep, _topStep, _rightStep, _bottomStep;
-	id _delegate;
+	__unsafe_unretained id _delegate;
 	SEL _delegateSelector;
 	NSTimer *_timer;
 }

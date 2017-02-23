@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "TMVCushionRenderer.h"
 
-//holds display information about one cell in the treemap
+//! holds display information about one cell in the treemap
 @interface TMVItem : NSObject
 {
     id _dataSource;
@@ -22,6 +22,7 @@
     TMVCushionRenderer *_cushionRenderer;
 }
 
+- (instancetype) init UNAVAILABLE_ATTRIBUTE;
 - (instancetype) initWithDataSource: (id) dataSource delegate: (id) delegate renderedItem: (id) item treeMapView: (id) view NS_DESIGNATED_INITIALIZER;
 
 - (void) setCushionColor: (NSColor*) color; 

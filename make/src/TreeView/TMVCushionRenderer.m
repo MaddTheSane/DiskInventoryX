@@ -84,12 +84,12 @@ SEL g_renderFunction;	//optimized rendering function depending on processor feat
     _color = newColor;
 }
 
-- (float*) surface
+- (CGFloat*) surface
 {
     return _surface;
 }
 
-- (void) setSurface: (const float*) newsurface
+- (void) setSurface: (const CGFloat*) newsurface
 {
     memcpy( _surface, newsurface, sizeof(_surface) );
 }
@@ -136,7 +136,7 @@ Unoptimized:
 - (void) renderCushionInBitmapGeneric: (NSBitmapImageRep*) bitmap
 {
     NSRect rect = self.rect;
-    const float *surface = [self surface];
+    const CGFloat *surface = [self surface];
     NSColor *baseColor = self.color;
 
     //we're expecting a bitmap which is at least as big as our rectangle,
@@ -169,11 +169,11 @@ Unoptimized:
     unsigned char *pixels = bitmap.bitmapData;
     NSInteger bytesPerRow = bitmap.bytesPerRow;
 	
-    int ix, iy;
-	int yStart = NSMinY(rect);
-	int yEnd = NSMaxY(rect);
-	int xStart = NSMinX(rect);
-	int xEnd = NSMaxX(rect);
+    NSInteger ix, iy;
+	NSInteger yStart = NSMinY(rect);
+	NSInteger yEnd = NSMaxY(rect);
+	NSInteger xStart = NSMinX(rect);
+	NSInteger xEnd = NSMaxX(rect);
     
     for ( iy = yStart; iy < yEnd ; iy++)
     {
@@ -224,7 +224,7 @@ Unoptimized:
 {
 	NSRect rect = self.rect;
 	
-    const float *surface = [self surface];
+    const CGFloat *surface = [self surface];
 	const double surface3 = surface[3];
 	const double surface2 = surface[2];
 	
@@ -261,14 +261,14 @@ Unoptimized:
     unsigned char *pixels = bitmap.bitmapData;
     NSInteger bytesPerRow = bitmap.bytesPerRow;
 	
-	const double nxFactor = 2.0f * surface[0];
-	const double nyFactor = 2.0f * surface[1];
+	const double nxFactor = 2.0 * surface[0];
+	const double nyFactor = 2.0 * surface[1];
 	
-    int ix, iy;
-	int yStart = NSMinY(rect);
-	int yEnd = NSMaxY(rect);
-	int xStart = NSMinX(rect);
-	int xEnd = NSMaxX(rect);
+    NSInteger ix, iy;
+	NSInteger yStart = NSMinY(rect);
+	NSInteger yEnd = NSMaxY(rect);
+	NSInteger xStart = NSMinX(rect);
+	NSInteger xEnd = NSMaxX(rect);
     
     for ( iy = yStart; iy < yEnd ; iy++)
     {
@@ -323,7 +323,7 @@ Unoptimized:
 {
 	NSRect rect = self.rect;
 	
-    const float *surface = [self surface];
+    const CGFloat *surface = [self surface];
 	const float surface3 = surface[3];
 	const float surface2 = surface[2];
 	
