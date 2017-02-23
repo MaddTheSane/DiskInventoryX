@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -43,12 +43,12 @@
 		FC37DADC075B407B00209C78 /* PrefsPageBase.m in Sources */ = {isa = PBXBuildFile; fileRef = FC37DADA075B407B00209C78 /* PrefsPageBase.m */; };
 		FC3FFAD9071074ED004BEC56 /* NTFileDesc-AccessExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = FC3FFAD7071074ED004BEC56 /* NTFileDesc-AccessExtensions.h */; };
 		FC3FFADA071074ED004BEC56 /* NTFileDesc-AccessExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FC3FFAD8071074ED004BEC56 /* NTFileDesc-AccessExtensions.m */; };
-		FC528433075FD35200374589 /* CocoaTechFoundation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FC570184070602110032DFE9 /* CocoaTechFoundation.framework */; };
+		FC528433075FD35200374589 /* CocoaTechFoundation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FC570184070602110032DFE9 /* CocoaTechFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		FC528AC7076079B500374589 /* LoadingPanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = FC528AC5076079B500374589 /* LoadingPanelController.h */; };
 		FC528AC8076079B500374589 /* LoadingPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = FC528AC6076079B500374589 /* LoadingPanelController.m */; };
 		FC528C0F0760958C00374589 /* TreeMapView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC528C0E0760958C00374589 /* TreeMapView.framework */; };
 		FC528C240760962100374589 /* MoveToTrash.png in Resources */ = {isa = PBXBuildFile; fileRef = FC528C230760962100374589 /* MoveToTrash.png */; };
-		FC528F5007609F0300374589 /* TreeMapView.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FC528C0E0760958C00374589 /* TreeMapView.framework */; };
+		FC528F5007609F0300374589 /* TreeMapView.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FC528C0E0760958C00374589 /* TreeMapView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		FC55B556073C281600B59D00 /* VolumesPanel.nib in Resources */ = {isa = PBXBuildFile; fileRef = FC55B554073C281600B59D00 /* VolumesPanel.nib */; };
 		FC5700F2070601AE0032DFE9 /* OmniAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC5700EF070601AE0032DFE9 /* OmniAppKit.framework */; };
 		FC5700F3070601AE0032DFE9 /* OmniBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC5700F0070601AE0032DFE9 /* OmniBase.framework */; };
@@ -57,12 +57,12 @@
 		FC570188070602110032DFE9 /* CocoaTechFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC570184070602110032DFE9 /* CocoaTechFoundation.framework */; };
 		FC570189070602110032DFE9 /* CocoaTechID3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC570185070602110032DFE9 /* CocoaTechID3.framework */; };
 		FC57018A070602110032DFE9 /* CocoaTechStrings.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC570186070602110032DFE9 /* CocoaTechStrings.framework */; };
-		FC5703A80706023D0032DFE9 /* CocoaTechBase.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FC570183070602110032DFE9 /* CocoaTechBase.framework */; };
-		FC5703AA0706023D0032DFE9 /* CocoaTechID3.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FC570185070602110032DFE9 /* CocoaTechID3.framework */; };
-		FC5703AB0706023D0032DFE9 /* CocoaTechStrings.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FC570186070602110032DFE9 /* CocoaTechStrings.framework */; };
-		FC5703AC0706023D0032DFE9 /* OmniAppKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FC5700EF070601AE0032DFE9 /* OmniAppKit.framework */; };
-		FC5703AD0706023D0032DFE9 /* OmniBase.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FC5700F0070601AE0032DFE9 /* OmniBase.framework */; };
-		FC5703AE0706023D0032DFE9 /* OmniFoundation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FC5700F1070601AE0032DFE9 /* OmniFoundation.framework */; };
+		FC5703A80706023D0032DFE9 /* CocoaTechBase.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FC570183070602110032DFE9 /* CocoaTechBase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		FC5703AA0706023D0032DFE9 /* CocoaTechID3.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FC570185070602110032DFE9 /* CocoaTechID3.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		FC5703AB0706023D0032DFE9 /* CocoaTechStrings.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FC570186070602110032DFE9 /* CocoaTechStrings.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		FC5703AC0706023D0032DFE9 /* OmniAppKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FC5700EF070601AE0032DFE9 /* OmniAppKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		FC5703AD0706023D0032DFE9 /* OmniBase.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FC5700F0070601AE0032DFE9 /* OmniBase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		FC5703AE0706023D0032DFE9 /* OmniFoundation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FC5700F1070601AE0032DFE9 /* OmniFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		FC657547075F4D2E0056F438 /* Preferences.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FC657546075F4D2E0056F438 /* Preferences.tiff */; };
 		FC657586075F58C90056F438 /* RefreshSelection.png in Resources */ = {isa = PBXBuildFile; fileRef = FC657584075F58C90056F438 /* RefreshSelection.png */; };
 		FC657587075F58C90056F438 /* RefreshAll.png in Resources */ = {isa = PBXBuildFile; fileRef = FC657585075F58C90056F438 /* RefreshAll.png */; };
@@ -74,7 +74,7 @@
 		FC6C55110577E62900DD1CE6 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = FC6C55100577E62900DD1CE6 /* AppIcon.icns */; };
 		FC6D4B230804040600E21F6D /* DIXFinderCMInstaller.h in Headers */ = {isa = PBXBuildFile; fileRef = FC6D4B210804040600E21F6D /* DIXFinderCMInstaller.h */; };
 		FC6D4B240804040600E21F6D /* DIXFinderCMInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6D4B220804040600E21F6D /* DIXFinderCMInstaller.m */; };
-		FC6D4C0D080416BC00E21F6D /* Disk Inventory X Finder CM.plugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = FC6D4C00080414C200E21F6D /* Disk Inventory X Finder CM.plugin */; };
+		FC6D4C0D080416BC00E21F6D /* Disk Inventory X Finder CM.plugin in CopyFiles */ = {isa = PBXBuildFile; fileRef = FC6D4C00080414C200E21F6D /* Disk Inventory X Finder CM.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		FC6DE9FF07FBE44A00581F63 /* FileKindsPopupController.h in Headers */ = {isa = PBXBuildFile; fileRef = FC6DE9FD07FBE44A00581F63 /* FileKindsPopupController.h */; };
 		FC6DEA0007FBE44A00581F63 /* FileKindsPopupController.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6DE9FE07FBE44A00581F63 /* FileKindsPopupController.m */; };
 		FC6DEA7007FBED8C00581F63 /* SelectionListController.h in Headers */ = {isa = PBXBuildFile; fileRef = FC6DEA6E07FBED8C00581F63 /* SelectionListController.h */; };
@@ -139,37 +139,6 @@
 		FCE5D6580806A2CC00BDB57A /* FinderCMPreferences.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FCE5D6570806A2CC00BDB57A /* FinderCMPreferences.tiff */; };
 		FCEC79A90768556E008895C2 /* Help in Resources */ = {isa = PBXBuildFile; fileRef = FCEC799F0768556E008895C2 /* Help */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXBuildStyle section */
-		4A9504D0FFE6A4CB11CA0CBA /* Development */ = {
-			isa = PBXBuildStyle;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				DEBUGGING_SYMBOLS = YES;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
-				OPTIMIZATION_CFLAGS = "-O0";
-				SYMROOT = ./../build/debug;
-				ZERO_LINK = YES;
-			};
-			name = Development;
-		};
-		4A9504D1FFE6A4CB11CA0CBA /* Deployment */ = {
-			isa = PBXBuildStyle;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = "NS_BLOCK_ASSERTIONS=1";
-				SYMROOT = ./../build/release;
-				ZERO_LINK = NO;
-			};
-			name = Deployment;
-		};
-/* End PBXBuildStyle section */
 
 /* Begin PBXContainerItemProxy section */
 		FC2788E607D7573900EDCC97 /* PBXContainerItemProxy */ = {
@@ -740,36 +709,6 @@
 			);
 			buildRules = (
 			);
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"/Users/Doom/Dev/OmniFrameworks 2004-07-16/build",
-					/Users/Doom/Dev/CocoaTechOpenSource3.2/Frameworks/build,
-					"/Users/Doom/Dev/Disk Inventory X/vdev/make/build",
-					/Users/Doom/Dev/TreeMapView/1.0/make/build/release,
-				);
-				GCC_ENABLE_TRIGRAPHS = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Disk Inventory X_Prefix.pch";
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "";
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "Disk Inventory X";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				WRAPPER_EXTENSION = app;
-				ZERO_LINK = NO;
-			};
 			dependencies = (
 			);
 			name = "Disk Inventory X";
@@ -783,16 +722,16 @@
 /* Begin PBXProject section */
 		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = FCA73FF6085C426A00C8726E /* Build configuration list for PBXProject "Disk Inventory X" */;
-			buildSettings = {
-				MACOSX_DEPLOYMENT_TARGET = 10.3;
-				SDKROOT = /Developer/SDKs/MacOSX10.3.9.sdk;
+			attributes = {
+				LastUpgradeCheck = 0820;
 			};
-			buildStyles = (
-				4A9504D0FFE6A4CB11CA0CBA /* Development */,
-				4A9504D1FFE6A4CB11CA0CBA /* Deployment */,
-			);
+			buildConfigurationList = FCA73FF6085C426A00C8726E /* Build configuration list for PBXProject "Disk Inventory X" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* Disk Inventory */;
 			projectDirPath = "";
 			projectReferences = (
@@ -801,6 +740,7 @@
 					ProjectRef = FC2788E007D7571C00EDCC97 /* TreeMapView.xcode */;
 				},
 			);
+			projectRoot = "";
 			targets = (
 				8D15AC270486D014006FF6A4 /* Disk Inventory X */,
 			);
@@ -1048,9 +988,9 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUGGING_SYMBOLS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
-					"/Users/Doom/Dev/OmniFrameworks 2004-07-16/build",
+					"/Users/Doom/Dev/OmniFrameworks\\ 2004-07-16/build",
 					/Users/Doom/Dev/CocoaTechOpenSource3.2/Frameworks/build,
-					"/Users/Doom/Dev/Disk Inventory X/vdev/make/build",
+					"/Users/Doom/Dev/Disk\\ Inventory\\ X/vdev/make/build",
 					/Users/Doom/Dev/TreeMapView/1.0/make/build/release,
 					"$(SRCROOT)/../../../../TreeMapView/vdev/make/build/Debug",
 				);
@@ -1072,6 +1012,7 @@
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.derlien.DiskInventoryX;
 				PRODUCT_NAME = "Disk Inventory X";
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
@@ -1089,9 +1030,9 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
-					"/Users/Doom/Dev/OmniFrameworks 2004-07-16/build",
+					"/Users/Doom/Dev/OmniFrameworks\\ 2004-07-16/build",
 					/Users/Doom/Dev/CocoaTechOpenSource3.2/Frameworks/build,
-					"/Users/Doom/Dev/Disk Inventory X/vdev/make/build",
+					"/Users/Doom/Dev/Disk\\ Inventory\\ X/vdev/make/build",
 					/Users/Doom/Dev/TreeMapView/1.0/make/build/release,
 					"$(SRCROOT)/../../../../TreeMapView/vdev/make/build/Debug",
 				);
@@ -1110,6 +1051,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.derlien.DiskInventoryX;
 				PRODUCT_NAME = "Disk Inventory X";
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = (
@@ -1122,46 +1064,31 @@
 			};
 			name = Release;
 		};
-		FCA73FF5085C426A00C8726E /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"/Users/Doom/Dev/OmniFrameworks 2004-07-16/build",
-					/Users/Doom/Dev/CocoaTechOpenSource3.2/Frameworks/build,
-					"/Users/Doom/Dev/Disk Inventory X/vdev/make/build",
-					/Users/Doom/Dev/TreeMapView/1.0/make/build/release,
-					"$(SRCROOT)/../../../../TreeMapView/vdev/make/build/Debug",
-				);
-				GCC_ENABLE_TRIGRAPHS = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Disk Inventory X_Prefix.pch";
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "";
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "Disk Inventory X";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				WRAPPER_EXTENSION = app;
-				ZERO_LINK = NO;
-			};
-			name = Default;
-		};
 		FCA73FF7085C426A00C8726E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				MACOSX_DEPLOYMENT_TARGET = 10.3;
-				SDKROOT = /Developer/SDKs/MacOSX10.3.9.sdk;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
 				SYMROOT = ./../build/debug;
 			};
 			name = Debug;
@@ -1169,19 +1096,29 @@
 		FCA73FF8085C426A00C8726E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				MACOSX_DEPLOYMENT_TARGET = 10.3;
-				SDKROOT = /Developer/SDKs/MacOSX10.3.9.sdk;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
 				SYMROOT = ./../build/release;
 			};
 			name = Release;
-		};
-		FCA73FF9085C426A00C8726E /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				MACOSX_DEPLOYMENT_TARGET = 10.3;
-				SDKROOT = /Developer/SDKs/MacOSX10.3.9.sdk;
-			};
-			name = Default;
 		};
 /* End XCBuildConfiguration section */
 
@@ -1191,20 +1128,18 @@
 			buildConfigurations = (
 				FCA73FF3085C426A00C8726E /* Debug */,
 				FCA73FF4085C426A00C8726E /* Release */,
-				FCA73FF5085C426A00C8726E /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Release;
 		};
 		FCA73FF6085C426A00C8726E /* Build configuration list for PBXProject "Disk Inventory X" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FCA73FF7085C426A00C8726E /* Debug */,
 				FCA73FF8085C426A00C8726E /* Release */,
-				FCA73FF9085C426A00C8726E /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
