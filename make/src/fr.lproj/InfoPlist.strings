@@ -1,0 +1,4 @@
+﻿CFBundleGetInfoString = "Disk Inventory X version 1.0, Tjark Derlien 2004";
+CFBundleName = "Disk Inventory X"; 
+CFBundleShortVersionString = "1.0"; 
+NSHumanReadableCopyright = "réalisé sous licence GPL"; 
