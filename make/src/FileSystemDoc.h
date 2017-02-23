@@ -11,33 +11,32 @@
 #import "FSItem.h"
 #import "Preferences.h"
 #import "LoadingPanelController.h"
+#import "FileTypeColors.h"
 
 //holds information about the count and size of the files of one kind (e.g. MP3 files)
 @interface FileKindStatistic : NSObject
 {
     NSString *_kindName;
-    NSNumber *_fileCount;
-	NSInteger _fileCountValue;
-    NSNumber *_size;
-	unsigned long long _sizeValue;
-	
-	LoadingPanelController *_progressController;
+	unsigned long long _size;
+	NSMutableSet *_items;
 }
 
 - (id) initWithItem: (FSItem*) item;
 
-- (void) addItemToStatistic: (FSItem* )item;
-
-- (NSString*) description;
+- (void) addItem: (FSItem* )item;
+- (void) removeItem: (FSItem* )item;
 
 - (NSString*) kindName;
+- (NSString*) description;
 
-- (NSNumber*) fileCount;		//# of files of this kind
-@property (nonatomic) NSInteger fileCountValue;
+- (unsigned) fileCount;		//# of files of this kind
+- (unsigned long long) size; //sum of sizes of files of this kind
+- (void) recalculateSize;
 
-- (NSNumber*) size;			//sum of sizes of files of this kind
-- (unsigned long long) sizeValue;
-- (void) setSizeValue: (unsigned long long) size;
+- (NSSet*) items;
+- (NSEnumerator*) itemEnumerator;
+
+- (NSComparisonResult) compareSizeDescendingly: (FileKindStatistic*) other;
 
 @end
 
@@ -48,6 +47,7 @@
     NSMutableArray *_zoomStack;
     NSMutableDictionary *_fileKindStatistics;	//dictionary: kind name -> FileKindStatistic
 	NSMutableDictionary *_viewOptions;
+	FileTypeColors *_kindColors;
 	
 	//these variables are used during the initial directory scan
 	LoadingPanelController *_progressController;
@@ -76,6 +76,7 @@
 - (void) zoomIntoItem: (FSItem*) item; //will post a "ZoomedItemChangedNotification"
 - (void) zoomOutToItem: (FSItem*) item;
 - (void) zoomOutOneStep;
+- (NSArray*) zoomStack;
 
 - (FSItem*) selectedItem;
 - (void) setSelectedItem: (FSItem*) item; //will post a "GlobalSelectionChangedNotification"
@@ -84,7 +85,7 @@
 - (FileKindStatistic*) kindStatisticForKind: (NSString*) kindName;
 - (NSDictionary*) kindStatistics;
 
-- (NSArray*) zoomStack;
+- (FileTypeColors*) fileTypeColors;
 
 - (void) refreshFileKindStatistics;
 

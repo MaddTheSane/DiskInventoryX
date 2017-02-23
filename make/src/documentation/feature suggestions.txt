@@ -1,3 +1,6 @@
+- show total number of all files
+- in addition to the "move to trash" command add the ability to move files to a specific folder
+- print report (simple textual report?)
 - the 'Open Folder' item in the File menu might be more correctly
   named 'Choose Location' or 'Select Location'.  This might
   necessitate renaming the 'Open Recent' item as well - not

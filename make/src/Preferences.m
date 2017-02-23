@@ -19,9 +19,12 @@ NSString *IgnoreCreatorCode				= @"IgnoreCreatorCode";
 NSString *ShowPhysicalFileSize			= @"ShowPhysicalFileSize"; //logical size otherwise (like the Finder)
 NSString *UseSmallFontInKindStatistic	= @"UseSmallFontInKindStatisticView";
 NSString *UseSmallFontInFilesView		= @"UseSmallFontInFilesView";
+NSString *UseSmallFontInSelectionList	= @"UseSmallFontInSelectionList";
+NSString *SplitWindowHorizontally		= @"SplitWindowHorizontally";
 NSString *AnimatedZooming				= @"AnimatedZooming";
 NSString *EnableLogging					= @"EnableLogging";
 NSString *DontShowDonationMessage		= @"DontShowDonationMessage";
+NSString *ShareKindColors				= @"ShareKindColors";
 
 @interface NSMutableDictionary(DocumentPreferences_Private)
 - (void) copyValuesFromSharedDefaults;

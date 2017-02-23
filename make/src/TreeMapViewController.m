@@ -8,7 +8,6 @@
 
 #import "TreeMapViewController.h"
 #import <TreeMapView/TreeMapView.h>
-#import "FileTypeColors.h"
 #import "MainWindowController.h"
 #import "FileSizeFormatter.h"
 #import "FSItem-Utilities.h"
@@ -53,7 +52,11 @@
     [_fileSizeTextField setStringValue: @""];
 	
 	//set up KVO
-	[doc addObserver: self forKeyPath: DocKeySelectedItem options: NSKeyValueChangeSetting context: nil];
+	[doc addObserver: self forKeyPath: DocKeySelectedItem options: NSKeyValueObservingOptionNew context: nil];
+	[[NSUserDefaultsController sharedUserDefaultsController] addObserver: self
+															  forKeyPath: [@"values." stringByAppendingString: ShareKindColors]
+																 options: 0
+																 context: ShareKindColors];
 	
 	//create "free space" and "other space" items
 	//(don't use [self rootItem] as we want the root, not the zoomed item)
@@ -167,7 +170,7 @@
 	switch ( [fsItem type] )
 	{
 		case FileFolderItem:
-			color = [[FileTypeColors instance] colorForItem: fsItem];
+			color = [[[self document] fileTypeColors] colorForItem: fsItem];
 			break;
 		case FreeSpaceItem:
 			color = [NSColor colorWithCalibratedWhite: 1 alpha: 1];
@@ -285,9 +288,9 @@
 		NSAssert( newZoomedItem == [self rootItem], @"invalid new zoomed item" );
 		
 		//did we zoom in or out?
-		BOOL didZoomedIn = [newZoomedItem isDescendantOf: oldZoomedItem];
+		BOOL didZoomIn = [newZoomedItem isDescendantOf: oldZoomedItem];
 		
-		if ( didZoomedIn )
+		if ( didZoomIn )
 		{
 			NSArray *itemPath = [newZoomedItem fsItemPathFromAncestor: oldZoomedItem];
 			[_treeMapView reloadAndPerformZoomIntoItem: itemPath];
@@ -324,6 +327,7 @@
 	[[self document] removeObserver: self forKeyPath: DocKeySelectedItem];
 	
     [[NSNotificationCenter defaultCenter] removeObserver: self];
+	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver: self forKeyPath: [@"values." stringByAppendingString: ShareKindColors]];
 }
 
 @end
@@ -332,7 +336,12 @@
 
 - (void)observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context
 {
-	if ( object == [self document] )
+	if ( context == ShareKindColors )
+	{
+		[_treeMapView invalidateCanvasCache];
+		[_treeMapView setNeedsDisplay: YES];
+	}
+	else if ( object == [self document] )
 	{
 		if ( [keyPath isEqualToString: DocKeySelectedItem] )
 			[self onDocumentSelectionChanged];

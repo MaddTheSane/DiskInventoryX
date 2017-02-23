@@ -11,20 +11,27 @@
 #import "Timing.h"
 #import <TreeMapView/TreeMapView.h>
 #import "FSItem-Utilities.h"
-#import <CocoatechCore/NTSimpleAlert.h>
+#import "FileSizeTransformer.h"
+#import <CocoaTechStrings/NTLocalizedString.h>
+#import "NTDefaultDirectory-Utilities.h"
 
 @interface MainWindowController(Private)
+- (void) moveToTrashSheetDidDismiss: (NSWindow*) sheet returnCode: (int) returnCode contextInfo: (void*) contextInfo;
 @end
 
 @implementation MainWindowController
 
-- (id) initWithDocument: (FileSystemDoc*) doc
+- (id) initWithWindowNibName:(NSString *)windowNibName
 {
-    self = [super init];
-
-    [self setDocument: doc];
-
-    return self;
+	self = [super initWithWindowNibName: windowNibName];
+	
+	if ( self != nil )
+	{
+		//register volume transformers needed by various controls
+		[NSValueTransformer setValueTransformer:[FileSizeTransformer transformer] forName: @"fileSizeTransformer"];
+	}
+	
+	return self;
 }
 
 + (FileSystemDoc*) documentForView: (NSView*) view
@@ -49,6 +56,7 @@
 	NSPoint poofEffectPoint = NSMakePoint( NSMinX(rect) + NSWidth(rect)/2,
 										   NSMinY(rect) + NSHeight(rect)/2);
 	
+	//coordinates for the poof effect must be in screen coordidates, so...
 	//convert view to window coords
 	poofEffectPoint = [view convertPoint: poofEffectPoint toView: nil];
 	
@@ -59,7 +67,7 @@
 	
 	//make sure the rect is not too small nor too large
 	if ( fminf(size.width, size.height) <= 25 || ( size.width + size.height ) <= 80 )
-		size = NSZeroSize;	//default size;
+		size = NSZeroSize;	//default size
 	
 	size.width = fminf( size.width, 200 );
 	size.height = fminf( size.height, 200 );
@@ -69,12 +77,36 @@
 
 - (void) awakeFromNib
 {
+	//split window horizontally?
+	if ( [[NSUserDefaults standardUserDefaults] boolForKey: SplitWindowHorizontally] )
+	{
+		[_splitter setVertical: NO];		
+	}
+	
+	[_splitter setPositionAutosaveName: @"MainWindowSplitter"];
+	
     [_kindsDrawer toggle: self];
+	//[_selectionListDrawer toggle: self];
+}
+
+- (NSDrawer*) kindStatisticsDrawer
+{
+	return _kindsDrawer;
+}
+
+- (NSDrawer*) selectionListDrawer
+{
+	return _selectionListDrawer;
 }
 
 - (IBAction)toggleFileKindsDrawer:(id)sender
 {
     [_kindsDrawer toggle: self];
+}
+
+- (IBAction) toggleSelectionListDrawer:(id)sender
+{
+	[_selectionListDrawer toggle: self];
 }
 
 - (IBAction) zoomIn:(id)sender
@@ -160,31 +192,30 @@
 	if ( selectedItem == nil || selectedItem == [doc zoomedItem] || [selectedItem isSpecialItem] )
 		return;
 	
-	//before we move the file/folder to trash, we need to calculate the position of the poof effect
-	NSRect cellRect;
-	NSView *view;
-	if ( [[self window] firstResponder] == _filesOutlineView )
+	//if file/folder lies on a network volume, it will be deleted!
+	//So warn the user and ask to proceed.
+	//(only local items can be moved to trash)
+	if ( [[selectedItem fileDesc] isNetwork] )
 	{
-		view = _filesOutlineView;
-		cellRect = [_filesOutlineView frameOfCellAtColumn: 0 row: [_filesOutlineView selectedRow]];
+		NSString *msg = [NSString stringWithFormat: [NTLocalizedString localize: @"The item \"%@\" could not be moved to the trash."],
+													[selectedItem displayName]];
+
+		NSBeginAlertSheet( msg,
+						  [NTLocalizedString localize: @"No"],
+						  [NTLocalizedString localize: @"Yes"],
+						  nil,
+						  [self window],
+						  self,
+						  nil,
+						  @selector(moveToTrashSheetDidDismiss: returnCode: contextInfo:),
+						  selectedItem,
+						  [NTLocalizedString localize: @"Would you like to delete it immediately?"]);
 	}
 	else
 	{
-		view = _treeMapView;
-		cellRect = [_treeMapView itemRectByPathToItem: [selectedItem fsItemPathFromAncestor: [doc zoomedItem]]];
-	}
-	
-	//now we can do it
-	if ( [doc moveItemToTrash: selectedItem] )
-	{
-		[[self class] poofEffectInView: view inRect: cellRect];
-	}
-	else
-	{
-		//failed
-		[NTSimpleAlert infoSheet: [self window]
-						 message: [NSString stringWithFormat: NSLocalizedString(@"\"%@\" cannot be moved to the trash.",@""), [selectedItem displayName] ]
-					  subMessage: NSLocalizedString( @"Maybe you do not have sufficient access privileges.", @"" ) ];
+		[self moveToTrashSheetDidDismiss: nil
+							  returnCode: NSAlertAlternateReturn
+							 contextInfo: selectedItem];
 	}
 }
 
@@ -224,18 +255,7 @@
 
 - (IBAction) changeSplitting:(id)sender
 {
-	if ( [_splitter isVertical] )
-	{
-		[_splitter setVertical: NO];
-		
-		[sender setTitle: NSLocalizedString(@"Split Vertically", @"")];
-	}
-	else
-	{
-		[_splitter setVertical: TRUE];
-		
-		[sender setTitle: NSLocalizedString(@"Split Horizontally", @"")];
-	}
+	[_splitter setVertical: ![_splitter isVertical]];
 	
 	[[[self window] contentView] setNeedsDisplay: TRUE];
 }
@@ -280,7 +300,7 @@
 	uint64_t doneTime = getTime();
 	
 	NSString *msg = [NSString stringWithFormat: @"rendering %u times took %.2f seconds", count, subtractTime(doneTime, startTime)];
-	NSBeginAlertSheet( msg, nil, nil, nil, [_splitter window], nil, nil, nil, nil, @"" );
+	NSBeginInformationalAlertSheet( msg, nil, nil, nil, [_splitter window], nil, nil, nil, nil, @"" );
 }
 
 - (IBAction) performLayoutBenchmark:(id)sender
@@ -294,14 +314,14 @@
 	uint64_t doneTime = getTime();
 	
 	NSString *msg = [NSString stringWithFormat: @"layout calculation %u times took %.2f seconds", count, subtractTime(doneTime, startTime)];
-	NSBeginAlertSheet( msg, nil, nil, nil, [_splitter window], nil, nil, nil, nil, @"" );
+	NSBeginInformationalAlertSheet( msg, nil, nil, nil, [_splitter window], nil, nil, nil, nil, @"" );
 }
 
 - (BOOL) validateMenuItem: (NSMenuItem*) menuItem
 {
     FileSystemDoc *doc = [self document];
-
     FSItem *selectedItem = [doc selectedItem];
+	SEL menuAction = [menuItem action];
 
 #define SET_TITLE( condition, string1, string2 ) \
 	[menuItem setTitle: NSLocalizedString( (condition) ? string1 : string2, @"")]
@@ -311,61 +331,81 @@
 	if ( [menuItem isKindOfClass: [NSToolbarItemValidationAdapter class]] )\
 		 [menuItem setState: (condition) ? NSOffState : NSOnState];
 	
-    if ( [menuItem action] == @selector(zoomIn:) )
+    if ( menuAction == @selector(zoomIn:) )
     {
         return selectedItem != nil && [selectedItem isFolder];
     }
-    else if ( [menuItem action] == @selector(zoomOut:) )
+    else if ( menuAction == @selector(zoomOut:) )
     {
         return [doc rootItem] != [doc zoomedItem];
     }
-    else if ( [menuItem action] == @selector(showInFinder:)
-			  || [menuItem action] == @selector(refresh:))
+    else if ( menuAction == @selector(showInFinder:)
+			  || menuAction == @selector(refresh:))
     {
         return selectedItem != nil;
     }
-    else if ( [menuItem action] == @selector(moveToTrash:) )
+    else if ( menuAction == @selector(moveToTrash:) )
     {
-        return selectedItem != nil && selectedItem != [doc zoomedItem] && ![selectedItem isSpecialItem];
+		//the trash folder and items residing in it can't be moved to trash
+		BOOL selectItemResidesInTrash = NO;
+		if ( selectedItem != nil )
+		{
+			NTFileDesc *trashDesc = [[NTDefaultDirectory sharedInstance] safeTrashForDesc: [selectedItem fileDesc]];
+			if ( [trashDesc isValid] )
+			{
+				FSItem* trashItem = [[doc rootItem] findItemByAbsolutePath: [trashDesc path] allowAncestors: NO];
+				selectItemResidesInTrash = trashItem == selectedItem || [selectedItem isDescendantOf: trashItem];
+			}
+		}
+        return !selectItemResidesInTrash && selectedItem != nil && selectedItem != [doc zoomedItem] && ![selectedItem isSpecialItem];
     }
-    else if ( [menuItem action] == @selector(showPackageContents:) )
+    else if ( menuAction == @selector(showPackageContents:) )
     {
         SET_TITLE_AND_IMAGE( [doc showPackageContents], @"Hide Package Contents", @"Show Package Contents" );
     }
-    else if ( [menuItem action] == @selector(showFreeSpace:) )
+    else if ( menuAction == @selector(showFreeSpace:) )
     {
         SET_TITLE_AND_IMAGE( [doc showFreeSpace], @"Hide Free Space", @"Show Free Space" );
     }
-    else if ( [menuItem action] == @selector(showOtherSpace:) )
+    else if ( menuAction == @selector(showOtherSpace:) )
     {
         SET_TITLE_AND_IMAGE( [doc showOtherSpace], @"Hide Other Space", @"Show Other Space" );
 		if ( [[[doc zoomedItem] fileDesc] isVolume] )
 			return NO;
     }
-    else if ( [menuItem action] == @selector(showPhysicalSizes:) )
+    else if ( menuAction == @selector(showPhysicalSizes:) )
     {
         SET_TITLE_AND_IMAGE( [doc showPhysicalFileSize], @"Show Logical File Size", @"Show Physical File Size" );
     }
-    else if ( [menuItem action] == @selector(ignoreCreatorCode:) )
+    else if ( menuAction == @selector(ignoreCreatorCode:) )
     {
         SET_TITLE_AND_IMAGE( [doc ignoreCreatorCode], @"Respect Creator Code", @"Ignore Creator Code" );
     }
-    else if ( [menuItem action] == @selector(toggleFileKindsDrawer:) )
+    else if ( menuAction == @selector(toggleFileKindsDrawer:) )
     {
         SET_TITLE_AND_IMAGE( [_kindsDrawer state] == NSDrawerClosedState,
 							 @"Show File Kind Statistics", @"Hide File Kind Statistics" );
     }
-    else if ( [menuItem action] == @selector(selectParentItem:) )
+    else if ( menuAction == @selector(toggleSelectionListDrawer:) )
+    {
+        SET_TITLE( [_selectionListDrawer state] == NSDrawerClosedState,
+							 @"Show Selection List", @"Hide Selection List" );
+    }
+    else if ( menuAction == @selector(selectParentItem:) )
     {
         return selectedItem != nil && selectedItem != [doc zoomedItem];
     }   
-    else if ( [menuItem action] == @selector(showInformationPanel:) )
+    else if ( menuAction == @selector(showInformationPanel:) )
     {
         SET_TITLE_AND_IMAGE( [[InfoPanelController sharedController] panelIsVisible],
 							 @"Hide Information", @"Show Information" );
     }   
+    else if ( menuAction == @selector(changeSplitting:) )
+    {
+        SET_TITLE( [_splitter isVertical], @"Split Horizontally", @"Split Vertically" );
+    }   
     
-#undef SET_MENUTITLE
+#undef SET_TITLE
 #undef SET_TITLE_AND_IMAGE
 	
     return YES;
@@ -406,5 +446,48 @@
 
 @implementation MainWindowController(Private)
 
+- (void) moveToTrashSheetDidDismiss: (NSWindow *) sheet
+						 returnCode: (int) returnCode
+						contextInfo: (void*) contextInfo
+{
+	if ( returnCode != NSAlertAlternateReturn )
+		return;
+	
+	FileSystemDoc *doc = [self document];
+	FSItem *selectedItem = (FSItem*) contextInfo;
+	
+	NSParameterAssert(	selectedItem != nil
+						&& selectedItem != [doc zoomedItem] 
+						&& ![selectedItem isSpecialItem] );
+	
+	//before we move the file/folder to trash, we need to calculate the position of the poof effect
+	NSRect cellRect;
+	NSView *view = nil;
+	if ( [[self window] firstResponder] == _filesOutlineView )
+	{
+		view = _filesOutlineView;
+		cellRect = [_filesOutlineView frameOfCellAtColumn: 0 row: [_filesOutlineView selectedRow]];
+	}
+	else
+	{
+		view = _treeMapView;
+		cellRect = [_treeMapView itemRectByPathToItem: [selectedItem fsItemPathFromAncestor: [doc zoomedItem]]];
+	}
+	
+	//now we can do it
+	if ( [doc moveItemToTrash: selectedItem] )
+	{
+		[[self class] poofEffectInView: view inRect: cellRect];
+		
+        [self synchronizeWindowTitleWithDocumentName];
+	}
+	else
+	{
+		//failed
+		[NTSimpleAlert infoSheet: [self window]
+						 message: [NSString stringWithFormat: NSLocalizedString(@"\"%@\" cannot be moved to the trash.",@""), [selectedItem displayName] ]
+					  subMessage: NSLocalizedString( @"Maybe you do not have sufficient access privileges.", @"" ) ];
+	}
+}
 
 @end

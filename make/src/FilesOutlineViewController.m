@@ -8,66 +8,11 @@
 
 #import "FilesOutlineViewController.h"
 #import "FSItem.h"
+#import "FSItem-Utilities.h"
 //#import <CocoaTechFoundation/NSImage-NTExtensions.h>
+#import "NSOutlineView-ContextMenuExtension.h"
 #import "MainWindowController.h"
 #import "Preferences.h"
-
-#pragma mark ----------------NSOutlineView context menu extension---------------------
-
-@interface NSObject(NSOutlineViewDelegateContextMenu)
-- (NSMenu*) outlineView: (NSOutlineView *) outlineView menuForTableColumn: (NSTableColumn*) column item: (id) item;
-@end
-
-@interface NSOutlineView(ContextMenuExtension)
-- (id) selectedItem;
-@end
-
-@implementation NSOutlineView(ContextMenuExtension)
-// return the selected item
-- (id) selectedItem
-{
-    int row = [self selectedRow];
-    return row >= 0 ? [self itemAtRow: row] : nil;
-}
-
-// ask the delegate which menu to show
--(NSMenu*) menuForEvent:(NSEvent*)evt
-{
-    NSPoint point = [self convertPoint: [evt locationInWindow] fromView: nil];
-    
-    int columnIndex = [self columnAtPoint:point];
-    int rowIndex = [self rowAtPoint:point];
-
-    if ( rowIndex >= 0 && [self numberOfSelectedRows] <= 1)
-        [self selectRowIndexes: [NSIndexSet indexSetWithIndex:rowIndex] byExtendingSelection: NO];
-
-    id delegate = [self delegate];
-    
-    if ( columnIndex >= 0 && rowIndex >= 0
-         && [delegate respondsToSelector:@selector(outlineView:menuForTableColumn:item:)] )
-    {
-		//get context menu
-        NSTableColumn *column = [[self tableColumns] objectAtIndex: columnIndex];
-        NSMenu *contextMenu = [delegate outlineView:self menuForTableColumn: column item: [self itemAtRow: rowIndex]];
-
-		//set first responder if we will show a context menu
-		//(isn't nessecary for proper function, but makes sense as the user opens the context menu)
-		if ( contextMenu != nil
-			 && [self acceptsFirstResponder]
-			 && [[self window] firstResponder] != self )
-		{
-			[[self window] makeFirstResponder: self];
-		}
-		
-		return contextMenu;
-    }
-    else
-        return NULL;
-}
-
-@end
-
-#pragma mark ------------------- FilesOutlineViewController --------------------------
 
 @interface FilesOutlineViewController(Private)
 
@@ -108,18 +53,18 @@
 				 object: [_outlineView window]];
 	
 	//set ImageAndTextCell as the data cell for the first (outline) column
-    [[_outlineView outlineTableColumn] setDataCell: [[[ImageAndTextCell alloc] init] autorelease]];
+    [[_outlineView outlineTableColumn] setDataCell: [ImageAndTextCell cell]];
 	
 	//set FileSizeFormatter for the size column
 	FileSizeFormatter *sizeFormatter = [[[FileSizeFormatter alloc] init] autorelease];
 	[[[_outlineView tableColumnWithIdentifier: @"size"] dataCell] setFormatter: sizeFormatter];
         
-	//set up KVO
-	[[NSUserDefaults standardUserDefaults] addObserver: self
-											forKeyPath: UseSmallFontInFilesView
-											   options: NSKeyValueChangeSetting
-											   context: nil];
-	[doc addObserver: self forKeyPath: DocKeySelectedItem options: NSKeyValueChangeSetting context: nil];
+	[[NSUserDefaultsController sharedUserDefaultsController] addObserver: self
+															  forKeyPath: [@"values." stringByAppendingString: UseSmallFontInFilesView]
+																 options: 0
+																 context: UseSmallFontInFilesView];
+	
+	[doc addObserver: self forKeyPath: DocKeySelectedItem options: 0 context: nil];
 	
 	//set small font for all for all columns if needed
 	[self setOutlineViewFont];
@@ -259,7 +204,7 @@ objectValueForTableColumn: (NSTableColumn *) tableColumn
 {
 	[[self document] removeObserver: self forKeyPath: DocKeySelectedItem];
 	
-	[[NSUserDefaults standardUserDefaults] removeObserver: self forKeyPath: UseSmallFontInFilesView];
+	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver: self forKeyPath: [@"values." stringByAppendingString: UseSmallFontInFilesView]];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver: self];
 }
@@ -273,10 +218,9 @@ objectValueForTableColumn: (NSTableColumn *) tableColumn
 						change:(NSDictionary*)change
 					   context:(void*)context
 {
-	if ( object == [NSUserDefaults standardUserDefaults] )
+	if ( context == UseSmallFontInFilesView )
 	{
-		if ( [keyPath isEqualToString: UseSmallFontInFilesView] )
-			[self setOutlineViewFont];
+		[self setOutlineViewFont];
 	}
 	else if ( object == [self document] )
 	{
@@ -301,22 +245,11 @@ objectValueForTableColumn: (NSTableColumn *) tableColumn
         //if the item can't be found in the view, then the user hasn't expanded the parents yet
         if ( row < 0 )
         {
-            //first, get path from the root item to the item to be selected
-            NSMutableArray *path = [NSMutableArray array];
+            //get path from the root item to the item to be selected
+            NSArray *path = [item fsItemPath];
             
-            item = [item parent];
-            while ( item != nil )
-            {
-                [path insertObject: item atIndex: 0];
-                
-                if ( item == [self rootItem] )
-                    item = nil;
-                else
-                    item = [item parent];
-            }
-            
-            //second, expand all parents
-            int i = 0;
+            //expand all nodes in the outlineview till the item
+            unsigned i = 0;
             for ( i = 1; i < [path count]; i++ )
             {
                 row = [_outlineView rowForItem: item];

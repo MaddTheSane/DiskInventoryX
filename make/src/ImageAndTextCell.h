@@ -14,6 +14,8 @@
     NSImage	*_image;
 }
 
++ (id) cell;
+
 @property (retain) NSImage *image;
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;

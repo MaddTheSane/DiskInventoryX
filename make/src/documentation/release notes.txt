@@ -1,6 +1,23 @@
 release notes
 =============
 
+vdev
+----
+
+new features:
+- Finder context menu plugin with a "Open in Disk Inventory X" command for folders and volumes (must be installed manually in the preference window!)
+- a new selection list which can show all files of a specific kind or all all files (to show the selection list, use the new context menu in the kind statistic or select menu "Window->Selection List").
+- an option whether the assignment between colors and file kinds are shared between open windows or not (so every kind has in all windows the same color - like before - or the assignment is done for each window separately)
+- performance improvements when dealing with a large number of files
+- sortable columns in the kind statistic drawer (and in the new selection list, of course)
+- a warning is shown prior deleting a file or folder on a network volume (items on a network volume can only be deleted, not moved to trash)
+
+bug fixes:
+- DIX crashed when refreshing a file or files if DIX has zoomed into a folder
+- the "select parent" shortcut did not work if the file view had the focus: the shortcut is now changed to Apple-U (previously Command-P).
+
+
+
 1.0 beta (2004-06-12)
 ---------------------
 - now runs only under Mac OS X 10.3+; 10.2 is no longer supported!

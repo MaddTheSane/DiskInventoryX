@@ -11,7 +11,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <menu title="MainMenu" systemMenu="main" id="29" userLabel="MainMenu">
             <items>
                 <menuItem title="NewApplication" id="56">
@@ -240,8 +240,7 @@ CA
                             <menuItem isSeparatorItem="YES" id="225">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Select Parent Folder" keyEquivalent="p" id="226">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                            <menuItem title="Select Parent Folder" keyEquivalent="u" id="226">
                                 <connections>
                                     <action selector="selectParentItem:" target="-1" id="227"/>
                                 </connections>
@@ -307,6 +306,11 @@ CA
                             <menuItem title="File Kind Statistics" toolTip="Show/hide the file kind statistic drawer" id="223">
                                 <connections>
                                     <action selector="toggleFileKindsDrawer:" target="-1" id="224"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Selection List" id="318">
+                                <connections>
+                                    <action selector="toggleSelectionListDrawer:" target="-1" id="319"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="92">

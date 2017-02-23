@@ -58,9 +58,23 @@
 			<key>NSDocumentClass</key>
 			<string>FileSystemDoc</string>
 		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>plugin</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Plugin</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>BNDL</string>
+			</array>
+			<key>NSDocumentClass</key>
+			<string>FileSystemDoc</string>
+		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
-	<string>Disk Inventory X</string>
+	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleHelpBookFolder</key>
 	<string>Help</string>
 	<key>CFBundleHelpBookName</key>
@@ -76,9 +90,9 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
-	<string>????</string>
+	<string>DIX </string>
 	<key>CFBundleVersion</key>
-	<string>1.0 Beta</string>
+	<string>1.0</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -97,6 +111,8 @@
 				<false/>
 				<key>IgnoreCreatorCode</key>
 				<false/>
+				<key>ShareKindColors</key>
+				<true/>
 				<key>ShowFreeSpace</key>
 				<false/>
 				<key>ShowOtherSpace</key>
@@ -105,25 +121,49 @@
 				<false/>
 				<key>ShowPhysicalFileSize</key>
 				<false/>
+				<key>SplitWindowHorizontally</key>
+				<false/>
 				<key>UseSmallFontInFilesView</key>
 				<false/>
 				<key>UseSmallFontInKindStatisticView</key>
+				<false/>
+				<key>UseSmallFontInSelectionList</key>
 				<false/>
 			</dict>
 		</dict>
 		<key>PrefsPanelController</key>
 		<dict>
+			<key>FinderCMPrefPage</key>
+			<dict>
+				<key>category</key>
+				<string>Basic</string>
+				<key>defaultsArray</key>
+				<array/>
+				<key>icon</key>
+				<string>FinderCMPreferences</string>
+				<key>identifier</key>
+				<string>FinderCMPrefPage</string>
+				<key>nib</key>
+				<string>FinderCMPreferencesPage</string>
+				<key>ordering</key>
+				<integer>20</integer>
+				<key>title</key>
+				<string>Finder Plugin</string>
+			</dict>
 			<key>GeneralPrefPage</key>
 			<dict>
 				<key>category</key>
 				<string>Basic</string>
 				<key>defaultsArray</key>
 				<array>
+					<string>SplitWindowHorizontally</string>
 					<string>ShowPackageContents</string>
 					<string>IgnoreCreatorCode</string>
 					<string>ShowPhysicalFileSize</string>
 					<string>UseSmallFontInFilesView</string>
 					<string>UseSmallFontInKindStatisticView</string>
+					<string>UseSmallFontInSelectionList</string>
+					<string>ShareKindColors</string>
 				</array>
 				<key>icon</key>
 				<string>GeneralPreferences</string>

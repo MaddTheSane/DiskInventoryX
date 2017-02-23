@@ -4,22 +4,26 @@
 #import "FileSystemDoc.h"
 #import <TreeMapView/TreeMapView.h>
 #import "OAToolbarWindowControllerEx.h"
+#import <OmniAppKit/OASplitView.h>
 
 @interface MainWindowController : OAToolbarWindowControllerEx
 {
     IBOutlet NSDrawer *_kindsDrawer;
-	IBOutlet NSSplitView *_splitter;
+    IBOutlet NSDrawer *_selectionListDrawer;
+	IBOutlet OASplitView *_splitter;
 	IBOutlet NSOutlineView *_filesOutlineView;
 	IBOutlet TreeMapView *_treeMapView;
 }
-
-- (id) initWithDocument: (FileSystemDoc*) doc;
 
 + (FileSystemDoc*) documentForView: (NSView*) view;
 
 + (void) poofEffectInView: (NSView*)view inRect: (NSRect) rect; //rect in view coords
 
-- (IBAction)toggleFileKindsDrawer:(id)sender;
+- (NSDrawer*) kindStatisticsDrawer;
+- (NSDrawer*) selectionListDrawer;
+
+- (IBAction) toggleFileKindsDrawer:(id)sender;
+- (IBAction) toggleSelectionListDrawer:(id)sender;
 - (IBAction) zoomIn:(id)sender;
 - (IBAction) zoomOut:(id)sender;
 - (IBAction) zoomOutTo:(id)sender;

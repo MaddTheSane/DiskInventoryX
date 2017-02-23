@@ -10,23 +10,24 @@
             <connections>
                 <outlet property="_filesOutlineView" destination="65" id="124"/>
                 <outlet property="_kindsDrawer" destination="21" id="102"/>
+                <outlet property="_selectionListDrawer" destination="137" id="149"/>
                 <outlet property="_splitter" destination="95" id="116"/>
                 <outlet property="_treeMapView" destination="30" id="125"/>
                 <outlet property="window" destination="22" id="28"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <drawer preferredEdge="minX" trailingOffset="15" id="21">
             <size key="contentSize" width="330" height="346"/>
-            <size key="minContentSize" width="50" height="50"/>
-            <size key="maxContentSize" width="600" height="400"/>
+            <size key="minContentSize" width="20" height="50"/>
+            <size key="maxContentSize" width="1000" height="400"/>
             <connections>
                 <outlet property="contentView" destination="24" id="26"/>
                 <outlet property="parentWindow" destination="22" id="25"/>
             </connections>
         </drawer>
-        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="22" userLabel="Parent Window">
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="MainWindow" animationBehavior="default" id="22" userLabel="Parent Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="240" y="289" width="572" height="521"/>
@@ -38,7 +39,7 @@
                     <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" id="33">
                         <rect key="frame" x="17" y="42" width="538" height="17"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="file name" id="138">
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="file name" id="340">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -47,24 +48,24 @@
                     <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" id="45">
                         <rect key="frame" x="17" y="20" width="538" height="14"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="file size" id="139">
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="file size" id="341">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <splitView vertical="YES" id="95">
+                    <splitView vertical="YES" id="95" customClass="OASplitView">
                         <rect key="frame" x="20" y="65" width="532" height="436"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="63">
                                 <rect key="frame" x="0.0" y="0.0" width="261" height="436"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
-                                <clipView key="contentView" id="ADm-ld-eiH">
+                                <clipView key="contentView" id="WYb-pn-pPv">
                                     <rect key="frame" x="1" y="0.0" width="259" height="435"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" headerView="146" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="64" id="65">
+                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveName="FilesView" headerView="354" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="64" id="65">
                                             <rect key="frame" x="0.0" y="0.0" width="259" height="412"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -77,7 +78,7 @@
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
                                                     </tableHeaderCell>
-                                                    <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="141">
+                                                    <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="346">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -90,7 +91,7 @@
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
                                                     </tableHeaderCell>
-                                                    <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="right" id="140">
+                                                    <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="right" id="345">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -105,15 +106,15 @@
                                         </outlineView>
                                     </subviews>
                                 </clipView>
-                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="145">
+                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="353">
                                     <rect key="frame" x="1" y="419" width="259" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="147">
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="355">
                                     <rect key="frame" x="244" y="23" width="16" height="412"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <tableHeaderView key="headerView" id="146">
+                                <tableHeaderView key="headerView" id="354">
                                     <rect key="frame" x="0.0" y="0.0" width="259" height="23"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
@@ -144,18 +145,18 @@
             </connections>
         </window>
         <customView id="24" userLabel="DrawContentView">
-            <rect key="frame" x="0.0" y="0.0" width="350" height="318"/>
+            <rect key="frame" x="0.0" y="0.0" width="305" height="318"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <scrollView horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="50">
-                    <rect key="frame" x="20" y="20" width="310" height="278"/>
+                    <rect key="frame" x="8" y="0.0" width="297" height="318"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <clipView key="contentView" id="Px9-K7-hs9">
-                        <rect key="frame" x="1" y="23" width="308" height="254"/>
+                    <clipView key="contentView" id="S67-9J-2Gh">
+                        <rect key="frame" x="1" y="0.0" width="284" height="303"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="149" id="48">
-                                <rect key="frame" x="0.0" y="0.0" width="308" height="254"/>
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveName="KindStatisticView" headerView="357" id="48" customClass="NSTableViewWithContextMenu">
+                                <rect key="frame" x="0.0" y="0.0" width="284" height="280"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -170,63 +171,79 @@
                                         <imageCell key="dataCell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" id="123"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
-                                    <tableColumn identifier="kindName" editable="NO" width="147" minWidth="51.370998382568359" maxWidth="1000" id="47">
+                                    <tableColumn identifier="kindName" editable="NO" width="135" minWidth="51.370998382568359" maxWidth="1000" id="47">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Kind">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
                                         </tableHeaderCell>
-                                        <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="142">
+                                        <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="347">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compareAsFilesystemName:" sortKey="kindName"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="296" name="value" keyPath="arrangedObjects.kindName" id="311"/>
+                                        </connections>
                                     </tableColumn>
-                                    <tableColumn identifier="size" width="53.221000671386719" minWidth="25.221000671386719" maxWidth="1000" id="61">
+                                    <tableColumn identifier="size" editable="NO" width="55.221000671386719" minWidth="25.221000671386719" maxWidth="1000" id="61">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="right" title="Size">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                         </tableHeaderCell>
-                                        <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="right" drawsBackground="YES" id="144">
-                                            <font key="font" metaFont="message" size="12"/>
+                                        <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="right" drawsBackground="YES" id="349">
+                                            <font key="font" metaFont="cellTitle"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="size"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="296" name="value" keyPath="arrangedObjects.size" id="307">
+                                                <dictionary key="options">
+                                                    <string key="NSValueTransformerName">fileSizeTransformer</string>
+                                                </dictionary>
+                                            </binding>
+                                        </connections>
                                     </tableColumn>
-                                    <tableColumn identifier="fileCount" width="60.992000579833984" minWidth="27.992000579833984" maxWidth="1000" id="60">
+                                    <tableColumn identifier="fileCount" editable="NO" width="46.992000579833984" minWidth="27.992000579833984" maxWidth="1000" id="60">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="right" title="Files">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                         </tableHeaderCell>
-                                        <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="right" drawsBackground="YES" id="143">
-                                            <font key="font" metaFont="message" size="12"/>
+                                        <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="right" drawsBackground="YES" id="348">
+                                            <font key="font" metaFont="cellTitle"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="fileCount"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="296" name="value" keyPath="arrangedObjects.fileCount" id="310"/>
+                                        </connections>
                                     </tableColumn>
                                 </tableColumns>
                                 <connections>
-                                    <outlet property="dataSource" destination="51" id="53"/>
                                     <outlet property="delegate" destination="51" id="54"/>
+                                    <outlet property="menu" destination="291" id="295"/>
                                 </connections>
                             </tableView>
                         </subviews>
                     </clipView>
-                    <scroller key="horizontalScroller" verticalHuggingPriority="750" controlSize="small" horizontal="YES" id="148">
-                        <rect key="frame" x="1" y="263" width="308" height="14"/>
+                    <scroller key="horizontalScroller" verticalHuggingPriority="750" controlSize="small" horizontal="YES" id="356">
+                        <rect key="frame" x="1" y="303" width="284" height="14"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <scroller key="verticalScroller" verticalHuggingPriority="750" controlSize="small" horizontal="NO" id="150">
-                        <rect key="frame" x="295" y="23" width="14" height="254"/>
+                    <scroller key="verticalScroller" verticalHuggingPriority="750" controlSize="small" horizontal="NO" id="358">
+                        <rect key="frame" x="285" y="23" width="11" height="280"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <tableHeaderView key="headerView" id="149">
-                        <rect key="frame" x="0.0" y="0.0" width="308" height="23"/>
+                    <tableHeaderView key="headerView" id="357">
+                        <rect key="frame" x="0.0" y="0.0" width="284" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
@@ -241,6 +258,8 @@
         </customObject>
         <customObject id="51" userLabel="FileKindsTableController" customClass="FileKindsTableController">
             <connections>
+                <outlet property="_kindsPopupArrayController" destination="156" id="293"/>
+                <outlet property="_kindsTableArrayController" destination="296" id="301"/>
                 <outlet property="_tableView" destination="48" id="56"/>
                 <outlet property="_windowController" destination="-2" id="105"/>
             </connections>
@@ -285,6 +304,240 @@
                     </connections>
                 </menuItem>
             </items>
+        </menu>
+        <drawer preferredEdge="minY" trailingOffset="15" id="137" userLabel="SelectionListDrawer">
+            <size key="contentSize" width="541" height="200"/>
+            <size key="minContentSize" width="50" height="30"/>
+            <size key="maxContentSize" width="600" height="1000"/>
+            <connections>
+                <outlet property="contentView" destination="138" id="139"/>
+                <outlet property="parentWindow" destination="22" id="150"/>
+            </connections>
+        </drawer>
+        <customView id="138" userLabel="SelectionListContentView">
+            <rect key="frame" x="0.0" y="0.0" width="456" height="167"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <progressIndicator hidden="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="318">
+                    <rect key="frame" x="330" y="146" width="16" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </progressIndicator>
+                <searchField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="312">
+                    <rect key="frame" x="349" y="143" width="107" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" alignment="left" placeholderString="search" bezelStyle="round" id="344">
+                        <font key="font" metaFont="cellTitle"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </searchFieldCell>
+                    <connections>
+                        <action selector="search:" target="174" id="316"/>
+                        <outlet property="delegate" destination="174" id="335"/>
+                        <outlet property="searchMenuTemplate" destination="321" id="326"/>
+                    </connections>
+                </searchField>
+                <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" id="205">
+                    <rect key="frame" x="8" y="146" width="135" height="14"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="left" title="Show all files of kind:" id="343">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="147">
+                    <rect key="frame" x="145" y="141" width="185" height="22"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="push" title="Item1" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="clipping" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="144" id="342">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                        <menu key="menu" title="OtherViews" id="148">
+                            <items>
+                                <menuItem title="Item1" state="on" id="144"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <binding destination="156" name="content" keyPath="arrangedObjects" id="274"/>
+                        <binding destination="156" name="contentValues" keyPath="arrangedObjects.kindName" previousBinding="274" id="275"/>
+                        <binding destination="156" name="selectedIndex" keyPath="selectionIndex" previousBinding="275" id="276">
+                            <dictionary key="options">
+                                <decimal key="NSNoSelectionPlaceholder" value="0"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </popUpButton>
+                <scrollView horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="140">
+                    <rect key="frame" x="0.0" y="0.0" width="456" height="137"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <clipView key="contentView" id="hyt-ug-Vuc">
+                        <rect key="frame" x="1" y="0.0" width="443" height="122"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveName="SelectionList" headerView="360" id="142" customClass="NSTableViewWithContextMenu">
+                                <rect key="frame" x="0.0" y="0.0" width="443" height="99"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <size key="intercellSpacing" width="3" height="2"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                <tableColumns>
+                                    <tableColumn identifier="displayName" editable="NO" width="168" minWidth="40" maxWidth="1000" id="141">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Name">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="350">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compareAsFilesystemName:" sortKey="displayName"/>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="174" name="value" keyPath="arrangedObjects.displayName" id="285"/>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn identifier="size" editable="NO" width="59" minWidth="10" maxWidth="1000" id="185">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Size">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="352">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="size"/>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="174" name="value" keyPath="arrangedObjects.size" id="286">
+                                                <dictionary key="options">
+                                                    <string key="NSValueTransformerName">fileSizeTransformer</string>
+                                                </dictionary>
+                                            </binding>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn identifier="displayPath" editable="NO" width="150" minWidth="31.094999313354492" maxWidth="1000" id="143">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Path">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" alignment="left" id="351">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compareAsFilesystemName:" sortKey="displayPath"/>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="174" name="value" keyPath="arrangedObjects.displayFolderName" id="287"/>
+                                        </connections>
+                                    </tableColumn>
+                                </tableColumns>
+                                <connections>
+                                    <outlet property="delegate" destination="206" id="207"/>
+                                    <outlet property="menu" destination="80" id="222"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                    </clipView>
+                    <scroller key="horizontalScroller" verticalHuggingPriority="750" controlSize="small" horizontal="YES" id="359">
+                        <rect key="frame" x="1" y="122" width="443" height="14"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" verticalHuggingPriority="750" controlSize="small" horizontal="NO" id="361">
+                        <rect key="frame" x="444" y="23" width="11" height="99"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <tableHeaderView key="headerView" id="360">
+                        <rect key="frame" x="0.0" y="0.0" width="443" height="23"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </tableHeaderView>
+                </scrollView>
+            </subviews>
+        </customView>
+        <arrayController editable="NO" clearsFilterPredicateOnInsertion="NO" id="156" userLabel="FileKindsPopupController" customClass="FileKindsPopupController">
+            <declaredKeys>
+                <string>kindName</string>
+                <string>fileCount</string>
+                <string>items</string>
+            </declaredKeys>
+            <connections>
+                <binding destination="-2" name="contentArray" keyPath="document.kindStatistics" id="173"/>
+                <outlet property="_kindsPopUpButton" destination="147" id="280"/>
+                <outlet property="_windowController" destination="-2" id="338"/>
+            </connections>
+        </arrayController>
+        <arrayController clearsFilterPredicateOnInsertion="NO" id="174" userLabel="SelectionListController" customClass="SelectionListController">
+            <declaredKeys>
+                <string>displayName</string>
+                <string>displayFolderName</string>
+                <string>size</string>
+            </declaredKeys>
+            <connections>
+                <binding destination="156" name="contentArray" keyPath="selection" id="289"/>
+                <outlet property="_kindsPopupController" destination="156" id="288"/>
+                <outlet property="_progressIndicator" destination="318" id="319"/>
+                <outlet property="_searchField" destination="312" id="337"/>
+                <outlet property="_windowController" destination="-2" id="317"/>
+            </connections>
+        </arrayController>
+        <customObject id="206" userLabel="SelectionListTableController" customClass="SelectionListTableController">
+            <connections>
+                <outlet property="_kindStatisticsArrayController" destination="156" id="282"/>
+                <outlet property="_selectionListArrayController" destination="174" id="210"/>
+                <outlet property="_tableView" destination="142" id="208"/>
+                <outlet property="_windowController" destination="-2" id="209"/>
+            </connections>
+        </customObject>
+        <menu title="Menu" id="291" userLabel="FileKindsTableViewContextMenu">
+            <items>
+                <menuItem title="Show Files in Selection List" id="290">
+                    <connections>
+                        <action selector="showFilesInSelectionList:" target="51" id="294"/>
+                    </connections>
+                </menuItem>
+            </items>
+        </menu>
+        <arrayController clearsFilterPredicateOnInsertion="NO" id="296" userLabel="FileKindsTableController2" customClass="GenericArrayController">
+            <declaredKeys>
+                <string>kindName</string>
+                <string>size</string>
+                <string>fileCount</string>
+            </declaredKeys>
+            <connections>
+                <binding destination="-2" name="contentArray" keyPath="document.kindStatistics" id="300"/>
+            </connections>
+        </arrayController>
+        <menu title="Menu" id="321" userLabel="SearchFieldMenu">
+            <items>
+                <menuItem title="All" id="328">
+                    <connections>
+                        <action selector="searchInAll:" target="174" id="329"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Name" id="323">
+                    <connections>
+                        <action selector="searchInNames:" target="174" id="333"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Kind" id="324">
+                    <connections>
+                        <action selector="searchInKindNames:" target="174" id="331"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Path" id="325">
+                    <connections>
+                        <action selector="searchInPaths:" target="174" id="330"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <connections>
+                <outlet property="delegate" destination="174" id="336"/>
+            </connections>
         </menu>
     </objects>
 </document>

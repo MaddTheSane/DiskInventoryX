@@ -7,7 +7,6 @@
 //
 
 #import "FileSystemDoc.h"
-#import "FileTypeColors.h"
 #import "MainWindowController.h"
 #import "DrivesPanelController.h"
 #import "FileSizeFormatter.h"
@@ -30,34 +29,43 @@ NSString *CollectFileKindStatisticsCanceledException = @"CollectFileKindStatisti
     _kindName = [item kindName];
 	[_kindName retain];
 
-    _fileCountValue = 1;
-	_fileCount = nil;
+	_size = [item sizeValue];
 	
-	_sizeValue = [item sizeValue];
-    _size = nil;
+	_items = [[NSMutableSet alloc] initWithObjects: item, nil];
 	}
-	
+
     return self;
 }
 
 - (void) dealloc
 {
     [_kindName release];
-    [_fileCount release];
-    [_size release];
+	[_items release];
 	
 	[super dealloc];
 }
 
-- (void) addItemToStatistic: (FSItem* )item;
+- (void) addItem: (FSItem* )item
 {
-    [self setFileCountValue: [self fileCountValue] +1 ];
-    [self setSizeValue: [self sizeValue] + [item sizeValue]];
+	NSParameterAssert( ![_items containsObject: item] );
+	
+	[_items addObject: item];
+	
+	_size += [item sizeValue];
+}
+
+- (void) removeItem: (FSItem* )item
+{
+	NSParameterAssert( [_items containsObject: item] );
+	
+	_size -= [item sizeValue];
+	
+	[_items removeObject: item];
 }
 
 - (NSString*) description
 {
-    return [[self kindName] stringByAppendingFormat: @" {%u files; %.1f kB}", [[self fileCount] unsignedIntValue], [[self fileCount] floatValue]/1024]; 
+    return [[self kindName] stringByAppendingFormat: @" {%u files; %.1f kB}", [self fileCount], (float) [self size]/1024]; 
 }
 
 - (NSString*) kindName
@@ -66,49 +74,50 @@ NSString *CollectFileKindStatisticsCanceledException = @"CollectFileKindStatisti
 }
 
 //# of files of this kind
-- (NSNumber*) fileCount
+- (unsigned) fileCount
 {
-	if ( _fileCount == nil || [_size unsignedLongLongValue] != _fileCountValue )
-	{
-		[_fileCount release];
-		_fileCount = [[NSNumber numberWithUnsignedInteger: _fileCountValue] retain];
-	}
-	
-    return _fileCount;
-}
-@synthesize fileCountValue = _fileCountValue;
-
-- (void) setFileCountValue: (NSInteger) newCount
-{
-	_fileCountValue = newCount;
-	
-	[_fileCount release];
-	_fileCount = nil;
+	return [_items count];
 }
 
 //sum of sizes of files of this kind
-- (NSNumber*) size
+- (unsigned long long) size
 {
-	if ( _size == nil || [_size unsignedLongLongValue] != _sizeValue )
-	{
-		[_size release];
-		_size = [[NSNumber alloc] initWithUnsignedLongLong: _sizeValue];
-	}
-		
-    return _size;
+	return _size;
 }
 
-- (unsigned long long) sizeValue
+- (void) recalculateSize
 {
-    return _sizeValue;
+	NSEnumerator *itemEnum = [self itemEnumerator];
+	FSItem *item = nil;
+	_size = 0;
+	while ( (item = [itemEnum nextObject]) != nil )
+		_size += [item sizeValue];
 }
 
-- (void) setSizeValue: (unsigned long long) newSize
+- (NSSet*) items
 {
-	_sizeValue = newSize;
+	return _items;
+}
+
+- (NSEnumerator*) itemEnumerator
+{
+	return [_items objectEnumerator];
+}
+
+//compare the size descendingly
+- (NSComparisonResult) compareSizeDescendingly: (FileKindStatistic*) other
+{
+	UInt64 mySize = [self size];
+	UInt64 otherSize = [other size];
 	
-	[_size release];
-	_size = nil;
+	//we want the sorting to be descending
+	if ( mySize < otherSize )
+		return NSOrderedDescending;
+	if ( mySize > otherSize )
+		return NSOrderedAscending;
+	
+	//if both object have the same size, order by their names
+	return [[self kindName] compare: [other kindName] options: NSNumericSearch];
 }
 
 @end
@@ -117,13 +126,23 @@ NSString *CollectFileKindStatisticsCanceledException = @"CollectFileKindStatisti
 
 @interface FileSystemDoc(Private)
 
-- (void) collectFileKindStatistics: (FSItem*) parentItem;
+- (void) addItemToFileKindStatistic: (FSItem*) item includingChilds: (BOOL) includingChilds;
+- (void) removeItemFromFileKindStatistic: (FSItem*) item includingChilds: (BOOL) includingChilds;
+- (void) recalculateFileKindStatisticSizes;
+- (void) removePackagesFromFileKindStatistic: (FSItem*) item;
+- (void) addPackagesToFileKindStatistic: (FSItem*) item; 	
+- (void) removeEmptyKindStatistics;
+
 - (void) reserveColorsForLargestKinds;
+
 - (void) checkTrash: (FSItem*) trashItem
 withPreviousContent: (NSArray*) oldContent
 			forItem: (FSItem*) itemTrashed;
+
 - (void) recalculateTotalSize;
+
 - (NSMutableDictionary*) viewOptions;
+
 - (void) postViewOptionChangedNotificationForOption: (NSString*) optionName;
 - (void) postNotificationName: (NSString*) name oldItem: (FSItem*) old newItem:  (FSItem*) new;
 
@@ -156,6 +175,12 @@ NSString *OldItem = @"OldItem";
         _zoomStack = [[NSMutableArray alloc] init];
 		
 		_viewOptions = [[NSMutableDictionary alloc] initWithDefaults];
+		
+		NSUserDefaultsController *sharedDefsController = [NSUserDefaultsController sharedUserDefaultsController];
+		[sharedDefsController addObserver: self
+							   forKeyPath: [@"values." stringByAppendingString: ShareKindColors]
+								  options: 0
+								  context: ShareKindColors];		
     }
     return self;
 }
@@ -163,7 +188,10 @@ NSString *OldItem = @"OldItem";
 - (void) dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver: self];        
-
+	
+	NSUserDefaultsController *sharedDefsController = [NSUserDefaultsController sharedUserDefaultsController];
+	[sharedDefsController removeObserver: self forKeyPath: [@"values." stringByAppendingString: ShareKindColors]];
+	
 	[_viewOptions release];
     [_fileKindStatistics release];
     [_zoomStack release];
@@ -172,6 +200,8 @@ NSString *OldItem = @"OldItem";
 	
 	[_directoryStack release];
 
+	[_kindColors release];
+	
     [super dealloc];
 }
 
@@ -286,7 +316,7 @@ NSString *OldItem = @"OldItem";
         [_rootItem loadChildren];
         
  		uint64_t doneLoadingTime = getTime();
-		NSLog (@"loading time:  %.2f seconds", subtractTime(doneLoadingTime, startTime));
+		LOG (@"loading time:  %.2f seconds", subtractTime(doneLoadingTime, startTime));
 		
        LOG(@"************** Loading complete *******************" );
         LOG(@"%u items created", g_fileCount + g_folderCount );
@@ -300,7 +330,7 @@ NSString *OldItem = @"OldItem";
 		[self refreshFileKindStatistics];
 		
 		uint64_t doneFileKindStatsTime = getTime();
-		NSLog (@"file kind statistics time:  %.2f seconds", subtractTime(doneFileKindStatsTime, doneLoadingTime));
+		LOG (@"file kind statistics time:  %.2f seconds", subtractTime(doneFileKindStatsTime, doneLoadingTime));
 		
 		//the modal session must be ended in the same @try section (if no exception occured)
 		[_progressController release];
@@ -334,10 +364,7 @@ NSString *OldItem = @"OldItem";
     [_directoryStack release];
     _directoryStack = nil;
 	
-	if ( [self showPhysicalFileSize] )
-		[[self rootItem] recalculateSize: YES];
-
-    return YES;
+   return YES;
 }
 
 - (IBAction) cancelScanningFolder:(id)sender
@@ -352,10 +379,10 @@ NSString *OldItem = @"OldItem";
 
 - (void) setShowPhysicalFileSize: (BOOL) show
 {
-	 [[self viewOptions] setShowPhysicalFileSize: show];
+	[[self viewOptions] setShowPhysicalFileSize: show];
 	
 	[self recalculateTotalSize];
-	[self refreshFileKindStatistics];
+	[self recalculateFileKindStatisticSizes];
 	
 	[self postViewOptionChangedNotificationForOption: ShowPhysicalFileSize];
 }
@@ -368,44 +395,46 @@ NSString *OldItem = @"OldItem";
 - (void) setShowPackageContents: (BOOL) show
 {
     show = (show == 0) ? NO : YES;
-    if ( show != [[self viewOptions] showPackageContents] )
-    {
-        [[self viewOptions] setShowPackageContents: show];
-
-        //the file kind statistic should only cover the currently visible part of the file system tree
-        //(this depends on the zoomed item and whether package contents is shown or not)
-        [self collectFileKindStatistics: nil];
+    if ( show == [[self viewOptions] showPackageContents] )
+		return;
+	
+	//remove all packages from kind statistic as they are now regarded differently (file<->folder)
+	[self removePackagesFromFileKindStatistic: nil]; 
+	
+	[[self viewOptions] setShowPackageContents: show];
+	
+	//re-add packages to statistic
+	[self addPackagesToFileKindStatistic: nil]; 	
+	
+	FSItem* selectedItem = [self selectedItem];
+	
+	//invalidate current selection, as the selection might be an item in a package
+	//(if "show package content" is turned off, files in packages aren't visible any more)
+	if ( ![self showPackageContents] && selectedItem != nil )
+		[self setSelectedItem: nil];
+	
+	[self postViewOptionChangedNotificationForOption: ShowPackageContents];
+	
+	//if "show package contents" is turned off, check if selection is within a package
+	//(as the selection got invalid)
+	if ( ![self showPackageContents] && selectedItem != nil)
+	{
+		//select it's farest parent which is a package
+		FSItem *packageItem = nil;
+		FSItem *parentItem = [selectedItem parent];
+		while ( parentItem != nil && parentItem != [self zoomedItem] )
+		{
+			if ( [parentItem isPackage] )
+				packageItem = parentItem;
+			parentItem = [parentItem parent];
+		}
 		
-		FSItem* selectedItem = [self selectedItem];
-		
-		//invalidate current selection, as the selection might be an item in a package
-		//(if "show package content" is turned off, files in packages aren't visible any more)
-		if ( ![self showPackageContents] && selectedItem != nil )
-			[self setSelectedItem: nil];
-        
-		[self postViewOptionChangedNotificationForOption: ShowPackageContents];
-
-        //if "show package contents" is turned off, check if selection is within a package
-        //(as the selection got invalid)
-        if ( ![self showPackageContents] && selectedItem != nil)
-        {
-            //select it's farest parent which is a package
-            FSItem *packageItem = nil;
-            FSItem *parentItem = [selectedItem parent];
-            while ( parentItem != nil && parentItem != [self zoomedItem] )
-            {
-                if ( [parentItem isPackage] )
-                    packageItem = parentItem;
-                parentItem = [parentItem parent];
-            }
-			
-			selectedItem = packageItem;
-        }
-		
-		//restore selection
-		if ( ![self showPackageContents] && selectedItem != nil )
-			[self setSelectedItem: selectedItem];
-    }
+		selectedItem = packageItem;
+	}
+	
+	//restore selection
+	if ( ![self showPackageContents] && selectedItem != nil )
+		[self setSelectedItem: selectedItem];
 }
 
 - (BOOL) showFreeSpace
@@ -443,7 +472,7 @@ NSString *OldItem = @"OldItem";
 	
 	[[self rootItem] setKindStringIgnoringCreatorCode: ignoreIt includeChilds: YES];
 	
-	[self collectFileKindStatistics: nil];
+	[self refreshFileKindStatistics];
 	
 	[self postViewOptionChangedNotificationForOption: IgnoreCreatorCode];
 }
@@ -471,14 +500,19 @@ NSString *OldItem = @"OldItem";
 {
 	NSParameterAssert( item != nil && item != [self zoomedItem] && ![item isSpecialItem] );
 	
-	NTFileDesc *trashDesc = [[NTDefaultDirectory sharedInstance] safeTrashForDesc: [item fileDesc]];
-	FSItem *trashItem = [trashDesc isValid] ? [[self rootItem] findItemByAbsolutePath: [trashDesc path] allowAncestors: NO] : nil;
-
 	//remember trash content so we can find the trashed item afterwards
 	NSArray *prevTrashContents = nil;
-	if ( trashItem != nil )
+	FSItem *trashItem = nil;
+	
+	//if file/folder lies on a network volume, it will be deleted!
+	//(only local items can be moved to trash)
+	if ( ![[item fileDesc] isNetwork] )
 	{
-		prevTrashContents = [trashDesc directoryContents: NO/*visibleOnly*/ resolveIfAlias: NO];
+		NTFileDesc *trashDesc = [[NTDefaultDirectory sharedInstance] safeTrashForDesc: [item fileDesc]];
+		trashItem = [trashDesc isValid] ? [[self rootItem] findItemByAbsolutePath: [trashDesc path] allowAncestors: NO] : nil;
+		
+		if ( trashItem != nil )
+			prevTrashContents = [trashDesc directoryContents: NO/*visibleOnly*/ resolveIfAlias: NO];
 	}
 	
 	//move file/folder to trash
@@ -504,19 +538,19 @@ NSString *OldItem = @"OldItem";
 	//retain and autorelease "item", so it will be accessible till all is done
 	[[item retain] autorelease];
 	
-	[parent removeChild: item];
+	[parent removeChild: item updateParent: YES];
+	
+	//keep kind statistic in sync
+	[self willChangeValueForKey: @"kindStatistics"];
+	[self removeItemFromFileKindStatistic: item includingChilds: YES];
 	
 	//the users's trash may have been created with the trash operation (if item is not on the same volume as the user's home)
 	//in this case, we won't see the trashed item, as we are not showing the trash folder currently 
 	if ( trashItem != nil && prevTrashContents != nil )
-	{
 		[self checkTrash: trashItem withPreviousContent: prevTrashContents forItem: item];
-	}
-		
-	[self recalculateTotalSize];
-	
-	//update our file kind statistics
-	[self refreshFileKindStatistics];
+
+	//"checkTrash" may have editied the kind statistic, so notify observers but now
+	[self didChangeValueForKey: @"kindStatistics"];
 	
 	//notify observers of the change
 	[[NSNotificationCenter defaultCenter] postNotificationName: FSItemsChangedNotification object: self];
@@ -561,7 +595,7 @@ NSString *OldItem = @"OldItem";
 		return;
 	}
 	
-	FSItem *itemRefreshing = nil;
+	FSItem *refreshedItem = nil;
 	
 	@try {
 		//we only show a progress indicator if the item to refresh has "many" childs
@@ -576,10 +610,10 @@ NSString *OldItem = @"OldItem";
 			[_progressController startAnimation];
 		}
 		
-		itemRefreshing = [[[FSItem alloc] initWithPath: [item path]] autorelease];
-		[itemRefreshing setDelegate: self];
-		if ( [itemRefreshing isFolder] )
-			 [itemRefreshing loadChildren];
+		refreshedItem = [[[FSItem alloc] initWithPath: [item path]] autorelease];
+		[refreshedItem setDelegate: self];
+		if ( [refreshedItem isFolder] )
+			 [refreshedItem loadChildren];
 		
 		[_progressController release];
 		_progressController = nil;
@@ -603,21 +637,34 @@ NSString *OldItem = @"OldItem";
 		NS_VOIDRETURN;
 	}
 	
+	//keep item valid till we are done
+	[[item retain] autorelease];
+	
 	if ( _rootItem == item )
 	{
 		[_rootItem release];
-		_rootItem = [itemRefreshing retain];
+		_rootItem = [refreshedItem retain];
+		//rebuild file kind statistics
+		[self refreshFileKindStatistics];
 	}
 	else
-		[[item parent] replaceChild: item withItem: itemRefreshing];
+	{
+		//update file kind statistics
+		if ( !zoomedItemIsInvalid )
+			[self willChangeValueForKey: @"kindStatistics"];
+		
+		[self removeItemFromFileKindStatistic: item includingChilds: YES];
+		
+		FSItem *parent = [item parent];
+		[parent replaceChild: item withItem: refreshedItem updateParent: YES];
+		
+		[self addItemToFileKindStatistic: refreshedItem includingChilds: YES];
+		
+		if ( !zoomedItemIsInvalid )
+			[self didChangeValueForKey: @"kindStatistics"];
+	}
 	
-	//item is now invalid, so set variable to the new FSItem
-	item = itemRefreshing;
-	
-	[self recalculateTotalSize];
-	
-	//update our file kind statistics
-	[self refreshFileKindStatistics];
+	//if current zoomed item got invalid, zoom out as far as necessary
 	if ( zoomedItemIsInvalid )
 	{
 		FSItem *newZoomItem = item;
@@ -630,6 +677,9 @@ NSString *OldItem = @"OldItem";
 	}
 	else
 	{
+		if ( [_zoomStack lastObject] == item )
+			[_zoomStack replaceObjectAtIndex: ([_zoomStack count]-1) withObject: refreshedItem];
+		
 		//notify observers of the change
 		[[NSNotificationCenter defaultCenter] postNotificationName: FSItemsChangedNotification object: self];
 	}
@@ -666,7 +716,7 @@ NSString *OldItem = @"OldItem";
     
     //the file kind statistic should only cover the currently visible part of the file system tree
     //(this depends on the zoomed item and whether package contents is shown or not)
-    [self collectFileKindStatistics: nil];
+    [self refreshFileKindStatistics];
 
     [self postNotificationName: ZoomedItemChangedNotification oldItem: oldZoomedItem newItem: [self zoomedItem]];
 }
@@ -675,13 +725,13 @@ NSString *OldItem = @"OldItem";
 {
     if ( [_zoomStack count] > 0 )
     {
-		FSItem *oldZoomedItem = [self zoomedItem];
+		FSItem *oldZoomedItem = [[[self zoomedItem] retain] autorelease];
 		
         [_zoomStack removeLastObject];
         
         //the file kind statistic should only cover the currently visible part of the file system tree
         //(this depends on the zoomed item and whether package contents is shown or not)
-        [self collectFileKindStatistics: nil];
+        [self refreshFileKindStatistics];
 		
 		//there is no "other" space if a complete volume is shown 
 		if ( [[self viewOptions] showOtherSpace] && [[[self zoomedItem] fileDesc] isVolume] )
@@ -699,7 +749,7 @@ NSString *OldItem = @"OldItem";
                        || item == [self rootItem]
                        || [_zoomStack indexOfObjectIdenticalTo: item] != NSNotFound );
     
-	FSItem *oldZoomedItem = [self zoomedItem];
+	FSItem *oldZoomedItem = [[[self zoomedItem] retain] autorelease];
 	
     if ( item == nil || item == [self rootItem] )
     {
@@ -724,13 +774,18 @@ NSString *OldItem = @"OldItem";
     
     //the file kind statistic should only cover the currently visible part of the file system tree
     //(this depends on the zoomed item and whether package contents is shown or not)
-    [self collectFileKindStatistics: nil];
+    [self refreshFileKindStatistics];
 
 	//there is no "other" space if a complete volume is shown 
 	if ( [[self viewOptions] showOtherSpace] && [[[self zoomedItem] fileDesc] isVolume] )
 		[[self viewOptions] setShowOtherSpace: NO]; //don't use our set-method as we don't want any notifications posted
 
 	[self postNotificationName: ZoomedItemChangedNotification oldItem: oldZoomedItem newItem: [self zoomedItem]];
+}
+
+- (NSArray*) zoomStack
+{
+	return _zoomStack;
 }
 
 - (FSItem*) selectedItem
@@ -790,18 +845,30 @@ NSString *OldItem = @"OldItem";
     return [[self kindStatistics] objectForKey: kindName];
 }
 
-- (NSArray*) zoomStack
+- (FileTypeColors*) fileTypeColors
 {
-	return _zoomStack;
+	if ( _kindColors == nil )
+	{
+		if ( [[NSUserDefaults standardUserDefaults] boolForKey: ShareKindColors] )
+			_kindColors = [[FileTypeColors instance] retain];
+		else
+			_kindColors = [[FileTypeColors alloc] init];
+	}
+
+	return _kindColors;
 }
 
 - (void) refreshFileKindStatistics
 {
+	[self willChangeValueForKey: @"kindStatistics"];
+	
 	//collect sizes and file count of all file kinds 
-	[self collectFileKindStatistics: nil];
+	[self addItemToFileKindStatistic: nil includingChilds: YES];
 	
 	//reserve the predefined colors for the kinds with the biggest size sums of the appropriate files
 	[self reserveColorsForLargestKinds];
+	
+	[self didChangeValueForKey: @"kindStatistics"];
 }
 
 
@@ -857,30 +924,35 @@ NSString *OldItem = @"OldItem";
 	return [self showPackageContents];
 }
 
+- (BOOL) fsItemShouldUsePhysicalFileSize: (FSItem*) item
+{
+	return [self showPhysicalFileSize];
+}
+
+#pragma mark --------KVO-----------------
+
+- (void)observeValueForKeyPath:(NSString*)keyPath
+					  ofObject:(id)object
+						change:(NSDictionary*)change
+					   context:(void*)context
+{
+	LOG( @"FileSystemDoc.observeValueForKeyPath: keyPath: %@, change dict:%@", keyPath, change );
+	
+	//this global preference option is cached in an instance variable for performance reasons
+	if ( context == ShareKindColors )
+	{
+		//if "share colors" was enabled previously, reset the shared colors so we get "fresh" colors the next time it is turned on again
+		[_kindColors reset];
+		[_kindColors release];
+		_kindColors = nil;
+		
+		[self reserveColorsForLargestKinds];
+	}
+}
+
 @end
 
 //================ implementation FileSystemDoc(Private) ======================================================
-
-//compares 2 FileKindStatistic objects by their sizes; the objects are identified by their kind names
-static NSInteger CompareKindStatisticsIdentifiedByNames( id fs1, id fs2, void *context )
-{
-    FileSystemDoc *doc = context;
-
-    //get FileKindStatistic objects by kind names
-    FileKindStatistic *stat1 = [doc kindStatisticForKind: fs1];
-	FileKindStatistic *stat2 = [doc kindStatisticForKind: fs2];
-
-	//we want the sorting to be descending, so flip the result of [NSNumber compare:]
-    switch ([[stat1 size] compare: [stat2 size]])
-	{
-		case NSOrderedSame: return NSOrderedSame;
-		case NSOrderedAscending: return NSOrderedDescending;
-		case NSOrderedDescending: return NSOrderedAscending;
-	}
-
-	NSCAssert( NO, @"illegal return value of [NSNumber compare:]" );
-	return NSOrderedSame;
-}
 
 @implementation FileSystemDoc(Private)
 
@@ -907,33 +979,24 @@ static NSInteger CompareKindStatisticsIdentifiedByNames( id fs1, id fs2, void *c
 
 - (void) recalculateTotalSize
 {
-	[[self rootItem] recalculateSize: [self showPhysicalFileSize]];
+	[[self rootItem] recalculateSize: [self showPhysicalFileSize] updateParent: NO];
 }
 
-- (void) collectFileKindStatistics: (FSItem*) item
+- (void) addItemToFileKindStatistic: (FSItem*) item includingChilds: (BOOL) includingChilds
 {
-    //if we are called with nil as item, this is the first call of this method
-    //so initialize our kinds dictionary
+    //if we are called with nil as item, we rebuild the statistic
     if ( item == nil )
     {
-        if ( _fileKindStatistics == nil )
-            _fileKindStatistics = [[NSMutableDictionary alloc] init];
-        else
-            [_fileKindStatistics removeAllObjects];
+        [_fileKindStatistics release];
+		_fileKindStatistics = [[NSMutableDictionary alloc] init];
         
         item = [self zoomedItem];
     }
 	
-    //if the item is a folder, recurse through it's childs
-    if ( [self itemIsNode: item] )
+    if ( ![self itemIsNode: item] )
     {
-        unsigned i;
-        for ( i = 0; i < [item childCount]; i++ )
-            [self collectFileKindStatistics: [item childAtIndex: i]];
-    }
-    else
-    {
-        //item is a file, so add it's informations to the appropriate statistic object
+        //item is a file (or regarded as such if item is a package and "show package contents" is turned off),
+		//so add it's informations to the appropriate statistic object
         FileKindStatistic* kindStatistic = [self kindStatisticForItem: item];
         if ( kindStatistic == nil )
         {
@@ -943,25 +1006,132 @@ static NSInteger CompareKindStatisticsIdentifiedByNames( id fs1, id fs2, void *c
             [kindStatistic release];
         }
         else
-		{
-            [kindStatistic addItemToStatistic: item];
-		}
+            [kindStatistic addItem: item];
+	}
+	else if ( includingChilds )
+	{
+		//if the item is a folder, recurse through it's childs
+        unsigned i = [item childCount];
+        while ( i-- )
+            [self addItemToFileKindStatistic: [item childAtIndex: i] includingChilds: YES];
+    }
+}
+
+- (void) removeItemFromFileKindStatistic: (FSItem*) item includingChilds: (BOOL) includingChilds
+{
+	NSParameterAssert( item != nil );
+	
+    if ( ![self itemIsNode: item] )
+    {
+        //item is a file (or regarded as such if item is a package and "show package contents" is turned off),
+		//so remove it's information from the appropriate statistic object
+        FileKindStatistic* kindStatistic = [self kindStatisticForItem: item];
+        if ( kindStatistic != nil )
+            [kindStatistic removeItem: item];
+	}
+	else if ( includingChilds )
+	{
+		//if the item is a folder, recurse through it's childs
+        unsigned i = [item childCount];
+        while ( i-- )
+            [self removeItemFromFileKindStatistic: [item childAtIndex: i] includingChilds: YES];		
+    }
+}
+
+- (void) recalculateFileKindStatisticSizes
+{
+	[self willChangeValueForKey: @"kindStatistics"];
+	
+	NSEnumerator *statisticEnum = [[self kindStatistics] objectEnumerator];
+	FileKindStatistic *statistic = nil;
+	while ( (statistic = [statisticEnum nextObject]) != nil )
+		[statistic recalculateSize];
+	
+	[self didChangeValueForKey: @"kindStatistics"];
+}
+
+- (void) removePackagesFromFileKindStatistic: (FSItem*) item
+{
+	BOOL bDoKVO = NO;
+	if ( item == nil )
+	{
+		bDoKVO = YES;
+		[self willChangeValueForKey: @"kindStatistics"];
+		item = [self zoomedItem];
+	}
+	
+	if ( [self itemIsNode: item] )
+	{
+		//if the item is a folder, recurse through it's childs
+		unsigned i = [item childCount];
+		while ( i-- )
+			[self removePackagesFromFileKindStatistic: [item childAtIndex: i]];
+	}
+	else
+	{
+		if ( [item isPackage] )
+			[self removeItemFromFileKindStatistic: item includingChilds: YES];
+	}
+	
+	if ( bDoKVO )
+	{
+		[self removeEmptyKindStatistics];
+		[self didChangeValueForKey: @"kindStatistics"];
+	}
+}
+
+- (void) addPackagesToFileKindStatistic: (FSItem*) item
+{
+	BOOL bDoKVO = NO;
+	if ( item == nil )
+	{
+		bDoKVO = YES;
+		[self willChangeValueForKey: @"kindStatistics"];
+		item = [self zoomedItem];
+	}
+	
+	if ( [self itemIsNode: item] )
+	{
+		//if the item is a folder, recurse through it's childs
+		unsigned i = [item childCount];
+		while ( i-- )
+			[self addPackagesToFileKindStatistic: [item childAtIndex: i]];
+	}
+	else
+	{
+		if ( [item isPackage] )
+			[self addItemToFileKindStatistic: item includingChilds: YES];
+	}
+	
+	if ( bDoKVO )
+		[self didChangeValueForKey: @"kindStatistics"];
+}
+
+- (void) removeEmptyKindStatistics
+{
+	NSEnumerator *keyEnumerator = [[[self kindStatistics] allKeys] objectEnumerator];
+	NSString *kindName;
+	while ( (kindName = [keyEnumerator nextObject]) != nil )
+	{
+		FileKindStatistic *stat = [_fileKindStatistics objectForKey: kindName];
+		if ( [stat fileCount] == 0 )
+			[_fileKindStatistics removeObjectForKey: kindName];
 	}
 }
 
 - (void) reserveColorsForLargestKinds
 {
 	//get a mutable copy of the keys
-    NSMutableArray *kinds = [[[self kindStatistics] allKeys] mutableCopy];
+    NSMutableArray *kinds = [[[self kindStatistics] allValues] mutableCopy];
 
     //order Statistics descendantly by size
-    [kinds sortUsingFunction: &CompareKindStatisticsIdentifiedByNames context: self];
+    [kinds sortUsingSelector: @selector(compareSizeDescendingly:)];
 
     NSEnumerator *kindNameEnum = [kinds objectEnumerator];
-    NSString *kindName;
-    while ( ( kindName = [kindNameEnum nextObject] ) != nil )
+    FileKindStatistic *kindStat;
+    while ( ( kindStat = [kindNameEnum nextObject] ) != nil )
     {
-        [[FileTypeColors instance] colorForKind: kindName];
+        [[self fileTypeColors] colorForKind: [kindStat kindName]];
     }
 	
 	[kinds release]; //mutableCopy returns a retained object (not autoreleased)
@@ -1007,7 +1177,10 @@ withPreviousContent: (NSArray*) oldContent
 		//...but give "itemTrashed" the valid NTFileDesc object
 		[itemTrashed setFileDesc: desc];
 
-		[trashItem insertChild: itemTrashed];	
+		[trashItem insertChild: itemTrashed updateParent: YES];
+		
+		//keep kind statistic in sync
+		[self addItemToFileKindStatistic: itemTrashed includingChilds: YES];
 	}
 		
 }	

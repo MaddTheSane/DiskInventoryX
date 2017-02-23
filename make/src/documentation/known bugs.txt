@@ -1,4 +1,4 @@
-- directories which can be listed (e.g. due to no permissions) are shown with size 0
+- directories which can not be listed (e.g. due to no permissions) are shown with size 0
 - the data in any column is chopped off without any indication (names, sizes)
 ((turning the name "This is a file" into "This...file"
   instead of "This is a", for example)

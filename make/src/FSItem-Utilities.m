@@ -45,7 +45,11 @@
 		return nil; //path defines no child
 	
 	//get relative child path (relative to self)
-	NSString *childPath = [path substringFromIndex: [myPath length]+1]; //+1 to jump over "/"
+	unsigned childPathStartIndex = [myPath length];
+	if ( ![myPath isEqualToString: NSOpenStepRootDirectory()] ) // should just be @"/"
+		childPathStartIndex++;
+	
+	NSString *childPath = [path substringFromIndex: childPathStartIndex]; 
 	
 	return [self findItemByRelativePath: childPath allowAncestors: allowAncestors];
 }
@@ -88,7 +92,7 @@
 	return [self fsItemPathFromAncestor: nil];
 }
 
-//path from an specific ancestor to self as FSItems: <ancestor><child1><child2><self>
+//path from a specific ancestor to self as FSItems: <ancestor><child1><child2><self>
 - (NSArray*) fsItemPathFromAncestor: (FSItem*) ancestor
 {
 	NSMutableArray *pathToSelf = [NSMutableArray array];

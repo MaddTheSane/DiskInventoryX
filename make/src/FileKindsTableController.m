@@ -7,21 +7,21 @@
 //
 
 #import "FileKindsTableController.h"
-#import "FileTypeColors.h"
 #import <TreeMapView/TMVCushionRenderer.h>
 #import <TreeMapView/NSBitmapImageRep-CreationExtensions.h>
 #import "Preferences.h"
 #import "MainWindowController.h"
 
+#import "FSItemIndex.h"
+
+
 //============ interface FileKindsTableController(Private) ==========================================================
 
 @interface FileKindsTableController(Private)
 
-- (void) reloadData;
-- (void) createKindArray;
 - (NSImage*) colorImageForRow: (int) row column: (NSTableColumn*) column;
 - (void) setTableViewFont;
-- (void)observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context;
+
 @end
 
 //============ implementation FileKindsTableController ==========================================================
@@ -35,52 +35,39 @@
 	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 	
     [center addObserver: self
-			   selector: @selector(globalSelectionChanged:)
+			   selector: @selector(documentSelectionChanged:)
 				   name: GlobalSelectionChangedNotification
-				 object: doc];
-	
-    [center addObserver: self
-			   selector: @selector(zoomedItemChanged:)
-				   name: ZoomedItemChangedNotification
-				 object: doc];
-	
-    [center addObserver: self
-			   selector: @selector(viewOptionChanged:)
-				   name: ViewOptionChangedNotification
-				 object: doc];
-	
-    [center addObserver: self
-			   selector: @selector(itemsChanged:)
-				   name: FSItemsChangedNotification
 				 object: doc];
 	
     [center addObserver: self
 			   selector: @selector(windowWillClose:)
 				   name: NSWindowWillCloseNotification
-				 object: [[_tableView window] parentWindow]];
-	
-	//this will alloc Objects for kind array and cushion images
-    [self createKindArray];
-
-	//set formatter for size column
-	FileSizeFormatter *sizeFormatter = [[[FileSizeFormatter alloc] init] autorelease];
-	[[[_tableView tableColumnWithIdentifier: @"size"] dataCell] setFormatter: sizeFormatter];
+				 object: [_windowController window]];
 	
 	//set up KVO
-	[[NSUserDefaults standardUserDefaults] addObserver: self
-											forKeyPath: UseSmallFontInKindStatistic
-											   options: NSKeyValueChangeSetting
-											   context: nil];
+	NSUserDefaultsController *sharedDefsController = [NSUserDefaultsController sharedUserDefaultsController];
+	[sharedDefsController addObserver: self
+						   forKeyPath: [@"values." stringByAppendingString: UseSmallFontInKindStatistic]
+							  options: 0
+							  context: UseSmallFontInKindStatistic];
+	[sharedDefsController addObserver: self
+						   forKeyPath: [@"values." stringByAppendingString: ShareKindColors]
+							  options: 0
+							  context: ShareKindColors];
+	
+	[_kindsTableArrayController addObserver: self forKeyPath: @"arrangedObjects" options: 0 context: nil];
 	
 	//set small font for all for all columns if needed
 	[self setTableViewFont];
     
-    [_tableView reloadData];
+	//set initial sorting (descendant size)
+	NSTableColumn *sizeColumn = [_tableView tableColumnWithIdentifier: @"size"];
+	NSArray *initialSortDescriptors = [NSArray arrayWithObject: [[sizeColumn sortDescriptorPrototype] reversedSortDescriptor]];
+	[_kindsTableArrayController setSortDescriptors: initialSortDescriptors];
 }
 
 - (void) dealloc
 {    
-    [_kinds release];
     [_cushionImages release];
 
     [super dealloc];
@@ -88,10 +75,21 @@
 
 - (FileSystemDoc*) document
 {
-    if ( _document == nil )
-        _document = [_windowController document];
+	return [_windowController document];
+}
 
-    return _document;
+- (IBAction) showFilesInSelectionList: (id) sender
+{
+	int selectionListDrawerState = [[_windowController selectionListDrawer] state];
+	
+	if ( selectionListDrawerState == NSDrawerClosingState || selectionListDrawerState == NSDrawerClosedState )
+		[[_windowController selectionListDrawer] toggle: self];
+	
+	int selectedRow = [_tableView selectedRow];
+	NSAssert( selectedRow >= 0, @"kinds tableview should have a selection" );
+	
+	FileKindStatistic *kindStat = [(NSArray*)[_kindsTableArrayController arrangedObjects] objectAtIndex: selectedRow];
+	[_kindsPopupArrayController setSelectedObjects: [NSArray arrayWithObject: kindStat]];
 }
 
 #pragma mark --------NSTableView delegate methods-----------------
@@ -99,30 +97,8 @@
 //NSTableView delegate
 - (void) tableView: (NSTableView*) tableView willDisplayCell: (id) cell forTableColumn: (NSTableColumn*) tableColumn row: (int) row
 {
-}
-
-#pragma mark --------NSTableView data source methods-----------------
-
-//NSTableView data source
-- (int) numberOfRowsInTableView: (NSTableView*) view
-{
-    return (int) [_kinds count];
-}
-
-- (id) tableView:  (NSTableView*) tableView objectValueForTableColumn: (NSTableColumn*) tableColumn row: (int) row
-{
-    NSString *columnTag = [tableColumn identifier];
-	
-	if ( [columnTag isEqualToString: @"color"] )
-	{
-		return [self colorImageForRow: row column: tableColumn];
-	}
-	else
-	{
-		//name, file count or size
-		FileKindStatistic *kindStatistics = [_kinds objectAtIndex: row];
-		return [kindStatistics valueForKey: columnTag];
-	}
+	if ( [[tableColumn identifier] isEqualToString: @"color"] )
+		[cell setImage: [self colorImageForRow: row column: tableColumn]];
 }
 
 #pragma mark --------NSTableView notifications-----------------
@@ -132,76 +108,51 @@
     //int row = [_tableView selectedRow];
 }
 
-@end
-
-//============ implementation FileKindsTableController(Private) ===============================================
-
-@implementation FileKindsTableController(Private)
+#pragma mark --------KVO-----------------
 
 - (void)observeValueForKeyPath:(NSString*)keyPath
 					  ofObject:(id)object
 						change:(NSDictionary*)change
 					   context:(void*)context
 {
-	if ( object == [NSUserDefaults standardUserDefaults] )
+	LOG( @"FileKindsTableColumn.observeValueForKeyPath: keyPath: %@, change dict:%@", keyPath, change );
+	
+	if ( context == UseSmallFontInKindStatistic )
+		[self setTableViewFont];
+	else if ( context == ShareKindColors )
 	{
-		if ( [keyPath isEqualToString: UseSmallFontInKindStatistic] )
-			[self setTableViewFont];
+		[_cushionImages release];
+		_cushionImages = nil;
+		
+		[_tableView setNeedsDisplay: YES];
+	}
+	else if ( object == _kindsTableArrayController )
+	{
+		if ( [keyPath isEqualToString: @"arrangedObjects"] )
+			[_cushionImages removeAllObjects];
 	}
 }
 
-static NSInteger CompareFileStatistics( id fs1, id fs2, void *context )
-{
-    FileKindStatistic *stat1 = (FileKindStatistic*) fs1;
-	FileKindStatistic *stat2 = (FileKindStatistic*) fs2;
-	
-	//we want the sorting to be descending, so flip the result of [NSNumber compare:]
-    switch ([[stat1 size] compare: [stat2 size]])
-	{
-		case NSOrderedSame: return NSOrderedSame;
-		case NSOrderedAscending: return NSOrderedDescending;
-		case NSOrderedDescending: return NSOrderedAscending;
-	}
-	
-	NSCAssert( NO, @"illegal return value of [NSNumber compare:]" );	
-	return NSOrderedSame;
-}
+@end
 
-- (void) createKindArray
-{
-    FileSystemDoc *document = [self document];
-	
-	unsigned statisticsCount = [[document kindStatistics] count];
-	
-    [_kinds release];
-    _kinds = [[NSMutableArray alloc] initWithCapacity: statisticsCount];
-	
-	[_cushionImages release];
-    _cushionImages = [[NSMutableArray alloc] initWithCapacity: statisticsCount];
+//============ implementation FileKindsTableController(Private) ===============================================
 
-    NSEnumerator *kindEnum = [[document kindStatistics] objectEnumerator];
-
-    FileKindStatistic *statistic;
-    while ( ( statistic = [kindEnum nextObject] ) != nil )
-    {
-        [_kinds addObject: statistic];
-		//fill our image array (for column "color") with NSNulls
-		//(images will be created on demand in "colorImageForRow:")
-		[_cushionImages addObject: [NSNull null]];
-    }
-
-    [_kinds sortUsingFunction: &CompareFileStatistics context: NULL];
-}
+@implementation FileKindsTableController(Private)
 
 //returns a cushion image for a given row in the tableview
 - (NSImage*) colorImageForRow: (int) row column: (NSTableColumn*) column
 {
-	NSImage *image = [_cushionImages objectAtIndex: row];
+	if ( _cushionImages == nil )
+		_cushionImages = [[NSMutableDictionary alloc] init];
+		
+	FileKindStatistic *kindStatistic = [(NSArray*)[_kindsTableArrayController arrangedObjects] objectAtIndex: row];
+	
+	NSImage *image = [_cushionImages objectForKey: [kindStatistic kindName]];
 	
 	NSSize cellSize = NSMakeSize( [column width], [_tableView rowHeight] );
 	
 	//if we don't have any image for that row yet or the cell size has changed, create a new image
-	if ( image == (NSImage*) [NSNull null] || !NSEqualSizes( [image size], cellSize ) )
+	if ( image == nil || !NSEqualSizes( [image size], cellSize ) )
 	{
 		//create a Bitmap with 24 bit color depth and no alpha component							 
 		NSBitmapImageRep* bitmap = [[ NSBitmapImageRep alloc]
@@ -210,8 +161,8 @@ static NSInteger CompareFileStatistics( id fs1, id fs2, void *context )
 		//..and draw a cushion in that bitmap
 		TMVCushionRenderer *cushionRenderer = [[TMVCushionRenderer alloc] initWithRect: NSMakeRect(0, 0, cellSize.width, cellSize.height)];
 		
-		FileKindStatistic *kindStatistics = [_kinds objectAtIndex: row];
-		[cushionRenderer setColor: [[FileTypeColors instance] colorForKind: [kindStatistics kindName]]];
+		FileTypeColors *kindColors = [[self document] fileTypeColors];
+		[cushionRenderer setColor: [kindColors colorForKind: [kindStatistic kindName]]];
 		
 		[cushionRenderer addRidgeByHeightFactor: 0.5];
 		[cushionRenderer renderCushionInBitmap: bitmap];
@@ -222,7 +173,7 @@ static NSInteger CompareFileStatistics( id fs1, id fs2, void *context )
 		image = [bitmap suitableImageForView: _tableView];
 		[bitmap release];
 		
-		[_cushionImages replaceObjectAtIndex: row withObject: image];
+		[_cushionImages setObject: image forKey: [kindStatistic kindName]];
 	}
 
 	return image;
@@ -250,72 +201,40 @@ static NSInteger CompareFileStatistics( id fs1, id fs2, void *context )
 	[_tableView setRowHeight: fontSize +4];
 }
 
-- (void) reloadData
-{
-    [self createKindArray];
-    
-    [_tableView reloadData];
-}
-
 #pragma mark --------document notifications-----------------
 
-- (void) globalSelectionChanged: (NSNotification*) notification
+- (void) documentSelectionChanged: (NSNotification*) notification
 {
-    FSItem *item = [[self document] selectedItem];
-
-    if ( item != nil )
-    {
-        NSString *itemKind = [item kindName];
-		
-		//find the corresponding FileKindStatistic-Object and select it
-        NSUInteger i;
-        for ( i = 0; i < [_kinds count]; i++ )
-        {
-			FileKindStatistic* statistic = [_kinds objectAtIndex: i];
-            if ( [itemKind isEqualToString: [statistic kindName]] )
-            {
-                [_tableView selectRowIndexes: [NSIndexSet indexSetWithIndex:i] byExtendingSelection: NO];
-                [_tableView scrollRowToVisible: i];
-                return;
-            }
-        }
-    }
-
-    //unknown kind (maybe a folder)
-    [_tableView deselectAll: self];
-}
-
-- (void) zoomedItemChanged: (NSNotification*) notification
-{
-    [self reloadData];
-}
-
-- (void) viewOptionChanged: (NSNotification*) notification
-{
-	NSString *theOption = [[notification userInfo] objectForKey:ChangedViewOption];
+	FileSystemDoc *doc = [self document];
 	
-	if ( [theOption isEqualToString: ShowPackageContents]
-		 || [theOption isEqualToString: ShowPhysicalFileSize]
-		 || [theOption isEqualToString: IgnoreCreatorCode] )
+    FSItem *item = [doc selectedItem];
+	//optimization: if item is a folder, remove selection (as it is not in the list anyway)
+	FileKindStatistic *stat = [doc itemIsNode: item] ? nil : [doc kindStatisticForItem: item];
+	
+	id tableViewSelection = [_kindsTableArrayController selection];
+	if ( tableViewSelection == NSNoSelectionMarker )
+		tableViewSelection = nil;
+	
+	if ( stat != tableViewSelection )
 	{
-		[self reloadData];
+		if ( stat == nil )
+			[_kindsTableArrayController setSelectionIndexes: [NSIndexSet indexSet]];
+		else
+			[_kindsTableArrayController setSelectedObjects: [NSArray arrayWithObject: stat]];
 	}
-}
-
-- (void) itemsChanged: (NSNotification*) notification
-{
-    [self reloadData];
-	[self globalSelectionChanged: nil];
 }
 
 #pragma mark --------window notifications-----------------
 
 - (void) windowWillClose: (NSNotification*) notification
 {
-	[[NSUserDefaults standardUserDefaults] removeObserver: self forKeyPath: UseSmallFontInKindStatistic];
+	NSUserDefaultsController *sharedDefsController = [NSUserDefaultsController sharedUserDefaultsController];
+	[sharedDefsController removeObserver: self forKeyPath: [@"values." stringByAppendingString: UseSmallFontInKindStatistic]];
+	[sharedDefsController removeObserver: self forKeyPath: [@"values." stringByAppendingString: ShareKindColors]];
+
+	[_kindsTableArrayController removeObserver: self forKeyPath: @"arrangedObjects"];
 	
     [[NSNotificationCenter defaultCenter] removeObserver: self];
 }
 
 @end
-

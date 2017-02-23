@@ -20,6 +20,9 @@
 "Show File Kind Statistics" = "Show File Kind Statistics";
 "Hide File Kind Statistics" = "Hide File Kind Statistics";
 
+"Show Selection List" = "Show Selection List";
+"Hide Selection List" = "Hide Selection List";
+
 "Show Information" = "Show Information";
 "Hide Information" = "Hide Information";
 
@@ -47,4 +50,16 @@
 
 /*refreshing failed because the loaded folder doesn't exist anymore*/
 "\"%@\" does not exist any more." = "\"%@\" does not exist any more.";
-"The folder will remain visible in Disk Inventory X, but the files cannot be accessed (e.g. shown in the Finder)." = "The folder will remain visible in Disk Inventory X, but the files cannot be accessed (e.g. shown in the Finder).";		
+"The folder will remain visible in Disk Inventory X, but the files cannot be accessed (e.g. shown in the Finder)." = "The folder will remain visible in Disk Inventory X, but the files cannot be accessed (e.g. shown in the Finder).";
+
+/*"all files" item in kinds popup button*/
+"(all kinds)" = "(all kinds)";
+
+/*strings for the Finder CM preference page*/
+"The Finder plugin is not installed. Click 'Install' to install it on your computer." = "The Finder plugin is not installed. Click 'Install' to install it on your computer.";
+"A newer version (%@) is installed." = "A newer version (%@) is installed.";
+"An older version (%@) is installed. It is recommended to update." = "An older version (%@) is installed. It is recommended to update.";
+"The current version (%@) is installed." = "The current version (%@) is installed.";
+"Reinstall" = "Reinstall";
+"Update" = "Update";
+"Install" = "Install";
