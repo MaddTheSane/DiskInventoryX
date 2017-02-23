@@ -460,6 +460,12 @@
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		32DBCF750370BD2300C91783 /* Disk Inventory X_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Disk Inventory X_Prefix.pch"; sourceTree = "<group>"; };
+		55410A121E5F899A002D48B4 /* af */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = af; path = af.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		55410A131E5F899A002D48B4 /* af */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = af; path = af.lproj/LoadingPanel.nib; sourceTree = "<group>"; };
+		55410A141E5F899A002D48B4 /* af */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = af; path = af.lproj/Credits.rtf; sourceTree = "<group>"; };
+		55410A151E5F899A002D48B4 /* af */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = af; path = af.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		55410A161E5F899B002D48B4 /* af */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = af; path = af.lproj/Localizable.strings; sourceTree = "<group>"; };
+		55410A171E5F8AEA002D48B4 /* af */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = af; path = af.lproj/TreeMap.nib; sourceTree = "<group>"; };
 		558C9BFE1E5F805A001E98FB /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Preferences.strings; sourceTree = "<group>"; };
 		558C9BFF1E5F805B001E98FB /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/GeneralPreferencesPage.nib; sourceTree = "<group>"; };
 		558C9C001E5F805B001E98FB /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/TreeMapPreferencesPage.nib; sourceTree = "<group>"; };
@@ -1128,6 +1134,7 @@
 				en,
 				fr,
 				de,
+				af,
 			);
 			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* Disk Inventory */;
 			projectDirPath = "";
@@ -1548,6 +1555,7 @@
 				089C1660FE840EACC02AAC07 /* English */,
 				558C9C081E5F8076001E98FB /* fr */,
 				558C9C141E5F8291001E98FB /* de */,
+				55410A151E5F899A002D48B4 /* af */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1557,6 +1565,7 @@
 			children = (
 				2A37F4BAFDCFA73011CA2CEA /* English */,
 				558C9C071E5F805D001E98FB /* fr */,
+				55410A141E5F899A002D48B4 /* af */,
 			);
 			name = Credits.rtf;
 			sourceTree = "<group>";
@@ -1625,6 +1634,7 @@
 				FC755298054C3C2900BBC68D /* English */,
 				558C9C031E5F805C001E98FB /* fr */,
 				558C9C0F1E5F828F001E98FB /* de */,
+				55410A171E5F8AEA002D48B4 /* af */,
 			);
 			name = TreeMap.nib;
 			sourceTree = "<group>";
@@ -1635,6 +1645,7 @@
 				FC75529A054C3C2900BBC68D /* English */,
 				558C9C041E5F805C001E98FB /* fr */,
 				558C9C101E5F828F001E98FB /* de */,
+				55410A121E5F899A002D48B4 /* af */,
 			);
 			name = MainMenu.nib;
 			sourceTree = "<group>";
@@ -1645,6 +1656,7 @@
 				FC75529C054C3C2900BBC68D /* English */,
 				558C9C051E5F805C001E98FB /* fr */,
 				558C9C111E5F8290001E98FB /* de */,
+				55410A131E5F899A002D48B4 /* af */,
 			);
 			name = LoadingPanel.nib;
 			sourceTree = "<group>";
@@ -1665,6 +1677,7 @@
 				FCAC0D320607189700B74E7D /* English */,
 				558C9C091E5F807A001E98FB /* fr */,
 				558C9C151E5F8291001E98FB /* de */,
+				55410A161E5F899B002D48B4 /* af */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
