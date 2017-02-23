@@ -1,0 +1,5 @@
+.DS_Store
+*.pbxuser
+project.xcworkspace/
+xcuserdata/
+*.mode?v?
