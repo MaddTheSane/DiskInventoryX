@@ -11,6 +11,7 @@
 #import "Timing.h"
 #import <TreeMapView/TreeMapView.h>
 #import "FSItem-Utilities.h"
+#import <CocoatechCore/NTSimpleAlert.h>
 
 @interface MainWindowController(Private)
 @end
@@ -52,7 +53,7 @@
 	poofEffectPoint = [view convertPoint: poofEffectPoint toView: nil];
 	
 	//convert window to screen coords
-	poofEffectPoint = [[view window] convertBaseToScreen: poofEffectPoint];
+	poofEffectPoint = [[view window] convertRectToScreen: (NSRect){.origin = poofEffectPoint, .size= NSMakeSize(1, 1)}].origin;
 	
 	NSSize size = NSMakeSize(NSWidth(rect), NSHeight(rect));
 	
@@ -125,8 +126,8 @@
 {
     FSItem *selectedItem = [[self document] selectedItem];
 
-    if ( selectedItem != nil && [[selectedItem fileDesc] exists] )
-        [[NSWorkspace sharedWorkspace] selectFile: [selectedItem path] inFileViewerRootedAtPath: nil];
+    if ( selectedItem != nil && [[selectedItem fileDesc] stillExists] )
+        [[NSWorkspace sharedWorkspace] selectFile: [selectedItem path] inFileViewerRootedAtPath: @""];
 }
 
 - (IBAction) refresh:(id)sender
@@ -296,7 +297,7 @@
 	NSBeginAlertSheet( msg, nil, nil, nil, [_splitter window], nil, nil, nil, nil, @"" );
 }
 
-- (BOOL) validateMenuItem: (id <NSMenuItem>) menuItem
+- (BOOL) validateMenuItem: (NSMenuItem*) menuItem
 {
     FileSystemDoc *doc = [self document];
 

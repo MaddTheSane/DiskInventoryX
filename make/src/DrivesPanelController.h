@@ -11,7 +11,7 @@
 
 @interface DrivesPanelController : NSObject
 {
-	NSMutableArray *_volumes;
+	NSMutableArray<NSDictionary<NSString*,id>*> *_volumes;
 	NSMutableArray *_progressIndicators;
 	IBOutlet NSTableView* _volumesTableView;
 	IBOutlet NSWindow* _volumesPanel;

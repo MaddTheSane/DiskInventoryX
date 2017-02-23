@@ -1,0 +1,9 @@
+﻿"Choose a valid destination." = "正しい行き先を選択してください。";
+"Compress" = "圧縮";
+"Compressing: %@ \nTo: %@" = "圧縮中：%@ \n圧縮先：%@";
+"Decompress" = "解凍";
+"Decompressing: %@ \nTo: %@" = "解凍中：%@ \n解凍先：%@";
+"Destination does not exist" = "行き先が存在していません";
+"Items remaining to compress: %d" = "圧縮する残りの項目：%d";
+"Items remaining to decompress: %d" = "解凍する残りの項目：%d";
+"Password" = "パスワード";

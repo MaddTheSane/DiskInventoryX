@@ -1,0 +1,22 @@
+﻿"Background" = "Tausta";
+"Black & White" = "Mustavalkoinen";
+"Cancel" = "Kumoa";
+"Choose..." = "Valitse...";
+"Compress" = "Pakkaus";
+"Convert Image..." = "Muunna kuvatiedosto…";
+"Crop" = "Rajaa";
+"Format" = "Formaatti";
+"Height:" = "Leveys:";
+"Image Converter" = "Kuvanmuuntaja";
+"Image: " = "Kuva: ";
+"Rotate Left" = "Pyöritä vasemmalle";
+"Rotate Right" = "Pyöritä oikealle";
+"Save" = "Tallenna";
+"Scale preview" = "Skaalaa esikatselua";
+"Size" = "Koko";
+"Width:" = "Korkeus:";
+"untitled" = "nimetön";
+
+/* ==== UNLOCALIZED ==== */
+
+"OK" = "OK";

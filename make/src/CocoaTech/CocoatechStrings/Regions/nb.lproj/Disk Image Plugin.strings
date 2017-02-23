@@ -1,0 +1,39 @@
+﻿"AES-128 (recommended)" = "AES-128 (anbefalt)";
+"Burn Image..." = "Brenn diskfil...";
+"Cancel" = "Avbryt";
+"Change Format..." = "Konverter diskfil...";
+"Convert" = "Konverter";
+"Converting Image..." = "Konverterer diskfil...";
+"Create" = "Opprett";
+"Create Disk Image" = "Opprett diskfil";
+"Create with directory:" = "Opprett med mappe:";
+"Create with size:" = "Opprett med str.:";
+"Create..." = "Ny diskfil...";
+"Creating Image..." = "Oppretter diskfil...";
+"Disk Image" = "Diskfil";
+"Disk Image Converter" = "Diskfil-konvertering";
+"Disk Image Converting" = "Diskfil-konvertering";
+"Disk Image Progress" = "Diskfil-framdrift";
+"Encryption:" = "Kryptering:";
+"Finished" = "Ferdig";
+"Image Format" = "Konverter diskfil til";
+"Internet enable" = "Internett-aktivering";
+"Megabytes" = "megabyte";
+"Mount after creating" = "Aktiver etter oppretting";
+"Mounting Image..." = "Aktiverer diskfil...";
+"Name:" = "Navn:";
+"None" = "Ingen";
+"Read only" = "Kun les";
+"Read only compressed" = "Kun les - komprimert";
+"Read/Write" = "Les/skriv";
+"Sparse" = "Minimum";
+"The file must have the .dmg, .img, .cdr, .iso, .smi or .toast extensions." = "Filen må ha en av følgende filendelser: .dmg, .img, smi eller .toast.";
+"Volume Name:" = "Volumnavn:";
+"Volume Size:" = "Volumstørrelse:";
+"untitled" = "uten navn";
+
+/* ==== UNLOCALIZED ==== */
+
+"DVD/CD-R master" = "DVD/CD-R master";
+"Format:" = "Format:";
+"Read only zlib compressed" = "Read only zlib compressed";

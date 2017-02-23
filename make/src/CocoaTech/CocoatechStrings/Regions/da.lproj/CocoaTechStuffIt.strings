@@ -1,0 +1,9 @@
+﻿"Choose a valid destination." = "Vælg en brugbar destination.";
+"Compress" = "Komprimer";
+"Compressing: %@ \nTo: %@" = "Komprimerer: %@ \ntil: %@";
+"Decompress" = "Dekomprimer";
+"Decompressing: %@ \nTo: %@" = "Dekomprimerer: %@ \ntil: %@";
+"Destination does not exist" = "Destinationen eksisterer ikke";
+"Items remaining to compress: %d" = "Emner der mangler at komprimeres: %d";
+"Items remaining to decompress: %d" = "Emner der mangler at dekomprimeres: %d";
+"Password" = "Adgangskode";

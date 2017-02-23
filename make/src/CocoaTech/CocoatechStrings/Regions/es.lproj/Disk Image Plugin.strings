@@ -1,0 +1,39 @@
+﻿"AES-128 (recommended)" = "AES-128 (recomendado)";
+"Burn Image..." = "Grabar imagen...";
+"Cancel" = "Cancelar";
+"Change Format..." = "Cambiar formato...";
+"Convert" = "Convertir";
+"Converting Image..." = "Convirtiendo imagen...";
+"Create" = "Crear";
+"Create Disk Image" = "Crear imagen de disco";
+"Create with directory:" = "Crear con directorio:";
+"Create with size:" = "Crear con tamaño:";
+"Create..." = "Crear...";
+"Creating Image..." = "Creando imagen...";
+"DVD/CD-R master" = "DVD/CD-R maestro";
+"Disk Image" = "Imagen de disco";
+"Disk Image Converter" = "Conversor de imagen de disco";
+"Disk Image Converting" = "Convirtiendo imagen de disco";
+"Disk Image Progress" = "Progreso de imagen de disco";
+"Encryption:" = "Cifrado:";
+"Finished" = "Finalizado";
+"Format:" = "Formato:";
+"Image Format" = "Formato de la imagen:";
+"Internet enable" = "Internet activo";
+"Mount after creating" = "Montar después de crear";
+"Mounting Image..." = "Montando imagen...";
+"Name:" = "Nombre:";
+"None" = "Ninguno";
+"Read only" = "Solo leer";
+"Read only compressed" = "Archivo comprimido de sólo lectura";
+"Read only zlib compressed" = "Archivo comprimido zlib de sólo lectura";
+"Read/Write" = "Lectura/Escritura";
+"Sparse" = "Escaso";
+"The file must have the .dmg, .img, .cdr, .iso, .smi or .toast extensions." = "El archivo debe tener una de las siguientes extensiones: .dmg, .img, .cdr, .iso, .smi o .toast";
+"Volume Name:" = "Nombre del volumen:";
+"Volume Size:" = "Tamaño del volumen:";
+"untitled" = "sin título";
+
+/* ==== UNLOCALIZED ==== */
+
+"Megabytes" = "Megabytes";

@@ -1,0 +1,11 @@
+﻿"##INSTRUCTIONS##" = "1) Choisissez votre région.\n2) Cliquez sur \"Voir les chaînes de texte non traduites\" pour en obtenir la liste.\n3) Tapez le texte anglais.\n4) Tapez sa traduction dans votre langue.\n5) Appuyez sur \"Entrée\" ou cliquez sur \"Valider\" pour effectuer la traduction.\n6) Pour la vérifier, vous devez quitter et relancer Path Finder.\n7) Les chaînes de texte traduites sont stockés en interne dans l'application (dans CocoaTechStrings.framework).\n8) Pour soumettre vos traductions, cliquez sur \"Envoyer vos traductions\". Le framework sera alors compressé et envoyé par email à Cocoatech.";
+"Close" = "Fermer";
+"Email Localization" = "Envoyer vos traductions";
+"English:" = "En anglais :";
+"Help us Localize Path Finder!" = "Aidez-nous à traduire Path Finder!";
+"If you find an unlocalized string in your language, please correct it and it will be included in the next release of Path Finder." = "Si vous trouvez une chaîne de texte non traduite dans votre langue, veuillez la corriger et cette correction sera incluse dans la prochaine version de Path Finder";
+"Localization" = "Traduction";
+"Localize" = "Valider";
+"Localized:" = "Traduction :";
+"Region:" = "Région :";
+"View Unlocalized Strings" = "Voir les chaînes non traduites";

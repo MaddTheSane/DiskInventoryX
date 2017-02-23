@@ -1,0 +1,37 @@
+﻿"All..." = "Все...";
+"Appearance" = "Вид";
+"Camera" = "Камера";
+"Crop" = "Обрезать";
+"DEVICES" = "УСТРОЙСТВА";
+"FAVORITES" = "ИЗБРАННОЕ";
+"Flip" = "Перевернуть";
+"Icon Size" = "Размер Иконки";
+"Info" = "Информация";
+"Launch..." = "Запустить...";
+"PLACES" = "ПАПКИ";
+"RECENT DOCUMENTS" = "ПОСЛЕДНИЕ ДОКУМЕНТЫ";
+"Recent Documents" = "Последние Документы";
+"Repository" = "Репозиторий";
+"Rotation" = "Поворот";
+"SEARCH FOR" = "ПАРАМЕТРЫ ПОИСКА";
+"SHARED" = "ОБЩИЙ ДОСТУП";
+"Tool" = "Инструмент";
+"Zoom" = "Приблизить";
+"add" = "добавить";
+"minutes" = "минуты";
+"other" = "другое";
+"revert" = "возвратить";
+"status" = "статус";
+"terminal" = "терминал";
+"update" = "обновление";
+
+/* ==== UNLOCALIZED ==== */
+
+"Aggressive Samba search" = "Aggressive Samba search";
+"Clear Samba server cache" = "Clear Samba server cache";
+"Refresh Samba server list every:" = "Refresh Samba server list every:";
+"Shared" = "Shared";
+"commit" = "commit";
+"diff" = "diff";
+"raw" = "raw";
+"rm" = "rm";

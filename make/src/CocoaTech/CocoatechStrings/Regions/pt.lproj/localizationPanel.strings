@@ -1,0 +1,14 @@
+﻿"##INSTRUCTIONS##" = "1) Choose your region\n2) Click \"View Unlocalized Strings\" for a list of string to localize\n3) Type in the English\n4) Type in the localization\n5) Type return or click the \"Localize\" button to set the localization\n6) To test, you must quit and relaunch the application\n7) The localized strings are written to the applications internal CocoaTechStrings.framework.\n8) To submit your localization, click the \"Email Localization\" button. This will compress the Framework and email it to Cocoatech.";
+"Close" = "Fechar";
+"Localized:" = "Localized";
+"Region:" = "Região:";
+
+/* ==== UNLOCALIZED ==== */
+
+"Email Localization" = "Email Localization";
+"English:" = "English:";
+"Help us Localize Path Finder!" = "Help us Localize Path Finder!";
+"If you find an unlocalized string in your language, please correct it and it will be included in the next release of Path Finder." = "If you find an unlocalized string in your language, please correct it and it will be included in the next release of Path Finder.";
+"Localization" = "Localization";
+"Localize" = "Localize";
+"View Unlocalized Strings" = "View Unlocalized Strings";

@@ -24,7 +24,7 @@
 	if ( [homeDesc volumeRefNum] == [desc volumeRefNum] )
 		return [self trashPath];
 	else
-		return [self trashPathForDesc: desc];
+		return [self trashPathForDesc: desc create: NO];
 }
 
 @end

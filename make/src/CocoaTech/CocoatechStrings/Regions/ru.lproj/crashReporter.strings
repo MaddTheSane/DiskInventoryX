@@ -1,0 +1,12 @@
+﻿"An exception occurred.  In some cases exceptions are harmless, but if you want to be safe, relaunch %@. Please help us improve %@ by sending this report and telling us what happened." = "Произошла ошибка. В некоторых случая это безвредно, но если вы хотите принять меры предосторожности, перезапустите %@. Пожалуйста, помогите нам улучшить %@. Пошлите нам этот отчет об ошибках и расскажите, что произошло.";
+"Crash log information:" = "Crash log информация:";
+"Don't Send" = "Не отправлять";
+"Error!" = "Ошибка!";
+"Exception log information:" = "Exception log информация:";
+"Path Finder has encountered an unexpected error.  Please email this report to crashreport@cocoatech.com so it can be fixed in the next release." = "Во время работы программы Path Finder случилась непредвиденная ошибка. Пожалуйста отправьте этот отчет по адресу crashreport@cocoatech.com, чтобы её можно было исправить в следующем обновлении программы.";
+"Path Finder was unable to automatically email the bug report.  Copy and paste the contents of this window and email it to crashreport@cocoatech.com" = "Path Finder не смог отправить отчет об ошибке. Пожалуйста, скопируйте содержимое этого окна и отправьте по адресу crashreport@cocoatech.com";
+"Please describe what you were doing when the problem occurred." = "Пожалуйста, опишите что Вы делали, когда произошла ошибка.";
+"Please tell us about the problem %@ encounted." = "Пожалуйста, расскажите нам о проблеме произошедшей в %@.";
+"Send Report" = "Отправить отчет";
+"Tell us what happened" = "Расскажите нам, что произошло";
+"The last time you ran %@, it encountered a problem that forced it to quit.  Please help us improve %@ by sending this report and telling us what happened." = "При последнем запуске %@, в программе произошла ошибка, в результате которой, программа была вынуждена прекратить свою работу.  Пожалуйста помогите нам улучшить %@, отправьте нам этот отчет об ошибках и расскажите, что произошло.";

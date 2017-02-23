@@ -40,7 +40,7 @@
 
 - (void)setState:(int)itemState
 {
-	OAToolbarWindowControllerEx *controller = [[_toolbarItem toolbar] delegate];
+	OAToolbarWindowControllerEx *controller = (id)[[_toolbarItem toolbar] delegate];
 	
 	NSAssert( [controller isKindOfClass: [OAToolbarWindowControllerEx class]],
 		@"delegate of toolbar must be a subclass of 'OAToolbarWindowControllerEx'" );
@@ -58,7 +58,7 @@
 
 @interface NSMenu(FindExtensions)
 
-- (id<NSMenuItem>) menuItemWithAction: (SEL) action;
+- (NSMenuItem*) menuItemWithAction: (SEL) action;
 
 @end
 
@@ -169,7 +169,7 @@ static NSMutableDictionary *g_toolbatStateImages = nil;
 	if (  action != 0
 		  && ( [itemInfo objectForKey:@"label"] == nil || [itemInfo objectForKey:@"toolTip"] == nil ) )
 	{
-		id<NSMenuItem> menuItem = [[NSApp mainMenu] menuItemWithAction: action];
+		NSMenuItem* menuItem = [[NSApp mainMenu] menuItemWithAction: action];
 		if ( menuItem != nil )
 		{
 			//set label?
@@ -246,7 +246,7 @@ static NSMutableDictionary *g_toolbatStateImages = nil;
 	
 	[g_toolbarItemValidationAdapter setToolbarItem: theItem];
 	
-	return [self validateMenuItem: (id<NSMenuItem>) g_toolbarItemValidationAdapter];
+	return [self validateMenuItem: (NSMenuItem*) g_toolbarItemValidationAdapter];
 }
 
 @end
@@ -255,15 +255,15 @@ static NSMutableDictionary *g_toolbatStateImages = nil;
 @implementation NSMenu(FindExtensions)
 
 //linear search through all menu items (including sub menus)
-- (id<NSMenuItem>) menuItemWithAction: (SEL) action
+- (NSMenuItem*) menuItemWithAction: (SEL) action
 {
 	//we enumerate backwards as for the main menu bar the more application specific actions
 	//are often in the menus after "File" and "Edit", so it is more likely to find the
 	//item in question in the rear menus (this may not apply to sub menus, but we do a linar search anyway) 
-	int i = [self numberOfItems];
+	NSInteger i = [self numberOfItems];
 	while ( i-- )
 	{
-		id <NSMenuItem> menuItem = [self itemAtIndex: i];
+		NSMenuItem* menuItem = [self itemAtIndex: i];
 		
 		if ( [menuItem action] == action )
 			return menuItem;

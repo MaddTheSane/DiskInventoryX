@@ -1,0 +1,37 @@
+﻿
+/* ==== UNLOCALIZED ==== */
+
+"Aggressive Samba search" = "Aggressive Samba search";
+"All..." = "All...";
+"Appearance" = "Appearance";
+"Camera" = "Camera";
+"Clear Samba server cache" = "Clear Samba server cache";
+"Crop" = "Crop";
+"DEVICES" = "DEVICES";
+"FAVORITES" = "FAVORITES";
+"Flip" = "Flip";
+"Icon Size" = "Icon Size";
+"Info" = "Info";
+"Launch..." = "Launch...";
+"PLACES" = "PLACES";
+"RECENT DOCUMENTS" = "RECENT DOCUMENTS";
+"Recent Documents" = "Recent Documents";
+"Refresh Samba server list every:" = "Refresh Samba server list every:";
+"Repository" = "Repository";
+"Rotation" = "Rotation";
+"SEARCH FOR" = "SEARCH FOR";
+"SHARED" = "SHARED";
+"Shared" = "Shared";
+"Tool" = "Tool";
+"Zoom" = "Zoom";
+"add" = "add";
+"commit" = "commit";
+"diff" = "diff";
+"minutes" = "minutes";
+"other" = "other";
+"raw" = "raw";
+"revert" = "revert";
+"rm" = "rm";
+"status" = "status";
+"terminal" = "terminal";
+"update" = "update";

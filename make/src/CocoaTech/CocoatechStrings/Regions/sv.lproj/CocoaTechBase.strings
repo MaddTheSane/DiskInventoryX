@@ -1,0 +1,33 @@
+﻿"Automatic" = "Automatiskt";
+"Black" = "Svart";
+"Blue" = "Blått";
+"Brown" = "Brunt";
+"Cancel" = "Avbryt";
+"Choose Application" = "Välj program";
+"Choose File" = "Välj Fil";
+"Choose Image" = "Välj Bild";
+"Choose..." = "Välj...";
+"Clear All" = "Rensa allt";
+"Edit Encodings Menu..." = "Ändra teckenkodningsmenyn...";
+"Encoding:" = "Kodning:";
+"Green" = "Grönt";
+"Ignore HTML Commands" = "Ignorera HTML-Kommandon";
+"Ignore RTF Commands" = "Ignorera RTF-Kommandon";
+"Processed %d items to \"%@\"" = "Behandlade %d objekt till \"%@\"";
+"Purple" = "Lila";
+"Red" = "Rött";
+"Revert to Default" = "Återgå till Standard";
+"Select All" = "Markera allt";
+"Stop" = "Stopp";
+"Text Encodings" = "Teckenkodningar";
+"Transparent" = "Genomskinlig";
+"White" = "Vitt";
+"Yellow" = "Gult";
+"bytes" = "byte";
+
+/* ==== UNLOCALIZED ==== */
+
+"Cyan" = "Cyan";
+"Magenta" = "Magenta";
+"OK" = "OK";
+"Orange" = "Orange";

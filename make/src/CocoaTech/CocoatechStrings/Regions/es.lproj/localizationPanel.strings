@@ -1,0 +1,11 @@
+﻿"##INSTRUCTIONS##" = "1) Seleccione su región\n2) Haga clic en \"Ver textos no localizados\" para obtener una lista de elementos a traducir\n3) Escriba en Inglés\n4) Escriba en Localización\n5) Presione Retorno o haga clic en el botón \"Localizar\" para establecer la traducción\n6) Para probarla, debe reiniciar la aplicación\n7) Las cadenas de texto localizadas son escritas en el archivo interno de la aplicación CocoaTechStrings.framework.\n8) Para enviar sus traducciones, haga clic en el botón \"Enviar traducciones por correo\". Esto comprimirá el Framework y lo enviará por correo a Cocoatech.";
+"Close" = "Cerrar";
+"Email Localization" = "Enviar traducciones por correo";
+"English:" = "Inglés:";
+"Help us Localize Path Finder!" = "¡Ayúdanos a localizar Path Finder!";
+"If you find an unlocalized string in your language, please correct it and it will be included in the next release of Path Finder." = "Si encuentra una cadena de texto sin traducción en su idioma, por favor corríjala y será incluida en la siguiente versión de Path Finder.";
+"Localization" = "Localizaciones";
+"Localize" = "Localizar";
+"Localized:" = "Localización";
+"Region:" = "Región:";
+"View Unlocalized Strings" = "Ver textos no localizados";

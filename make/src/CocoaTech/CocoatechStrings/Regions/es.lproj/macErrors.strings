@@ -1,0 +1,5 @@
+﻿"-47" = "Archivo ocupado";
+"-5000" = "privilegios de acceso insuficientes para esta operación";
+"-61" = "privilegios de escritura insuficientes para esta operación";
+"-8081" = "Archivo ocupado";
+"The operation could not be completed because the disk is in use" = "No se puedo completar la operación porque el disco está en uso";

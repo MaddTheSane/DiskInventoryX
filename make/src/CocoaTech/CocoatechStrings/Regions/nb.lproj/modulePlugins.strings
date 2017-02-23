@@ -1,0 +1,37 @@
+﻿"All..." = "Alle...";
+"Appearance" = "Utseende";
+"Camera" = "Kamera";
+"Crop" = "Beskjær";
+"DEVICES" = "ENHETER";
+"FAVORITES" = "FAVORITTER";
+"Icon Size" = "Symbolstørrelse";
+"Launch..." = "Kjør...";
+"PLACES" = "STEDER";
+"RECENT DOCUMENTS" = "SIST BRUKTE FILER";
+"SEARCH FOR" = "SØK ETTER";
+"SHARED" = "DELT";
+"Shared" = "Delt";
+"Tool" = "Verktøy";
+
+/* ==== UNLOCALIZED ==== */
+
+"Aggressive Samba search" = "Aggressive Samba search";
+"Clear Samba server cache" = "Clear Samba server cache";
+"Flip" = "Flip";
+"Info" = "Info";
+"Recent Documents" = "Recent Documents";
+"Refresh Samba server list every:" = "Refresh Samba server list every:";
+"Repository" = "Repository";
+"Rotation" = "Rotation";
+"Zoom" = "Zoom";
+"add" = "add";
+"commit" = "commit";
+"diff" = "diff";
+"minutes" = "minutes";
+"other" = "other";
+"raw" = "raw";
+"revert" = "revert";
+"rm" = "rm";
+"status" = "status";
+"terminal" = "terminal";
+"update" = "update";

@@ -4,7 +4,9 @@
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
-	#import <CocoaTechFoundation/CocoaTechFoundation.h>
+	#import <CocoatechCore/CocoatechCore.h>
+	#import <CocoatechFile/CocoatechFile.h>
+	//#import <CocoaTechFoundation/CocoaTechFoundation.h>
 
 	#import <OmniBase/OmniBase.h>
 

@@ -11,6 +11,8 @@
 extern unsigned g_fileCount;
 extern unsigned g_folderCount;
 
+@protocol FSItemDelegate;
+
 typedef enum
 {
 	FileFolderItem, //regular file or folder
@@ -20,7 +22,7 @@ typedef enum
 
 @interface FSItem : NSObject {
 	NTFileDesc *_fileDesc;
-    FSItem *_parent;	//only valid for non-root items
+    __unsafe_unretained FSItem *_parent;	//only valid for non-root items
 	
 	NSMutableDictionary *_icons; //holds icons in various sizes (see iconWithSize:)
 	
@@ -28,7 +30,7 @@ typedef enum
 
     NSNumber *_size;
 
-    unsigned _hash;
+    NSUInteger _hash;
 
     NSMutableArray *_childs;
 	
@@ -91,11 +93,11 @@ typedef enum
 - (NSString *) displayPath; //path relative to root item, not "/"
 - (NSString *) kindName;
 
-- (unsigned) hash;
+- (NSUInteger) hash;
 @end
 
 /* optional delegate methods */
-@interface NSObject(FSItemDelegate)
+@protocol FSItemDelegate<NSObject>
 - (BOOL) fsItemEnteringFolder: (FSItem*) item; //delegate may return NO to stop loading in "loadChilds"
 - (BOOL) fsItemExittingFolder: (FSItem*) item;
 - (BOOL) fsItemShouldIgnoreCreatorCode: (FSItem*) item; //default is NO (if not implemented by delegate)

@@ -7,7 +7,7 @@
 //
 
 #import "DIXFileInfoView.h"
-
+#import "NTTitledInfoPair.h"
 
 @interface NTInfoView (MakeVisible)
 - (NSArray*)infoPairs;

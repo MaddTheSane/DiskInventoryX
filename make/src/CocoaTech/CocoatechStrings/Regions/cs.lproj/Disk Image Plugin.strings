@@ -1,0 +1,39 @@
+﻿"Burn Image..." = "Vypálit...";
+"Cancel" = "Zrušit";
+"Change Format..." = "Změnit formát...";
+"Convert" = "Konvertovat";
+"Converting Image..." = "Convertuji obraz...";
+"Create" = "Vytvořit";
+"Create Disk Image" = "Obraz disku";
+"Create..." = "Nový obraz disku...";
+"Creating Image..." = "Vytvářím obraz...";
+"Disk Image" = "Obraz disku";
+"Disk Image Converter" = "Konvertor obrazu disku";
+"Disk Image Converting" = "Konverze obrazu disku";
+"Disk Image Progress" = "Průběh obrazu disku";
+"Finished" = "Ukončeno";
+"Format:" = "Formát:";
+"Image Format" = "Výsledná konverze";
+"Internet enable" = "Povolit internet";
+"Megabytes" = "Megabytů";
+"Mount after creating" = "Připojit po vytvoření";
+"Mounting Image..." = "Připojuji obraz...";
+"Name:" = "Jméno:";
+"None" = "Žádný";
+"Read only" = "Jen pro čtení";
+"Read only compressed" = "Jen pro čtení, komprimováno";
+"Read/Write" = "Čtení/Zápis";
+"The file must have the .dmg, .img, .cdr, .iso, .smi or .toast extensions." = "Soubor musí mít příponu .dmg, .img, .cdr, .iso, .smi nebo .toast.";
+"Volume Name:" = "Jméno svazku:";
+"Volume Size:" = "Velikost svazku:";
+"untitled" = "beze jména";
+
+/* ==== UNLOCALIZED ==== */
+
+"AES-128 (recommended)" = "AES-128 (recommended)";
+"Create with directory:" = "Create with directory:";
+"Create with size:" = "Create with size:";
+"DVD/CD-R master" = "DVD/CD-R master";
+"Encryption:" = "Encryption:";
+"Read only zlib compressed" = "Read only zlib compressed";
+"Sparse" = "Sparse";

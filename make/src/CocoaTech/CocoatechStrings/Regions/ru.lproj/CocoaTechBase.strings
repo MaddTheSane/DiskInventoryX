@@ -1,0 +1,33 @@
+﻿"Automatic" = "Автоматически";
+"Black" = "Чёрный";
+"Blue" = "Синий";
+"Brown" = "Коричневый";
+"Cancel" = "Отменить";
+"Choose Application" = "Выбрать Приложение";
+"Choose File" = "Выбрать Файл";
+"Choose Image" = "Выбрать Картинку";
+"Choose..." = "Выбрать...";
+"Clear All" = "Стереть всё";
+"Cyan" = "Голубой";
+"Edit Encodings Menu..." = "Редактор Меню Кодировок";
+"Encoding:" = "Кодировка:";
+"Green" = "Зелёный";
+"Ignore HTML Commands" = "Игнорировать Комманды HTML";
+"Ignore RTF Commands" = "Игнорировать Комманды RTF";
+"Magenta" = "Магента";
+"OK" = "ОК";
+"Orange" = "Оранжевый";
+"Purple" = "Лиловый";
+"Red" = "Красный";
+"Revert to Default" = "Сбросить Всё";
+"Select All" = "Выделить всё";
+"Stop" = "Остановить";
+"Text Encodings" = "Кодировки";
+"Transparent" = "Прозрачный";
+"White" = "Белый";
+"Yellow" = "Жёлтый";
+"bytes" = "байт";
+
+/* ==== UNLOCALIZED ==== */
+
+"Processed %d items to \"%@\"" = "Processed %d items to \"%@\"";

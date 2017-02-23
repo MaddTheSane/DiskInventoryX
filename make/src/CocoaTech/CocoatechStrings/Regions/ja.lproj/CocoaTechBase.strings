@@ -1,0 +1,33 @@
+﻿"Automatic" = "自動";
+"Black" = "ブラック";
+"Blue" = "ブルー";
+"Brown" = "ブラウン";
+"Cancel" = "キャンセル";
+"Choose Application" = "アプリケーションを選択";
+"Choose File" = "ファイルを選択";
+"Choose Image" = "イメージを選択";
+"Choose..." = "選択...";
+"Clear All" = "すべて非選択";
+"Cyan" = "シアン";
+"Edit Encodings Menu..." = "エンコーディングメニューを編集...";
+"Encoding:" = "エンコーディング：";
+"Green" = "グリーン";
+"Ignore HTML Commands" = "HTML コマンドを無視する";
+"Ignore RTF Commands" = "RTF コマンドを無視する";
+"Magenta" = "マゼンタ";
+"Orange" = "オレンジ";
+"Processed %d items to \"%@\"" = "%d 項目を“%@”へ処理しました";
+"Purple" = "パープル";
+"Red" = "レッド";
+"Revert to Default" = "デフォルトに戻す";
+"Select All" = "すべて選択";
+"Stop" = "停止";
+"Text Encodings" = "テキストエンコーディング";
+"Transparent" = "透明";
+"White" = "ホワイト";
+"Yellow" = "イエロー";
+"bytes" = "バイト";
+
+/* ==== UNLOCALIZED ==== */
+
+"OK" = "OK";

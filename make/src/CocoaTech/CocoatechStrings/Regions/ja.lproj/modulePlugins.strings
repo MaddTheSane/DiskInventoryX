@@ -1,0 +1,37 @@
+﻿"Aggressive Samba search" = "積極的に Samba を探す";
+"All..." = "すべて...";
+"Appearance" = "アピアランス";
+"Camera" = "カメラ";
+"Clear Samba server cache" = "Samba サーバのキャッシュを消去する";
+"Crop" = "トリミング";
+"DEVICES" = "デバイス";
+"FAVORITES" = "よく使う項目";
+"Flip" = "反転";
+"Icon Size" = "アイコンのサイズ";
+"Info" = "情報";
+"Launch..." = "起動...";
+"PLACES" = "場所";
+"RECENT DOCUMENTS" = "最近使った書類";
+"Recent Documents" = "最近使った書類";
+"Refresh Samba server list every:" = "Samba サーバのリストを次の間隔で更新する：";
+"Repository" = "リポジトリ";
+"Rotation" = "回転";
+"SEARCH FOR" = "検索";
+"SHARED" = "共有";
+"Shared" = "共有";
+"Tool" = "ツール";
+"Zoom" = "ズーム";
+"minutes" = "分";
+
+/* ==== UNLOCALIZED ==== */
+
+"add" = "add";
+"commit" = "commit";
+"diff" = "diff";
+"other" = "other";
+"raw" = "raw";
+"revert" = "revert";
+"rm" = "rm";
+"status" = "status";
+"terminal" = "terminal";
+"update" = "update";

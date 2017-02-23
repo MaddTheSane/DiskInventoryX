@@ -1,0 +1,11 @@
+﻿"##INSTRUCTIONS##" = "1) Wählen Sie Ihre Sprach-Region\n2) Klicken Sie auf \"Unübersetzte Ausdrücke ansehen\" um eine Liste der noch nicht übersetzten Ausdrücke zu erhalten\n3) Geben Sie den englischen Begriff ein\n4) Geben Sie die Übersetzung ein\n5) Drücken Sie die Eingabetaste oder klicken Sie auf \"Lokalisieren\" \n6) Um die Änderungen zu sehen müssen Sie Path Finder neu starten\n7) Die lokalisierten Strings werden im Programm internen Bereich CocoaTechStrings.framework gespeichert.\n8) Klicken Sie auf \"Lokalisierung per Email versenden\". Dies komprimiert das Framework und sendet eine E-Mail an Cocoatech.";
+"Close" = "Schließen";
+"Email Localization" = "Lokalisierung versenden";
+"English:" = "Englisch:";
+"Help us Localize Path Finder!" = "Helfen Sie uns Path Finder zu lokalisieren!";
+"If you find an unlocalized string in your language, please correct it and it will be included in the next release of Path Finder." = "Wenn Sie einen nicht in Ihre Sprache übersetzen Ausdruck finden, bitte korrigieren Sie ihn, damit er beim nächsten Release von Path Finder richtiggestellt ist.";
+"Localization" = "Lokalisierung";
+"Localize" = "Lokalisieren";
+"Localized:" = "Localized";
+"Region:" = "Sprachregion:";
+"View Unlocalized Strings" = "Unübersetzte Ausdrücke ansehen";

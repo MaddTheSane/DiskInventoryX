@@ -1,0 +1,12 @@
+﻿"An exception occurred.  In some cases exceptions are harmless, but if you want to be safe, relaunch %@. Please help us improve %@ by sending this report and telling us what happened." = "Er is een exceptie opgetreden. In sommige gevallen zijn excepties zonder schade, maar als u veilig wilt zitten, herstart u %@. Help ons bij het verbeteren van %@ door dit rapport op te sturen en ons te vertellen wat er gebeurde.";
+"Crash log information:" = "Crash loginformatie:";
+"Don't Send" = "Stuur niet";
+"Error!" = "Fout!";
+"Exception log information:" = "Exceptie loginformatie:";
+"Path Finder has encountered an unexpected error.  Please email this report to crashreport@cocoatech.com so it can be fixed in the next release." = "Er is een onverwachte fout opgetreden in Path Finder. We stellen het op prijs als u dit foutrapport e-mailt naar crashreport@cocoatech.com, zodat we de fout kunnen herstellen in de volgende versie.";
+"Path Finder was unable to automatically email the bug report.  Copy and paste the contents of this window and email it to crashreport@cocoatech.com" = "Path Finder kan het probleemrapport niet automatisch e-mailen. Kopieer en plak de inhoud van dit venster en e-mail het naar crashreport@cocoatech.com";
+"Please describe what you were doing when the problem occurred." = "Omschrijf aub wat u deed toen het probleem optrad.";
+"Please tell us about the problem %@ encounted." = "Vertel ons over het probleem dat optrad in %@.";
+"Send Report" = "Stuur rapport";
+"Tell us what happened" = "Vertel ons wat er gebeurde";
+"The last time you ran %@, it encountered a problem that forced it to quit.  Please help us improve %@ by sending this report and telling us what happened." = "De laatste keer dat %@ gestart was, is er een probleem opgetreden waardoor het geforceerd moest stoppen. Help ons %@ te verbeteren door dit rapport te versturen en ons te vertellen wat u op dat moment deed.";

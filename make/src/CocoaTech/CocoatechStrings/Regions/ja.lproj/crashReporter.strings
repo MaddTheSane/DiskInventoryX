@@ -1,0 +1,12 @@
+﻿"An exception occurred.  In some cases exceptions are harmless, but if you want to be safe, relaunch %@. Please help us improve %@ by sending this report and telling us what happened." = "例外エラーが発生しました。例外エラーは無害な場合もありますが、安全を期する場合は、%1$@ を再起動してください。%2$@ 改善のために、ぜひこのレポートをご送信いただき、何が起きたのかお知らせください。";
+"Crash log information:" = "クラッシュログ情報：";
+"Don't Send" = "送信しない";
+"Error!" = "エラー！";
+"Exception log information:" = "例外エラーログ情報：";
+"Path Finder has encountered an unexpected error.  Please email this report to crashreport@cocoatech.com so it can be fixed in the next release." = "予期しないエラーが発生しました。次回のリリースでこの問題を修正できるように、このレポートを crashreport@cocoatech.com へご送信ください。";
+"Path Finder was unable to automatically email the bug report.  Copy and paste the contents of this window and email it to crashreport@cocoatech.com" = "このバグレポートを自動送信することができませんでした。このウインドウの内容をメールにコピー＆ペーストして crashreport@cocoatech.com へご送信ください。";
+"Please describe what you were doing when the problem occurred." = "この問題が起きたときに何をしていたかをご記入ください。";
+"Please tell us about the problem %@ encounted." = "%@ が遭遇したこの問題についてご記入ください。";
+"Send Report" = "レポート送信";
+"Tell us what happened" = "何が起きたかお知らせください";
+"The last time you ran %@, it encountered a problem that forced it to quit.  Please help us improve %@ by sending this report and telling us what happened." = "前回 %1$@ を実行したとき、強制終了が起きるような問題に遭遇しました。%2$@ 改善のために、ぜひこのレポートをご送信いただき、何が起きたのかお知らせください。";

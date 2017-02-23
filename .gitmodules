@@ -1,0 +1,3 @@
+[submodule "make/src/OmniGroup"]
+	path = make/src/OmniGroup
+	url = https://github.com/MaddTheSane/OmniGroup.git

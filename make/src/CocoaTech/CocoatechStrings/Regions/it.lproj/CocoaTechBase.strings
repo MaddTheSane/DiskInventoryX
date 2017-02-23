@@ -1,0 +1,33 @@
+﻿"Automatic" = "Automatico";
+"Black" = "Nero";
+"Blue" = "Blu";
+"Brown" = "Marrone";
+"Cancel" = "Annulla";
+"Choose Application" = "Scegli Applicazione";
+"Choose File" = "Scegli Documento";
+"Choose Image" = "Scegli Immagine";
+"Choose..." = "Scegli...";
+"Clear All" = "Cancella Tutto";
+"Cyan" = "Ciano";
+"Edit Encodings Menu..." = "Modifca Menu Encoding...";
+"Encoding:" = "Codifica:";
+"Green" = "Verde";
+"Ignore HTML Commands" = "Ignora Comandi HTML";
+"Ignore RTF Commands" = "Ignora Comandi RTF";
+"Orange" = "Arancione";
+"Processed %d items to \"%@\"" = "Processati %d elementi in \"%@\"";
+"Purple" = "Viola";
+"Red" = "Rosso";
+"Revert to Default" = "Ripristina ai valori iniziali";
+"Select All" = "Seleziona Tutto";
+"Text Encodings" = "Encoding Testo";
+"Transparent" = "Trasparente";
+"White" = "Bianco";
+"Yellow" = "Giallo";
+"bytes" = "byte";
+
+/* ==== UNLOCALIZED ==== */
+
+"Magenta" = "Magenta";
+"OK" = "OK";
+"Stop" = "Stop";

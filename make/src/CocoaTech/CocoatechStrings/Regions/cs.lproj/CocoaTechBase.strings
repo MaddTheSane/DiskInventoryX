@@ -1,0 +1,33 @@
+﻿"Automatic" = "Automaticky";
+"Black" = "ČBlack";
+"Blue" = "Modrá";
+"Brown" = "Hnědá";
+"Cancel" = "Zrušit";
+"Choose Application" = "Vyberte aplikaci";
+"Choose File" = "Vyberte soubor";
+"Choose Image" = "Vyberte obrázek";
+"Choose..." = "Vybrat...";
+"Clear All" = "Smazat vše";
+"Edit Encodings Menu..." = "Upravit menu kódování...";
+"Encoding:" = "Kódování:";
+"Green" = "Zelená";
+"Ignore HTML Commands" = "Ignorovat příkazy HTML";
+"Ignore RTF Commands" = "Ignorovat příkazy RTF";
+"OK" = "Budiž";
+"Orange" = "Oranžová";
+"Processed %d items to \"%@\"" = "Zpracováno %d položek do \"%@\"";
+"Purple" = "Fialová";
+"Red" = "Červená";
+"Revert to Default" = "Zpět k původní verzi";
+"Select All" = "Vybrat vše";
+"Stop" = "Zastavit";
+"Text Encodings" = "Kódování textu";
+"Transparent" = "Průhledná";
+"White" = "Bílá";
+"bytes" = "bytů";
+
+/* ==== UNLOCALIZED ==== */
+
+"Cyan" = "Cyan";
+"Magenta" = "Magenta";
+"Yellow" = "Yellow";

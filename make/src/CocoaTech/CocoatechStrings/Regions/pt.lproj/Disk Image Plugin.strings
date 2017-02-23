@@ -1,0 +1,39 @@
+﻿"AES-128 (recommended)" = "AES-128 (recomendada)";
+"Cancel" = "Cancelar";
+"Convert" = "Converter";
+"Create" = "Criar";
+"Create..." = "Criar...";
+"Disk Image" = "Imagem de Disco";
+"Encryption:" = "Encriptação:";
+"Finished" = "Concluído";
+"Format:" = "Formato:";
+"Image Format" = "Formato Imagem:";
+"Name:" = "Nome:";
+"None" = "Nenhuma";
+"Read only" = "Somente leitura";
+"Read/Write" = "Leitura/Escrita";
+"untitled" = "sem título";
+
+/* ==== UNLOCALIZED ==== */
+
+"Burn Image..." = "Burn Image...";
+"Change Format..." = "Change Format...";
+"Converting Image..." = "Converting Image...";
+"Create Disk Image" = "Create Disk Image";
+"Create with directory:" = "Create with directory:";
+"Create with size:" = "Create with size:";
+"Creating Image..." = "Creating Image...";
+"DVD/CD-R master" = "DVD/CD-R master";
+"Disk Image Converter" = "Disk Image Converter";
+"Disk Image Converting" = "Disk Image Converting";
+"Disk Image Progress" = "Disk Image Progress";
+"Internet enable" = "Internet enable";
+"Megabytes" = "Megabytes";
+"Mount after creating" = "Mount after creating";
+"Mounting Image..." = "Mounting Image...";
+"Read only compressed" = "Read only compressed";
+"Read only zlib compressed" = "Read only zlib compressed";
+"Sparse" = "Sparse";
+"The file must have the .dmg, .img, .cdr, .iso, .smi or .toast extensions." = "The file must have the .dmg, .img, .cdr, .iso, .smi or .toast extensions.";
+"Volume Name:" = "Volume Name:";
+"Volume Size:" = "Volume Size:";

@@ -1,0 +1,12 @@
+﻿"An exception occurred.  In some cases exceptions are harmless, but if you want to be safe, relaunch %@. Please help us improve %@ by sending this report and telling us what happened." = "Si è verificata una exception.  In alcuni casi esse non causano problemi, ma se vuoi essere sicuro riapri %@. Per favore aiutaci a migliorare %@ inviandoci questo resoconto e descrivendo cosa è successo.";
+"Crash log information:" = "Informazioni del Crash log:";
+"Don't Send" = "Non Inviare";
+"Error!" = "Errore!";
+"Exception log information:" = "Informazioni dell'Exception log:";
+"Path Finder has encountered an unexpected error.  Please email this report to crashreport@cocoatech.com so it can be fixed in the next release." = "Path Finder ha riscontrato un errore inaspettato.  Per favore invia una email con questo resoconto a crashreport@cocoatech.com in modo che il problema possa essere risolto nella prossima versione.";
+"Path Finder was unable to automatically email the bug report.  Copy and paste the contents of this window and email it to crashreport@cocoatech.com" = "Path Finder non è riuscito ad inviare automaticamente una email per il resoconto dei bug. Copia ed incolla il contenuto di questa finestra e manda una email a crashreport@cocoatech.com.";
+"Please describe what you were doing when the problem occurred." = "Per favore descrivi cosa stavi facendo quando si è verificato il problema.";
+"Please tell us about the problem %@ encounted." = "Per favore descrivi il problema che %@ ha riscontrato.";
+"Send Report" = "Invia Resoconto";
+"Tell us what happened" = "Descrivi cosa è accaduto";
+"The last time you ran %@, it encountered a problem that forced it to quit.  Please help us improve %@ by sending this report and telling us what happened." = "L'ultima volta che hai eseguito %@ si è verificato un problema che ne ha forzato la chiusura.  Per favore aiutaci a migliorare %@ inviandoci questo resoconto e descrivendo cosa è successo.";

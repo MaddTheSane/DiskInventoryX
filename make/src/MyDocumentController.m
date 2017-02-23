@@ -19,7 +19,7 @@ BOOL g_EnableLogging;
 
 @implementation MyDocumentController
 
-- (int) runModalOpenPanel: (NSOpenPanel*) openPanel forTypes: (NSArray*) extensions
+- (NSInteger) runModalOpenPanel: (NSOpenPanel*) openPanel forTypes: (NSArray*) extensions
 {
     //we want the user to choose a directory (including packages)
     [openPanel setCanChooseDirectories: YES];
@@ -29,7 +29,7 @@ BOOL g_EnableLogging;
 //	if ( ![[DrivesPanelController sharedController] panelIsVisible] )
 	{
 		//volumes panel isn't (yet) loaded, so show the open panel the normal way (as a modal window)
-		return [openPanel runModalForTypes: nil];
+		return [openPanel runModal];
 	}
 /*	else
 	{
@@ -53,10 +53,9 @@ BOOL g_EnableLogging;
 	if ( returnCode == NSOKButton )
 	{
 		//open selected folders
-		NSEnumerator *fileEnum = [[sheet filenames] objectEnumerator];
-		NSString *fileName;
-		while ( (fileName = [fileEnum nextObject]) != nil )
+		for ( NSURL *fileURL in [sheet URLs] )
 		{
+			NSString *fileName = [fileURL path];
 			//defer it till the next loop cycle to let the sheet closes itself first
 			[[NSRunLoop currentRunLoop] performSelector:@selector(openDocumentWithContentsOfFile:)
 												 target: self
@@ -97,16 +96,16 @@ BOOL g_EnableLogging;
 {
 	//we implement this method by ourself, so we can avoid that stupid message "document couldn't be opened"
 	//in the case the user canceled the opening
-	NSArray *fileNames = [self fileNamesFromRunningOpenPanel];
+	NSArray *fileNames = [self URLsFromRunningOpenPanel];
 	
 	if ( fileNames == nil )
 		return; //cancel pressed in open panel
 	
-	NSEnumerator *enumerator = [fileNames objectEnumerator];
-	NSString *fileName;
-	while ( fileName = [enumerator nextObject] )
+	for ( NSURL *fileName in fileNames )
 	{
-		[self openDocumentWithContentsOfFile: fileName display: YES];
+		[self openDocumentWithContentsOfURL:fileName display:YES completionHandler:^(NSDocument * _Nullable document, BOOL documentWasAlreadyOpen, NSError * _Nullable error) {
+			//
+		}];
 	}
 }
 

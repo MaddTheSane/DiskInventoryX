@@ -12,7 +12,7 @@
 //created an attributed string to be displayed in the volume usage column
 @interface VolumeUsageTransformer : NSValueTransformer
 {
-	FileSizeFormatter *_sizeFormatter;
+	NSByteCountFormatter *_sizeFormatter;
 }
 
 + (id) transformer;

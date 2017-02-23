@@ -1,0 +1,37 @@
+﻿"All..." = "Kaikki...";
+"Camera" = "Kamera";
+"Crop" = "Rajaa";
+"DEVICES" = "LAITTEET";
+"FAVORITES" = "SUOSIKIT";
+"Flip" = "Käännä";
+"Info" = "Tiedot";
+"Launch..." = "Käynnistä...";
+"PLACES" = "PAIKAT";
+"RECENT DOCUMENTS" = "TIEDOSTOHISTORIA";
+"Repository" = "Säilytyspaikka";
+"Rotation" = "Pyöritä";
+"SEARCH FOR" = "ETSI";
+"SHARED" = "JAETTU";
+"Tool" = "Työkalu";
+"Zoom" = "Muuta kokoa";
+"add" = "lisää";
+"commit" = "sitoudu";
+"other" = "muu";
+"revert" = "palauttaa";
+"status" = "tilanne";
+"terminal" = "terminaali";
+"update" = "päivitys";
+
+/* ==== UNLOCALIZED ==== */
+
+"Aggressive Samba search" = "Aggressive Samba search";
+"Appearance" = "Appearance";
+"Clear Samba server cache" = "Clear Samba server cache";
+"Icon Size" = "Icon Size";
+"Recent Documents" = "Recent Documents";
+"Refresh Samba server list every:" = "Refresh Samba server list every:";
+"Shared" = "Shared";
+"diff" = "diff";
+"minutes" = "minutes";
+"raw" = "raw";
+"rm" = "rm";

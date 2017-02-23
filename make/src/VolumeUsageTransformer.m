@@ -20,7 +20,7 @@
 {
 	self = [super init];
 	
-	_sizeFormatter = [[FileSizeFormatter alloc] init];
+	_sizeFormatter = [[NSByteCountFormatter alloc] init];
 	
 	return self;
 }
@@ -40,8 +40,7 @@
 	//get values as NSNumbers
 	NSNumber *numCapacity = [value valueForKey: @"totalBytes"];
 	NSNumber *numFree = [value valueForKey: @"freeBytes"];
-	NSNumber *numUsed = [NSNumber numberWithUnsignedLongLong:
-							[numCapacity unsignedLongLongValue] - [numFree unsignedLongLongValue]];
+	NSNumber *numUsed = @([numCapacity unsignedLongLongValue] - [numFree unsignedLongLongValue]);
 	
 	//convert values to formatted strings
 	NSString *strCapacity = [_sizeFormatter stringForObjectValue: numCapacity];

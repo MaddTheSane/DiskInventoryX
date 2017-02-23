@@ -1,0 +1,9 @@
+﻿"Choose a valid destination." = "Valitse validi sijoituskohde.";
+"Compress" = "Pakkaa";
+"Compressing: %@ \nTo: %@" = "Pakkaan: %@ \nKohteeseen: %@";
+"Decompress" = "Pura";
+"Decompressing: %@ \nTo: %@" = "Puretaan: %@ \nKohteeseen: %@";
+"Destination does not exist" = "Sijoituskohdetta ei ole";
+"Items remaining to compress: %d" = "Kohteita pakkaamatta: %d";
+"Items remaining to decompress: %d" = "Purettavia kohteita jäljellä: %d";
+"Password" = "Salasana";

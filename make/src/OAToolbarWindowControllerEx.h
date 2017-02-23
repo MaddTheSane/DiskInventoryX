@@ -19,7 +19,7 @@
 
 @end
 
-@interface OAToolbarWindowControllerEx : OAToolbarWindowController {
+@interface OAToolbarWindowControllerEx : OAToolbarWindowController <NSToolbarDelegate> {
 
 }
 

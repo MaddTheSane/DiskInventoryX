@@ -7,17 +7,20 @@
 //
 
 #import "NTFileDesc-AccessExtensions.h"
-#import <CocoaTechFoundation/NTFileDesc.h>
+#import <CocoatechFile/NTFileDesc.h>
+#import <CocoatechFile/NTFileDescData.h>
 
 @implementation NTFileDesc(AccessExtensions)
 
 - (NTFSRefObject*) fsRefObject
 {
-	return _fsRefObject;
+	return FSRefObject;
 }
 
+//#if 0
 - (void) setKindString: (NSString*) kindString
 {
+	/*
 	[_lock lock];
 	
 	[kindString retain];
@@ -26,12 +29,15 @@
 	
 	_bools.kindString_initialized = YES;
 	
-	[_lock unlock];
+	[_lock unlock];*/
+	[[self cache] setKind:kindString];
 }
 
 - (BOOL) isKindStringSet
 {
-	return _bools.kindString_initialized;
+	//- (BOOL)kind_initialized:(NSString**)outValue;
+	return [[self cache] kind_initialized:NULL];
+	//return _bools.kindString_initialized;
 }
 
 //NTFileDesc calls "FSGetTotalForkSizes(..)" to get the size of a file and
@@ -42,14 +48,8 @@
 //(as we just add the logical sizes of the data and resource forks to get a file's size)
 - (void) setSize: (UInt64) size
 {
-	[_lock lock];
-	
-	_sizeOfAllForks = size;
-	
-	_bools.folderSizeIsCalculated = YES;
-	_folderSize = size;
-	
-	[_lock unlock];
+	[[self cache] setFileSize:size];
 }
+//#endif
 
 @end

@@ -1,0 +1,22 @@
+﻿"Background" = "Tło";
+"Black & White" = "Czarnobiały";
+"Cancel" = "Poniechaj";
+"Choose..." = "Wybierz...";
+"Compress" = "Kompresja";
+"Convert Image..." = "Konwersja obrazka...";
+"Crop" = "Kadruj";
+"Height:" = "Wysokość:";
+"Image: " = "Obrazek: ";
+"Rotate Left" = "Obróć w lewo";
+"Rotate Right" = "Obróć w prawo";
+"Save" = "Zachowaj";
+"Scale preview" = "Skaluj przegląd";
+"Size" = "Wielkość";
+"Width:" = "Szerokość:";
+"untitled" = "bez nazwy";
+
+/* ==== UNLOCALIZED ==== */
+
+"Format" = "Format";
+"Image Converter" = "Image Converter";
+"OK" = "OK";

@@ -1,0 +1,12 @@
+﻿"An exception occurred.  In some cases exceptions are harmless, but if you want to be safe, relaunch %@. Please help us improve %@ by sending this report and telling us what happened." = "Ha ocurrido una excepción, En algunos casos estas son inofensivas, pero si desea sentirse más seguro, reinicie %@. Por favor ayúdenos a mejorar %@ enviandonos este reporte y diciéndonos que sucedió.";
+"Crash log information:" = "Información de la bitácora de errores:";
+"Don't Send" = "No Enviar";
+"Error!" = "¡Error!";
+"Exception log information:" = "Información de la bitácora de excepción:";
+"Path Finder has encountered an unexpected error.  Please email this report to crashreport@cocoatech.com so it can be fixed in the next release." = "Path Finder ha encontrado un error inesperado. Por favor envíe este reporte a crashreport@cocoatech.com para que el problema pueda ser solucionado en la próxima versión.";
+"Path Finder was unable to automatically email the bug report.  Copy and paste the contents of this window and email it to crashreport@cocoatech.com" = "Path Finder no pudo enviar el reporte de errores de manera automática. Copie y pegue el contenido de esta ventana y envíelo por correo a crashreport@cocoatech.com";
+"Please describe what you were doing when the problem occurred." = "Por favor describa lo que estaba haciendo cuando se produjo el error.";
+"Please tell us about the problem %@ encounted." = "Por favor díganos acerca del problema %@ encontrado.";
+"Send Report" = "Enviar reporte";
+"Tell us what happened" = "Díganos que sucedió";
+"The last time you ran %@, it encountered a problem that forced it to quit.  Please help us improve %@ by sending this report and telling us what happened." = "La última ocasión que ejecutó %@, se encontró un problema que forzó a la aplicación a que se cerrara. Por favor ayúdenos a mejorar %@ enviandonos este reporte y diciendonos que sucedió.";

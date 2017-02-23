@@ -1,0 +1,9 @@
+﻿"Choose a valid destination." = "Kies een geldige bestemming.";
+"Compress" = "Comprimeer";
+"Compressing: %@ \nTo: %@" = "Comprimeert: %@ \nAls: %@";
+"Decompress" = "Decomprimeer";
+"Decompressing: %@ \nTo: %@" = "Decomprimeert: %@ \nNaar: %@";
+"Destination does not exist" = "Bestemming bestaat niet";
+"Items remaining to compress: %d" = "Nog te comprimeren onderdelen: %d";
+"Items remaining to decompress: %d" = "Nog te decomprimeren onderdelen: %d";
+"Password" = "Wachtwoord";

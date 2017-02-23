@@ -16,10 +16,10 @@
 	//the preferences shown in each page must be declared in info.plist proberly!
 	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
 	
-    unsigned int preferenceIndex = [preferences count];
+    NSInteger preferenceIndex = [_preferences count];
     while (preferenceIndex--)
 	{
-        NSString *aKey = [[preferences objectAtIndex: preferenceIndex] key];
+        NSString *aKey = [[_preferences objectAtIndex: preferenceIndex] key];
 		
 		//removeObjectForKey isn't Key-Value-Observing (KVO) compliant,
 		//so make sure all observers get notified
@@ -35,10 +35,10 @@
  	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
 	NSDictionary *defaultValues = [prefs volatileDomainForName: NSRegistrationDomain];
 	
-    unsigned int preferenceIndex = [preferences count];
+    NSInteger preferenceIndex = [_preferences count];
     while (preferenceIndex--)
 	{
-        NSString *key = [[preferences objectAtIndex: preferenceIndex] key];
+        NSString *key = [[_preferences objectAtIndex: preferenceIndex] key];
 		
 		id defValue = [defaultValues objectForKey: key];
 		id prefValue = [prefs objectForKey: key];

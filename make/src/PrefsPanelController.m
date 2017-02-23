@@ -9,6 +9,7 @@
 #import "PrefsPanelController.h"
 #import <OmniAppKit/OAPreferenceClientRecord.h>
 #import <OmniAppKit/OAPreferenceClient.h>
+#import <OmniAppKit/OAPreferenceController.h>
 
 @interface OAPreferenceController(MakeVisible)
 - (void)_restoreDefaultsSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
@@ -52,7 +53,7 @@
 		NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         
 		//the preferences shown in each page must be declared proberly in info.plist!
-        clientEnumerator = [[self allClientRecords] objectEnumerator];
+        clientEnumerator = [[PrefsPanelController allClientRecords] objectEnumerator];
         while ((aClientRecord = [clientEnumerator nextObject])) {
             NSArray *preferenceKeys;
             NSEnumerator *keyEnumerator;
@@ -69,7 +70,7 @@
 			}
         }
     }
-    [nonretained_currentClient valuesHaveChanged];
+    [[self currentClient] valuesHaveChanged];
 }
 
 @end

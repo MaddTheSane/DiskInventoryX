@@ -1,0 +1,12 @@
+﻿"An exception occurred.  In some cases exceptions are harmless, but if you want to be safe, relaunch %@. Please help us improve %@ by sending this report and telling us what happened." = "Ein Ausnahmefehler ist aufgetreten. In einigen Fällen sind Ausnahmefehler harmlos, aber Sie sind auf der sicheren Seite, wenn Sie %@ neustarten. Bitte helfen Sie uns dabei, %@ zu verbessern, indem Sie uns diesen Bericht senden und beschreiben, was passiert ist.";
+"Crash log information:" = "Fehlerprotokoll Information:";
+"Don't Send" = "Nicht senden";
+"Error!" = "Fehler!";
+"Exception log information:" = "Ausnahmeprotokoll Information:";
+"Path Finder has encountered an unexpected error.  Please email this report to crashreport@cocoatech.com so it can be fixed in the next release." = "Path Finder ist auf einen unerwarteten Fehler gestoßen. Bitte senden Sie diesen Bericht per E-Mail an crashreport@cocoatech.com, so dass dieser Fehler im nächsten Release behoben werden kann.";
+"Path Finder was unable to automatically email the bug report.  Copy and paste the contents of this window and email it to crashreport@cocoatech.com" = "Es war Path Finder nicht möglich, den Fehlerbericht automatisch zu versenden. Kopieren Sie den Inhalt dieses Fensters, und senden Sie ihn per E-Mail an crashreport@cocoatech.com";
+"Please describe what you were doing when the problem occurred." = "Bitte beschreiben Sie, was Sie taten als das Problem aufgetreten ist.";
+"Please tell us about the problem %@ encounted." = "Bitte teilen Sie uns weitere Informationen über das Problem %@ mit.";
+"Send Report" = "Bericht versenden";
+"Tell us what happened" = "Beschreiben Sie was passiert ist";
+"The last time you ran %@, it encountered a problem that forced it to quit.  Please help us improve %@ by sending this report and telling us what happened." = "Als Sie %@ das letzte Mal ausführten, ist es auf ein Problem gestoßen, dass es gezwungen hat, sich zu beenden. Bitte helfen Sie uns dabei, %@ zu verbessern indem Sie diesen Bericht an uns senden, und beschreiben, was passiert ist.";

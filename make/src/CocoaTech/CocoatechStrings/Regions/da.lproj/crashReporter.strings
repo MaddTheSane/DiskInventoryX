@@ -1,0 +1,15 @@
+﻿
+/* ==== UNLOCALIZED ==== */
+
+"An exception occurred.  In some cases exceptions are harmless, but if you want to be safe, relaunch %@. Please help us improve %@ by sending this report and telling us what happened." = "An exception occurred.  In some cases exceptions are harmless, but if you want to be safe, relaunch %@. Please help us improve %@ by sending this report and telling us what happened.";
+"Crash log information:" = "Crash log information:";
+"Don't Send" = "Don't Send";
+"Error!" = "Error!";
+"Exception log information:" = "Exception log information:";
+"Path Finder has encountered an unexpected error.  Please email this report to crashreport@cocoatech.com so it can be fixed in the next release." = "Path Finder has encountered an unexpected error.  Please email this report to crashreport@cocoatech.com so it can be fixed in the next release.";
+"Path Finder was unable to automatically email the bug report.  Copy and paste the contents of this window and email it to crashreport@cocoatech.com" = "Path Finder was unable to automatically email the bug report.  Copy and paste the contents of this window and email it to crashreport@cocoatech.com";
+"Please describe what you were doing when the problem occurred." = "Please describe what you were doing when the problem occurred.";
+"Please tell us about the problem %@ encounted." = "Please tell us about the problem %@ encounted.";
+"Send Report" = "Send Report";
+"Tell us what happened" = "Tell us what happened";
+"The last time you ran %@, it encountered a problem that forced it to quit.  Please help us improve %@ by sending this report and telling us what happened." = "The last time you ran %@, it encountered a problem that forced it to quit.  Please help us improve %@ by sending this report and telling us what happened.";

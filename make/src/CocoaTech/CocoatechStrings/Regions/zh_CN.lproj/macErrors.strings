@@ -1,0 +1,5 @@
+﻿"-47" = "文件正忙";
+"-5000" = "操作访问权限不足";
+"-61" = "写权限不足";
+"-8081" = "文件正忙";
+"The operation could not be completed because the disk is in use" = "由于该磁盘正在使用，本操作不能完成";

@@ -1,0 +1,9 @@
+﻿"Choose a valid destination." = "Vyberte správně umístění.";
+"Compress" = "Komprimovat";
+"Compressing: %@ \nTo: %@" = "Komprimuji: %@ \nDo: %@";
+"Decompress" = "Rozbalit";
+"Decompressing: %@ \nTo: %@" = "Rozbaluji: %@ \nDo: %@";
+"Destination does not exist" = "Umístění neexistuje";
+"Items remaining to compress: %d" = "Zbývající položky ke komprimaci: %d";
+"Items remaining to decompress: %d" = "Zbývající položky k dekomprimaci: %d";
+"Password" = "Heslo";

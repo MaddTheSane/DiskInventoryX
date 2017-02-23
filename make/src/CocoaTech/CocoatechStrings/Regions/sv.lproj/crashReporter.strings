@@ -1,0 +1,12 @@
+﻿"An exception occurred.  In some cases exceptions are harmless, but if you want to be safe, relaunch %@. Please help us improve %@ by sending this report and telling us what happened." = "Ett undantag inträffade. I vissa fall är undantag ofarliga, men om du vill vara på den säkra sidan bör du starta om %@. Hjälp oss att förbättra %@ genom att skicka denna rapport och berätta för oss vad som hände.";
+"Crash log information:" = "Information i kraschloggen:";
+"Don't Send" = "Skicka inte";
+"Error!" = "Fel!";
+"Exception log information:" = "Information i undantagsloggen:";
+"Path Finder has encountered an unexpected error.  Please email this report to crashreport@cocoatech.com so it can be fixed in the next release." = "Path Finder har stött på ett oväntat fel. Vi ber dig e-posta denna rapport till crashreport@cocoatech.com så att det kan åtgärdas till nästa version.";
+"Path Finder was unable to automatically email the bug report.  Copy and paste the contents of this window and email it to crashreport@cocoatech.com" = "Path Finder lyckades inte e-posta felrapporten automatiskt. Kopiera och klistra in innehållet i detta fönster och e-posta det till crashreport@cocoatech.com";
+"Please describe what you were doing when the problem occurred." = "Beskriv vad du gjorde när problemet uppstod.";
+"Please tell us about the problem %@ encounted." = "Berätta för oss om problemet %@ stötte på.";
+"Send Report" = "Skicka rapport";
+"Tell us what happened" = "Berätta för oss vad som hände";
+"The last time you ran %@, it encountered a problem that forced it to quit.  Please help us improve %@ by sending this report and telling us what happened." = "Senaste gången du körde %@ uppstod ett problem som tvingade programmet att avslutas. Hjälp oss att förbättra %@ genom att skicka denna rapport och berätta för oss vad som hände.";

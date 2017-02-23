@@ -7,7 +7,7 @@
 //
 
 #import "DrivesPanelController.h"
-#import <CocoaTechFoundation/NTVolumeMgr.h>
+#import <CocoatechFile/NTVolumeMgr.h>
 #import "FileSizeFormatter.h"
 #import "VolumeNameTransformer.h"
 #import "VolumeUsageTransformer.h"
@@ -87,22 +87,17 @@
 
 - (IBAction)openVolume:(id)sender
 {
-	//get selected rows as an array of NSNumbers
-	NSArray *indexArray = [[_volumesTableView selectedRowIndexes] array];
-	
-	//open volume shown in each of the selected rows
-	NSEnumerator *indexEnum = [indexArray objectEnumerator];
-	NSNumber *index;
-	while ( (index = [indexEnum nextObject] ) != nil )
+	NSIndexSet *indexes = [_volumesTableView selectedRowIndexes];
+	for (NSInteger index = indexes.firstIndex; index != NSNotFound; index = [indexes indexGreaterThanIndex:index])
 	{
-		NSString *path = [[_volumes objectAtIndex: [index unsignedIntValue]] valueForKeyPath: @"volume.mountPointFileDesc.path"];
+		NSString *path = [[_volumes objectAtIndex: index] valueForKeyPath: @"volume.mountPoint.path"];
 		
 		//defer it till the next loop cycle (otherwise the "Open Volume" button stays in "pressed" mode during the loading)
 		[[NSRunLoop currentRunLoop] performSelector:@selector(openDocumentWithContentsOfFile:)
 											 target: [NSDocumentController sharedDocumentController]
 										   argument: path
 											  order: 1
-											  modes: [NSArray arrayWithObject: NSDefaultRunLoopMode]];
+											  modes: @[NSDefaultRunLoopMode]];
 	}
 }
 
@@ -132,31 +127,29 @@
 - (void) rebuildVolumesArray
 {
 	NSArray *vols;
-	if ( _volumes == nil )
-		//first time, so use the class method (will enumerate volumes instantly)
-		vols = [NTVolumeMgr mountedVolumes: YES /*userViewableOnly*/];
-	else
+	//if ( _volumes == nil )
+	//	//first time, so use the class method (will enumerate volumes instantly)
+	//	vols = [NTVolumeMgr mountedVolumes: YES /*userViewableOnly*/];
+	//else
 		//called due to a kNTVolumeMgrVolumeHasMountedNotification, so get a copy of [NTVolumeMgr sharedInstance]'s cached volume array
-		vols = [[NTVolumeMgr sharedInstance] mountedVolumes];
+		vols = [[NTVolumeMgr sharedInstance] volumes];
 	
 	[self willChangeValueForKey: @"volumes"];
 
-	NS_DURING
+	@try {
 		[_volumes release];
 		_volumes = [[NSMutableArray alloc] initWithCapacity: [vols count]];
 		
-		NSEnumerator *volEnum = [vols objectEnumerator];
-		NTVolume *volume;
-		while ( ( volume = [volEnum nextObject] ) != nil )
+		for ( NTVolume *volume in vols )
 		{
 			//filter out the virtual "Network" volume
-			if ( ![[volume driveName] isEqualToString: @"Network"] )
+			if ( ![[volume fileSystemName] isEqualToString: @"Network"] )
 			{
 				//put NTVolume object for key "volume" in the entry dictionary
 				NSMutableDictionary *entry = [NSMutableDictionary dictionaryWithObject: volume forKey: @"volume"];
 				
 				//put volume icon for key "image" in the entry dictionary
-				NSImage *volImage = [NSImage imageForDesc:[volume mountPointFileDesc] size: 32];
+				NSImage *volImage = [NSImage imageForDesc:[volume mountPoint] size: 32];
 				
 				[entry setObject: ( volImage == nil ? (id)[NSNull null] : volImage )
 						  forKey: @"image"];
@@ -164,8 +157,8 @@
 				[_volumes addObject: entry];
 			}
 		}
-	NS_HANDLER
-	NS_ENDHANDLER
+	} @catch (NSException *localException) {
+	}
 	
 	[self rebuildProgressIndicatorArray];
 	

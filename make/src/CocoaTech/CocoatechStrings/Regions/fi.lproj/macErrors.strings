@@ -1,0 +1,5 @@
+﻿"-47" = "File is busy";
+"-5000" = "Insufficient access privileges for operation";
+"-61" = "Insufficient write permission for operation";
+"-8081" = "File is busy";
+"The operation could not be completed because the disk is in use" = "Toimintoa ei voitu suorittaa loppuun sillä levy on käytössä";

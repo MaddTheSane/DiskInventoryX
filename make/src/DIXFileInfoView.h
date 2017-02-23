@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "NTInfoView.h"
 
 @interface DIXFileInfoView : NTInfoView {
 

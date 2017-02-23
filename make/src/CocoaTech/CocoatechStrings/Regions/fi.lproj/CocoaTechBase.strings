@@ -1,0 +1,33 @@
+﻿"Automatic" = "Automaattinen";
+"Black" = "Musta";
+"Blue" = "Sininen";
+"Brown" = "Ruskea";
+"Cancel" = "Kumoa";
+"Choose Application" = "Valitse ohjelma";
+"Choose File" = "Valitse tiedosto";
+"Choose Image" = "Valitse kuva";
+"Choose..." = "Valitse...";
+"Clear All" = "Poista kaikki";
+"Cyan" = "Syaani";
+"Edit Encodings Menu..." = "Muokkaa merkkikoodausvalikkoa...";
+"Encoding:" = "Merkkikoodaus:";
+"Green" = "Vihreä";
+"Ignore HTML Commands" = "Älä huomioi HTML-komentoja";
+"Ignore RTF Commands" = "Älä huomioi RTF-komentoja";
+"Magenta" = "Violetti";
+"Orange" = "Oranssi";
+"Processed %d items to \"%@\"" = "Prosessoitu %d kohdetta kohteeseen \"%@\"";
+"Purple" = "Violetti";
+"Red" = "Punainen";
+"Revert to Default" = "Palaa oletusarvoihin";
+"Select All" = "Valitse kaikki";
+"Stop" = "Pysäytä";
+"Text Encodings" = "Merkkikoodaukset";
+"Transparent" = "Läpinäkyvä";
+"White" = "Valkoinen";
+"Yellow" = "Keltainen";
+"bytes" = "tavua";
+
+/* ==== UNLOCALIZED ==== */
+
+"OK" = "OK";

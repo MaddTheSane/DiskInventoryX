@@ -1,0 +1,39 @@
+﻿"AES-128 (recommended)" = "AES-128 (empfohlen)";
+"Burn Image..." = "Image brennen...";
+"Cancel" = "Abbrechen";
+"Change Format..." = "Disk Image konvertieren...";
+"Convert" = "Umwandeln";
+"Converting Image..." = "Image wird konvertiert...";
+"Create" = "Erstellen";
+"Create Disk Image" = "Disk Image erstellen";
+"Create with directory:" = "Image von einem Ordner:";
+"Create with size:" = "Image mit fester Größe:";
+"Create..." = "Neues Disk Image...";
+"Creating Image..." = "Image wird erstellt...";
+"DVD/CD-R master" = "DVD/CD-R Master";
+"Disk Image" = "Image";
+"Disk Image Converter" = "Disk Image Konvertierer";
+"Disk Image Converting" = "Disk Image konvertieren";
+"Disk Image Progress" = "Disk Image Fortschritt";
+"Encryption:" = "Verschlüsselung:";
+"Finished" = "Fertig";
+"Image Format" = "Disk Image umwandeln in:";
+"Internet enable" = "Internet aktiviert";
+"Megabytes" = "Megabyte";
+"Mount after creating" = "Image nach dem Erstellen mounten";
+"Mounting Image..." = "Image wird gemountet...";
+"None" = "Keine";
+"Read only" = "Schreibgeschütztes Image";
+"Read only compressed" = "Schreibgeschütztes komprimiertes Image";
+"Read only zlib compressed" = "Schreibgeschützt zlib-komprimiert";
+"Read/Write" = "Image mit Lese / Schreibzugriff";
+"Sparse" = "Mitwachsend";
+"The file must have the .dmg, .img, .cdr, .iso, .smi or .toast extensions." = "Die Dateiendung muss .dmg, .img, .cdr, .iso, .smi oder .toast sein.";
+"Volume Name:" = "Image Name:";
+"Volume Size:" = "Image Größe:";
+"untitled" = "unbenannt";
+
+/* ==== UNLOCALIZED ==== */
+
+"Format:" = "Format:";
+"Name:" = "Name:";

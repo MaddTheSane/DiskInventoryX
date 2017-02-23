@@ -25,8 +25,8 @@
 	if ( value == nil )
 		return nil;
 	
-	NSString *name = [value valueForKeyPath: @"mountPointFileDesc.displayName"];
-	NSString *volumeType = [value valueForKeyPath: @"mountPointFileDesc.volumeFormat"];
+	NSString *name = [value valueForKeyPath: @"mountPoint.displayName"];
+	NSString *volumeType = [value valueForKeyPath: @"volumeFormat"];
 	
 	//create an attributed string with the format "<volume display name><line break> <volume format>"
 	

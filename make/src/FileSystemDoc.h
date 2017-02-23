@@ -17,7 +17,7 @@
 {
     NSString *_kindName;
     NSNumber *_fileCount;
-	unsigned _fileCountValue;
+	NSInteger _fileCountValue;
     NSNumber *_size;
 	unsigned long long _sizeValue;
 	
@@ -33,8 +33,7 @@
 - (NSString*) kindName;
 
 - (NSNumber*) fileCount;		//# of files of this kind
-- (unsigned) fileCountValue;
-- (void) setFileCountValue: (unsigned) newCount;
+@property (nonatomic) NSInteger fileCountValue;
 
 - (NSNumber*) size;			//sum of sizes of files of this kind
 - (unsigned long long) sizeValue;

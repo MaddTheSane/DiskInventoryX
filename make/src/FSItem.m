@@ -7,8 +7,8 @@
 //
 
 #import "FSItem.h"
-#import <CocoaTechFoundation/NTFileDesc.h>
-#import <CocoaTechFoundation/NTFSRefObject.h>
+#import <CocoatechFile/NTFileDesc.h>
+#import <CocoatechFile/NTFSRefObject.h>
 #import <NTFileDesc-AccessExtensions.h>
 #import "NTFSRefObject-AccessExtensions.h"
 #import <OmniFoundation/NSArray-OFExtensions.h>
@@ -168,7 +168,7 @@ static struct _BulkCatalogInfoRec {
 	_fileDesc = desc;
 }
 
-- (unsigned) hash
+- (NSUInteger) hash
 {
 	if ( _hash == 0 )
 		_hash = [[self path] hash];
@@ -254,7 +254,7 @@ static struct _BulkCatalogInfoRec {
 	//NSTFileDesc.exists checks it's FSRef and it's path, but the path might have been generated
 	//from the FSRef. But as we want to know if the file still exists at the place at the
 	//time we searched the file, we have to check the path that we store.
-	return [_fileDesc exists] && [NTFileUtilities validPath:[self path]];
+	return [_fileDesc stillExists] && [_fileDesc isValid];
 }
 
 - (NSImage*) iconWithSize: (unsigned) iconSize
@@ -426,8 +426,11 @@ static struct _BulkCatalogInfoRec {
 				NTFSRefObject *fsRefObject = [_fileDesc fsRefObject];
 				if ( usePhysicalSize )
 					size = [fsRefObject rsrcForkPhysicalSize] + [fsRefObject dataForkPhysicalSize];
-				else
-					size = [fsRefObject rsrcForkSize] + [fsRefObject dataForkSize];
+				else {
+					NTFileDesc *fDesc = [[NTFileDesc alloc] initWithFSRefObject:fsRefObject];
+					size = [fDesc rsrcForkSize] + [fDesc dataForkSize];
+					[fDesc release];
+				}
 			}
 			break;
 			
@@ -603,7 +606,7 @@ static struct _BulkCatalogInfoRec {
 			[fsRefObject setPath: path];
 		}
 		
-		return [[fsRefObject ntPath] path];
+		return [[self fileDesc] path];
 	}
 	else
 		return [self name];
@@ -690,7 +693,7 @@ static struct _BulkCatalogInfoRec {
 			  fsRef: (FSRef*) fsRef
 		catalogInfo: (FSCatalogInfo *)catalogInfo
 {
-    self = [super init];
+	if (self = [super init]) {
 	
 	_type = FileFolderItem;
 	
@@ -703,7 +706,7 @@ static struct _BulkCatalogInfoRec {
 													   catalogInfo: catalogInfo
 															bitmap: kCatalogInfoBitmapBulk
 															  name: name
-														 parentRef: [[parent fileDesc] fsRefObject]];
+														 /*parentRef: [[parent fileDesc] fsRefObject]*/];
 	
 	_fileDesc = [[NTFileDesc alloc] initWithFSRefObject: fsRefObject];
 	[fsRefObject release];
@@ -720,6 +723,7 @@ static struct _BulkCatalogInfoRec {
 		g_folderCount++;
     else
         g_fileCount++;
+	}
 	
     return self;
 }

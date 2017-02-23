@@ -1,0 +1,12 @@
+﻿"An exception occurred.  In some cases exceptions are harmless, but if you want to be safe, relaunch %@. Please help us improve %@ by sending this report and telling us what happened." = "Tapahtui poikkeus. Joissain tapauksissa poikkeukset ovat harmittomia, mutta jos haluat olla varma käynnista %@ uudelleen. Ole hyvä ja auta meitä parantamaan %@-ohjelmaa lähettämällä meille tämä raportti ja kertomalla meille mitä tapahtui.";
+"Crash log information:" = "Kaatumisraportin tietoja:";
+"Don't Send" = "Älä lähetä";
+"Error!" = "Virhe!";
+"Exception log information:" = "Poikkeusraportin tietoja:";
+"Path Finder has encountered an unexpected error.  Please email this report to crashreport@cocoatech.com so it can be fixed in the next release." = "Path Finder on kohdannut odottamattoman virheen. Ole ystävällinen ja lähetä tämä raportti osoitteeseen crashreport@cocoatech.com jotta se voidaan korjata seuraavaan julkaistaavaan versioon.";
+"Path Finder was unable to automatically email the bug report.  Copy and paste the contents of this window and email it to crashreport@cocoatech.com" = "Path Finder ei pystynyt sähköpostittamaan bugiraporttia automaattisesti. Kopioi ja liimaa tämän ikkunan sisältö ja sähköpostita se osoitteseen crashreport@cocoatech.com";
+"Please describe what you were doing when the problem occurred." = "Ole hyvä ja kuvaile mitä teit, kun ongelma tapahtui.";
+"Please tell us about the problem %@ encounted." = "Ole hyvä ja kerro meille ongelmasta jonka %@ kohtasi.";
+"Send Report" = "Lähetä raportti";
+"Tell us what happened" = "Kerro meille mitä tapahtui";
+"The last time you ran %@, it encountered a problem that forced it to quit.  Please help us improve %@ by sending this report and telling us what happened." = "Viimeksi, kun käytit %@-ohjelmaa, se kohtasi ongelman joka pakotti lopettamaan. Ole hyvä ja auta meitä parantamaan %@-ohjelmaa lähettämällä tämä raportti ja kertomalla meille mitä tapahtui.";

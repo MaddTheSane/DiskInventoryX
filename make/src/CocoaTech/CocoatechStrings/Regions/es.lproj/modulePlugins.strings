@@ -1,0 +1,37 @@
+﻿"Aggressive Samba search" = "Búsqueda agresiva en Samba";
+"All..." = "Todo...";
+"Appearance" = "Apariencia";
+"Camera" = "Cámara";
+"Clear Samba server cache" = "Vaciar cache de servidor Samba";
+"Crop" = "Recortar";
+"DEVICES" = "DISPOSITIVOS";
+"FAVORITES" = "FAVORITOS";
+"Flip" = "Invertir";
+"Icon Size" = "Tamaño de los iconos";
+"Info" = "Información";
+"Launch..." = "Lanzar...";
+"PLACES" = "UBICACIONES";
+"RECENT DOCUMENTS" = "DOCUMENTOS RECIENTES";
+"Recent Documents" = "Documentos recientes";
+"Refresh Samba server list every:" = "Refrescar lista de servidor Samba cada:";
+"Repository" = "Repositorio";
+"Rotation" = "Rotación";
+"SEARCH FOR" = "BUSCAR";
+"SHARED" = "COMPARTIDO";
+"Shared" = "Compartido";
+"Tool" = "Herramienta";
+"add" = "añadir";
+"commit" = "Ejecutar";
+"minutes" = "minutos";
+"other" = "otro";
+"raw" = "crudo";
+"revert" = "revertir";
+"status" = "estado";
+"update" = "actualizar";
+
+/* ==== UNLOCALIZED ==== */
+
+"Zoom" = "Zoom";
+"diff" = "diff";
+"rm" = "rm";
+"terminal" = "terminal";

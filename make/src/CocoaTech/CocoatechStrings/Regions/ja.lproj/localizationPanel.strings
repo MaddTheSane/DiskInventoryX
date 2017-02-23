@@ -1,0 +1,11 @@
+﻿"##INSTRUCTIONS##" = "1) 地域を選択。\n2) “未ローカライズの文字列を見る”をクリックして翻訳する文字列のリストを表示。\n3) 英語の文字列を入力。\n4) 翻訳した文字列を入力。\n5) return キーまたは“ローカライズ”ボタンをクリックしてローカリゼーションを確定。\n6) テストするには、アプリケーションをいったん終了して再起動する必要があります。\n7) 翻訳した文字列はアプリケーション内部の CocoaTechStrings.framework に書き込まれます。\n8) 翻訳した文字列を提出するには“ローカリゼーションをメール”をクリックします。上記のフレームワークが圧縮されるので、それを CocoaTech へメールしてください。";
+"Close" = "閉じる";
+"Email Localization" = "ローカリゼーションをメール";
+"English:" = "英語：";
+"Help us Localize Path Finder!" = "Path Finder のローカライズにご協力ください！";
+"If you find an unlocalized string in your language, please correct it and it will be included in the next release of Path Finder." = "お使いの言語で未ローカライズの文字列を見つけたら、どうかそれを直してください。次回の Path Finder で修正するようにします。";
+"Localization" = "ローカリゼーション";
+"Localize" = "ローカライズ";
+"Localized:" = "翻訳：";
+"Region:" = "地域：";
+"View Unlocalized Strings" = "未ローカライズの文字列を見る";

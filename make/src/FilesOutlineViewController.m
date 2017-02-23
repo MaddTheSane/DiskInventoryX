@@ -8,7 +8,7 @@
 
 #import "FilesOutlineViewController.h"
 #import "FSItem.h"
-#import <CocoaTechFoundation/NSImage-NTExtensions.h>
+//#import <CocoaTechFoundation/NSImage-NTExtensions.h>
 #import "MainWindowController.h"
 #import "Preferences.h"
 
@@ -39,7 +39,7 @@
     int rowIndex = [self rowAtPoint:point];
 
     if ( rowIndex >= 0 && [self numberOfSelectedRows] <= 1)
-        [self selectRow: rowIndex byExtendingSelection: NO];
+        [self selectRowIndexes: [NSIndexSet indexSetWithIndex:rowIndex] byExtendingSelection: NO];
 
     id delegate = [self delegate];
     
@@ -237,9 +237,9 @@ objectValueForTableColumn: (NSTableColumn *) tableColumn
 		[self reloadPackages: nil];
 		
 		//try to restore selection
-		int row = [_outlineView rowForItem: selectedItem];
+		NSInteger row = [_outlineView rowForItem: selectedItem];
 		if ( row >= 0 )
-			[_outlineView selectRow: row byExtendingSelection: NO];
+			[_outlineView selectRowIndexes: [NSIndexSet indexSetWithIndex:row] byExtendingSelection: NO];
 		
 		//the view doesn't redraw properly, so invalidate it
 		[_outlineView setNeedsDisplay: YES];
@@ -296,7 +296,7 @@ objectValueForTableColumn: (NSTableColumn *) tableColumn
         [_outlineView deselectAll: nil];
     else
     {
-        int row = [_outlineView rowForItem: item];
+        NSInteger row = [_outlineView rowForItem: item];
         
         //if the item can't be found in the view, then the user hasn't expanded the parents yet
         if ( row < 0 )
@@ -339,7 +339,7 @@ objectValueForTableColumn: (NSTableColumn *) tableColumn
             [_outlineView deselectAll: nil];
         else
         {
-            [_outlineView selectRow: row byExtendingSelection: NO];
+            [_outlineView selectRowIndexes: [NSIndexSet indexSetWithIndex:row] byExtendingSelection: NO];
             [_outlineView scrollRowToVisible: row];
         }
     }

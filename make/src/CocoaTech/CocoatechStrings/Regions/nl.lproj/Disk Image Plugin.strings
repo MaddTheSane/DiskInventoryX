@@ -1,0 +1,39 @@
+﻿"AES-128 (recommended)" = "AES-128 (aanbevolen)";
+"Burn Image..." = "Brand schijfkopiebestand...";
+"Cancel" = "Annuleer";
+"Change Format..." = "Wijzig formaat...";
+"Convert" = "Converteer";
+"Converting Image..." = "Converteert schijfkopiebestand...";
+"Create" = "Maak";
+"Create Disk Image" = "Maak schijfkopiebestand";
+"Create with directory:" = "Maak aan met map:";
+"Create with size:" = "Maak aan met grootte:";
+"Create..." = "Maak...";
+"Creating Image..." = "Maakt schijfkopiebestand...";
+"Disk Image" = "Schijfkopiebestand";
+"Disk Image Converter" = "Schijfkopiebestand converteerder";
+"Disk Image Converting" = "Schijfkopiebestand conversie";
+"Disk Image Progress" = "Voortgang schijfkopiebestand";
+"Encryption:" = "Codering:";
+"Finished" = "Gereed";
+"Format:" = "Formaat:";
+"Image Format" = "Afbeeldingsformaat";
+"Internet enable" = "Geschikt voor internet";
+"Megabytes" = "Megabyte";
+"Mount after creating" = "Activeer na aanmaken";
+"Mounting Image..." = "Activeert schijfkopiebestand...";
+"Name:" = "Naam:";
+"None" = "Geen";
+"Read only" = "Alleen lezen";
+"Read only compressed" = "Alleen-lezen gecomprimeerd";
+"Read only zlib compressed" = "Alleen-lezen zlib gecomprimeerd";
+"Read/Write" = "Lezen/schrijven";
+"Sparse" = "Spaarzaam";
+"The file must have the .dmg, .img, .cdr, .iso, .smi or .toast extensions." = "Het bestand moet eindigen op de extensie .dmg, .img, .cdr, .iso, .smi of .toast.";
+"Volume Name:" = "Volumenaam:";
+"Volume Size:" = "Volumegrootte:";
+"untitled" = "naamloos";
+
+/* ==== UNLOCALIZED ==== */
+
+"DVD/CD-R master" = "DVD/CD-R master";

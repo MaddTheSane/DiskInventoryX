@@ -1,0 +1,12 @@
+﻿"Choose a valid destination." = "Scegli una destinazione valida.";
+"Compress" = "Comprimi";
+"Compressing: %@ \nTo: %@" = "Comprimo: %@ \nIn: %@";
+"Decompress" = "Decomprimi";
+"Decompressing: %@ \nTo: %@" = "Decomprimo: %@ \nIn: %@";
+"Destination does not exist" = "La destinazione non esiste";
+"Items remaining to compress: %d" = "Elementi ancora da comprimere: %d";
+"Items remaining to decompress: %d" = "Elementi ancora da decomprimere: %d";
+
+/* ==== UNLOCALIZED ==== */
+
+"Password" = "Password";

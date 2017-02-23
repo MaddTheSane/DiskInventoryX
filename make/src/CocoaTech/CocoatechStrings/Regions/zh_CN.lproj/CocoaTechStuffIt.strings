@@ -1,0 +1,9 @@
+﻿"Choose a valid destination." = "选取一个有效的目标位置。";
+"Compress" = "压缩";
+"Compressing: %@ \nTo: %@" = "正在压缩: %@ \n到: %@";
+"Decompress" = "解压缩";
+"Decompressing: %@ \nTo: %@" = "正在解压: %@ \n到: %@";
+"Destination does not exist" = "目标位置不存在";
+"Items remaining to compress: %d" = "待压缩的项目: %d";
+"Items remaining to decompress: %d" = "待解压的项目: %d";
+"Password" = "密码";

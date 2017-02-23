@@ -1,0 +1,12 @@
+﻿"Compress" = "압축";
+"Decompress" = "압축해제";
+"Password" = "암호";
+
+/* ==== UNLOCALIZED ==== */
+
+"Choose a valid destination." = "Choose a valid destination.";
+"Compressing: %@ \nTo: %@" = "Compressing: %@ \nTo: %@";
+"Decompressing: %@ \nTo: %@" = "Decompressing: %@ \nTo: %@";
+"Destination does not exist" = "Destination does not exist";
+"Items remaining to compress: %d" = "Items remaining to compress: %d";
+"Items remaining to decompress: %d" = "Items remaining to decompress: %d";

@@ -1,0 +1,22 @@
+﻿"Background" = "Bakgrunn";
+"Black & White" = "Svart-hvitt ";
+"Cancel" = "Avbryt";
+"Choose..." = "Velg...";
+"Compress" = "Komprimer";
+"Convert Image..." = "Konverter bilde...";
+"Crop" = "Beskjær";
+"Height:" = "Høyde:";
+"Image Converter" = "Bildekonvertering";
+"Image: " = "Bilde: ";
+"Rotate Left" = "Roter mot venstre";
+"Rotate Right" = "Roter mot høyre";
+"Save" = "Arkiver";
+"Scale preview" = "Skaler forhåndsvisning";
+"Size" = "Størrelse";
+"Width:" = "Bredde:";
+"untitled" = "uten navn";
+
+/* ==== UNLOCALIZED ==== */
+
+"Format" = "Format";
+"OK" = "OK";

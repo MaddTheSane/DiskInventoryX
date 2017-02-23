@@ -26,8 +26,7 @@ NSString *CollectFileKindStatisticsCanceledException = @"CollectFileKindStatisti
 
 - (id) initWithItem: (FSItem*) item
 {
-    self = [super init];
-    
+	if (self = [super init]) {
     _kindName = [item kindName];
 	[_kindName retain];
 
@@ -36,7 +35,8 @@ NSString *CollectFileKindStatisticsCanceledException = @"CollectFileKindStatisti
 	
 	_sizeValue = [item sizeValue];
     _size = nil;
-
+	}
+	
     return self;
 }
 
@@ -71,18 +71,14 @@ NSString *CollectFileKindStatisticsCanceledException = @"CollectFileKindStatisti
 	if ( _fileCount == nil || [_size unsignedLongLongValue] != _fileCountValue )
 	{
 		[_fileCount release];
-		_fileCount = [[NSNumber numberWithUnsignedInt: _fileCountValue] retain];
+		_fileCount = [[NSNumber numberWithUnsignedInteger: _fileCountValue] retain];
 	}
 	
     return _fileCount;
 }
+@synthesize fileCountValue = _fileCountValue;
 
-- (unsigned) fileCountValue
-{
-	return _fileCountValue;
-}
-
-- (void) setFileCountValue: (unsigned) newCount
+- (void) setFileCountValue: (NSInteger) newCount
 {
 	_fileCountValue = newCount;
 	
@@ -201,10 +197,83 @@ NSString *OldItem = @"OldItem";
     // Add any code here that needs to be executed once the windowController has loaded the document's window.
 }
 
+-(BOOL)readFromURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError * _Nullable *)outError
+{
+	//now the real work: loading the folder contents
+	@try {
+		_progressController = [[LoadingPanelController alloc] init];
+		[_progressController startAnimation];
+		
+		uint64_t startTime = getTime();
+		
+		_rootItem = [[FSItem alloc] initWithPath: [url path]];
+		[_rootItem setDelegate: self];
+		
+		//[_rootItem loadChilds];
+		[_rootItem loadChildren];
+		
+		uint64_t doneLoadingTime = getTime();
+		NSLog (@"loading time:  %.2f seconds", subtractTime(doneLoadingTime, startTime));
+		
+		LOG(@"************** Loading complete *******************" );
+		LOG(@"%u items created", g_fileCount + g_folderCount );
+		LOG(@"%u files", g_fileCount );
+		LOG(@"%u folders", g_folderCount );
+		
+		//ok, now we've got an FSItem for every file and directory in the given folder
+		//[_progressController setMessageText: NSLocalizedString( @"Classifying Files", @"")];
+		
+		//collect sizes and file count of all file kinds
+		[self refreshFileKindStatistics];
+		
+		uint64_t doneFileKindStatsTime = getTime();
+		NSLog (@"file kind statistics time:  %.2f seconds", subtractTime(doneFileKindStatsTime, doneLoadingTime));
+		
+		//the modal session must be ended in the same @try section (if no exception occured)
+		[_progressController release];
+		_progressController = nil;
+		
+	} @catch (NSException *localException) {
+		LOG( @"exception '%@' occured during directory traversal: %@", [localException name], [localException reason] );
+		
+		//according to the docu, we don't need to end a modal session explicitly in the case of an exception
+		[_progressController closeNoModalEnd];
+		[_progressController release];
+		_progressController = nil;
+		
+		[_rootItem release];
+		_rootItem = nil;
+		
+		if ( [[localException name] isEqualToString: FSItemLoadingCanceledException]
+			|| [[localException name] isEqualToString: CollectFileKindStatisticsCanceledException] )
+		{
+			//loading canceled by user
+			if (outError) {
+				*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil];
+			}
+		}
+		else
+		{
+			//error
+			NSRunInformationalAlertPanel( NSLocalizedString( @"The folder's content could not be loaded.", @""), @"%@", nil, nil, nil, [localException reason]);
+		}
+		
+		return NO;
+	}
+	
+	[_directoryStack release];
+	_directoryStack = nil;
+	
+	if ([self showPhysicalFileSize])
+		[[self rootItem] recalculateSize: YES];
+	
+	return YES;
+}
+
 - (BOOL) readFromFile: (NSString *) folder ofType: (NSString *) docType
 {
     //now the real work: loading the folder contents
-    NS_DURING
+    @try {
 		_progressController = [[LoadingPanelController alloc] init];
 		[_progressController startAnimation];	
 		
@@ -233,11 +302,11 @@ NSString *OldItem = @"OldItem";
 		uint64_t doneFileKindStatsTime = getTime();
 		NSLog (@"file kind statistics time:  %.2f seconds", subtractTime(doneFileKindStatsTime, doneLoadingTime));
 		
-		//the modal session must be ended in the same NS_DURING section (if no exception occured)
+		//the modal session must be ended in the same @try section (if no exception occured)
 		[_progressController release];
 		_progressController = nil;
 		
-    NS_HANDLER
+    } @catch (NSException *localException) {
         LOG( @"exception '%@' occured during directory traversal: %@", [localException name], [localException reason] );
 		
 		//according to the docu, we don't need to end a modal session explicitly in the case of an exception
@@ -256,11 +325,11 @@ NSString *OldItem = @"OldItem";
 		else
 		{
 			//error
-			NSRunInformationalAlertPanel( NSLocalizedString( @"The folder's content could not be loaded.", @""), [localException reason], nil, nil, nil);
+			NSRunInformationalAlertPanel( NSLocalizedString( @"The folder's content could not be loaded.", @""), @"%@", nil, nil, nil, [localException reason]);
 		}
 		
         NS_VALUERETURN( NO, BOOL );
-    NS_ENDHANDLER
+    }
 
     [_directoryStack release];
     _directoryStack = nil;
@@ -414,7 +483,7 @@ NSString *OldItem = @"OldItem";
 	
 	//move file/folder to trash
 	NSArray *filesToTrash = [NSArray arrayWithObject: [item name]];
-	int tag = 0;
+	NSInteger tag = 0;
 	if ( ![[NSWorkspace sharedWorkspace] performFileOperation: NSWorkspaceRecycleOperation
 													  source: [item folderName]
 												 destination: @""
@@ -494,7 +563,7 @@ NSString *OldItem = @"OldItem";
 	
 	FSItem *itemRefreshing = nil;
 	
-	NS_DURING
+	@try {
 		//we only show a progress indicator if the item to refresh has "many" childs
 		//(of course this could have changed since the loading, but what criteria should
 		//we use instead?)
@@ -514,7 +583,7 @@ NSString *OldItem = @"OldItem";
 		
 		[_progressController release];
 		_progressController = nil;
-	NS_HANDLER
+	} @catch (NSException *localException) {
 		[_progressController closeNoModalEnd];
 		[_progressController release];
 		_progressController = nil;
@@ -532,7 +601,7 @@ NSString *OldItem = @"OldItem";
 						  subMessage: [localException reason] ];
 		}
 		NS_VOIDRETURN;
-	NS_ENDHANDLER
+	}
 	
 	if ( _rootItem == item )
 	{
@@ -793,7 +862,7 @@ NSString *OldItem = @"OldItem";
 //================ implementation FileSystemDoc(Private) ======================================================
 
 //compares 2 FileKindStatistic objects by their sizes; the objects are identified by their kind names
-int CompareKindStatisticsIdentifiedByNames( id fs1, id fs2, void *context )
+static NSInteger CompareKindStatisticsIdentifiedByNames( id fs1, id fs2, void *context )
 {
     FileSystemDoc *doc = context;
 

@@ -1,0 +1,33 @@
+﻿"Automatic" = "Automatisk";
+"Black" = "Sort";
+"Blue" = "Blå";
+"Brown" = "Brun";
+"Cancel" = "Annuller";
+"Choose Application" = "Vælg program";
+"Choose File" = "Vælg fil";
+"Choose Image" = "Vælg billede";
+"Choose..." = "Vælg...";
+"Clear All" = "Slet alt";
+"Cyan" = "Turkis";
+"Edit Encodings Menu..." = "Rediger Kodnings-menu...";
+"Encoding:" = "Kodning:";
+"Green" = "Grøn";
+"Ignore HTML Commands" = "Ignorer HTML kommandoer";
+"Ignore RTF Commands" = "Ignorer RTF kommandoer";
+"Processed %d items to \"%@\"" = "Udførte %d emner til \"%@\"";
+"Purple" = "Lilla";
+"Red" = "Rød";
+"Revert to Default" = "Tilbage til standardindstilling";
+"Select All" = "Vælg alt";
+"Stop" = "Afbryd";
+"Text Encodings" = "Tekstkodning";
+"Transparent" = "Gennemsigtig";
+"White" = "Hvid";
+"Yellow" = "Gul";
+
+/* ==== UNLOCALIZED ==== */
+
+"Magenta" = "Magenta";
+"OK" = "OK";
+"Orange" = "Orange";
+"bytes" = "bytes";

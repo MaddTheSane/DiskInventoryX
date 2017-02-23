@@ -150,7 +150,7 @@
 	}
 }
 
-int CompareFileStatistics( id fs1, id fs2, void *context )
+static NSInteger CompareFileStatistics( id fs1, id fs2, void *context )
 {
     FileKindStatistic *stat1 = (FileKindStatistic*) fs1;
 	FileKindStatistic *stat2 = (FileKindStatistic*) fs2;
@@ -268,13 +268,13 @@ int CompareFileStatistics( id fs1, id fs2, void *context )
         NSString *itemKind = [item kindName];
 		
 		//find the corresponding FileKindStatistic-Object and select it
-        unsigned i;
+        NSUInteger i;
         for ( i = 0; i < [_kinds count]; i++ )
         {
 			FileKindStatistic* statistic = [_kinds objectAtIndex: i];
             if ( [itemKind isEqualToString: [statistic kindName]] )
             {
-                [_tableView selectRow: i byExtendingSelection: NO];
+                [_tableView selectRowIndexes: [NSIndexSet indexSetWithIndex:i] byExtendingSelection: NO];
                 [_tableView scrollRowToVisible: i];
                 return;
             }

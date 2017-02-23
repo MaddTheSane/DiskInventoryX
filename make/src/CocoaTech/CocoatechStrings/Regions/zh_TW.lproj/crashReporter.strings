@@ -1,0 +1,12 @@
+﻿"An exception occurred.  In some cases exceptions are harmless, but if you want to be safe, relaunch %@. Please help us improve %@ by sending this report and telling us what happened." = "發生例外。某些情形下，例外是不會造成傷害的，但為了安全起見，請重新啟動 %@。請協助我們改善 %@，您可以寄送報告並告訴我們發生的問題。";
+"Crash log information:" = "程式突然結束日誌資訊：";
+"Don't Send" = "不要傳送";
+"Error!" = "發生錯誤！";
+"Exception log information:" = "例外日誌資訊：";
+"Path Finder has encountered an unexpected error.  Please email this report to crashreport@cocoatech.com so it can be fixed in the next release." = "Path Finder 發生非預期的錯誤。請以電子郵件寄送此報告至 crashreport@cocoatech.com，以便在下一個版本進行修正。";
+"Path Finder was unable to automatically email the bug report.  Copy and paste the contents of this window and email it to crashreport@cocoatech.com" = "Path Finder 無法自動以電子郵件傳送此份程式錯誤報告。請複製此視窗的內容並將其寄送至 crashreport@cocoatech.com";
+"Please describe what you were doing when the problem occurred." = "請說明問題發生時，您正在執行的動作。";
+"Please tell us about the problem %@ encounted." = "請告訴我們此問題 %@ 的相關資訊。";
+"Send Report" = "寄送報告";
+"Tell us what happened" = "告訴我們問題發生的經過";
+"The last time you ran %@, it encountered a problem that forced it to quit.  Please help us improve %@ by sending this report and telling us what happened." = "上次您執行 %@ 時，曾發生問題且程式強制結束。請協助我們改善 %@，您可以寄送報告並告訴我們問題發生的經過。";

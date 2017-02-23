@@ -1,0 +1,9 @@
+﻿"Choose a valid destination." = "Bitte einen gültigen Zielort auswählen.";
+"Compress" = "Komprimieren";
+"Compressing: %@ \nTo: %@" = "Komprimiere %@ \nNach: %@";
+"Decompress" = "Dekomprimieren";
+"Decompressing: %@ \nTo: %@" = "Dekomprimiere: %@ \nNach: %@";
+"Destination does not exist" = "Zielort existiert nicht";
+"Items remaining to compress: %d" = "Verbleibende Objekte zum Komprimieren: %d";
+"Items remaining to decompress: %d" = "Verbleibende Objekte zum Dekomprimieren: %d";
+"Password" = "Passwort";

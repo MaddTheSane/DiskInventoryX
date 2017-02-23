@@ -1,0 +1,22 @@
+﻿"Background" = "Bakgrund";
+"Black & White" = "Svartvitt";
+"Cancel" = "Avbryt";
+"Choose..." = "Välj...";
+"Compress" = "Kompression";
+"Convert Image..." = "Konvertera grafik...";
+"Crop" = "Beskär";
+"Format" = "Formatera";
+"Height:" = "Höjd:";
+"Image Converter" = "Bild Konverterare";
+"Image: " = "Bild: ";
+"Rotate Left" = "Rotera Vänster";
+"Rotate Right" = "Rotera Höger";
+"Save" = "Spara";
+"Scale preview" = "Förhandsvisning";
+"Size" = "Storlek";
+"Width:" = "Bredd:";
+"untitled" = "namnlös";
+
+/* ==== UNLOCALIZED ==== */
+
+"OK" = "OK";

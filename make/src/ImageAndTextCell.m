@@ -49,6 +49,7 @@
 #define IMAGE_OFFSET	5	//space between left side of cell rect and image
 
 @implementation ImageAndTextCell
+@synthesize image = _image;
 
 - (void)dealloc
 {
@@ -62,19 +63,6 @@
     ImageAndTextCell *cell = (ImageAndTextCell *)[super copyWithZone:zone];
     cell->_image = [_image retain];
     return cell;
-}
-
-- (void)setImage:(NSImage *)anImage {
-    if (anImage != _image)
-	{
-        [_image release];
-        _image = [anImage retain];
-    }
-}
-
-- (NSImage *)image
-{
-    return _image;
 }
 
 - (NSRect)imageFrameForCellFrame:(NSRect)cellFrame
@@ -99,7 +87,7 @@
     [super editWithFrame: textFrame inView: controlView editor:textObj delegate:anObject event: theEvent];
 }
 
-- (void)selectWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject start:(int)selStart length:(int)selLength
+- (void)selectWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject start:(NSInteger)selStart length:(NSInteger)selLength
 {
     NSRect textFrame, imageFrame;
     NSDivideRect (aRect, &imageFrame, &textFrame, TEXT_OFFSET + [_image size].width, NSMinXEdge);
@@ -129,11 +117,15 @@
         else
             imageFrame.origin.y += ceil((cellFrame.size.height - imageFrame.size.height) / 2);
 
-        [_image compositeToPoint:imageFrame.origin operation:NSCompositeSourceOver];
+		[_image drawAtPoint:imageFrame.origin fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
     }
 	
+	self.truncatesLastVisibleLine = YES;
+	self.lineBreakMode = NSLineBreakByWordWrapping;
+	
+#if 0
 	ThemeFontID themeFont = kThemeSystemFont;
-	float fontSize = [[self font] pointSize];
+	CGFloat fontSize = [[self font] pointSize];
 	
 	if ( fontSize == [NSFont systemFontSize] )
 		themeFont = kThemeSystemFont;
@@ -141,9 +133,11 @@
 		themeFont = kThemeSmallSystemFont;
 	else LOG( @"ImageTextCell can't determine appropriate truncating method" );
 
-	[self setStringValue: [[self stringValue] truncatedStringWithMaxWidth: NSWidth(cellFrame)
-															  themeFontID: themeFont
-														   truncationMode: truncEnd]];
+	//[self setStringValue: [[self stringValue] truncatedStringWithMaxWidth: NSWidth(cellFrame)
+	//														  themeFontID: themeFont
+	//													   truncationMode: truncEnd]];
+#endif
+	
     [super drawWithFrame:cellFrame inView:controlView];
 }
 

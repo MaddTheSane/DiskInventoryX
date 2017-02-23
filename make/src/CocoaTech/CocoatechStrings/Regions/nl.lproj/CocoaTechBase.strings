@@ -1,0 +1,33 @@
+﻿"Automatic" = "Automatisch";
+"Black" = "Zwart";
+"Blue" = "Blauw";
+"Brown" = "Bruin";
+"Cancel" = "Annuleer";
+"Choose Application" = "Kies programma";
+"Choose File" = "Kies bestand";
+"Choose Image" = "Kies afbeelding";
+"Choose..." = "Selecteer...";
+"Clear All" = "Wis alles";
+"Cyan" = "Cyaan";
+"Edit Encodings Menu..." = "Pas menu Coderingen aan...";
+"Encoding:" = "Codering:";
+"Green" = "Groen";
+"Ignore HTML Commands" = "Negeer HTML-commando's";
+"Ignore RTF Commands" = "Negeer RTF-commando's";
+"Orange" = "Oranje";
+"Processed %d items to \"%@\"" = "%d onderdelen verwerkt naar \"%@\"";
+"Purple" = "Paars";
+"Red" = "Rood";
+"Revert to Default" = "Standaardinstellingen";
+"Select All" = "Selecteer alles";
+"Stop" = "Stoppen";
+"Text Encodings" = "Tekstcoderingen";
+"Transparent" = "Transparant";
+"White" = "Wit";
+"Yellow" = "Geel";
+"bytes" = "byte";
+
+/* ==== UNLOCALIZED ==== */
+
+"Magenta" = "Magenta";
+"OK" = "OK";

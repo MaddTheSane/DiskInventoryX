@@ -1,0 +1,39 @@
+﻿"AES-128 (recommended)" = "AES-128 (рекомендуется)";
+"Burn Image..." = "Записать образ диска...";
+"Cancel" = "Отменить";
+"Change Format..." = "Изменить Формат...";
+"Convert" = "Конвертировать";
+"Converting Image..." = "Конвертирование Образа Диска...";
+"Create" = "Создать";
+"Create Disk Image" = "Создать Образ Диска";
+"Create with directory:" = "Создать из папки:";
+"Create with size:" = "Создать размером в";
+"Create..." = "Создать...";
+"Creating Image..." = "Создание Образа...";
+"DVD/CD-R master" = "DVD/СD-R master";
+"Disk Image" = "Образ диска";
+"Disk Image Converter" = "Конвертор Дисковых Образов";
+"Disk Image Converting" = "Конвертирование Образа Диска";
+"Encryption:" = "Шифрование:";
+"Finished" = "Завершено";
+"Format:" = "Формат:";
+"Image Format" = "Формат Образа Диска";
+"Megabytes" = "Мегабайт";
+"Mount after creating" = "Присоединить после создания";
+"Mounting Image..." = "Присоединение Образа Диска...";
+"Name:" = "Имя:";
+"None" = "Отсутствует";
+"Read only" = "Только чтение";
+"Read only compressed" = "Сжатый, только для чтения";
+"Read/Write" = " Чтение/Запись";
+"The file must have the .dmg, .img, .cdr, .iso, .smi or .toast extensions." = "Файл должен иметь расширение .dmg, .img, .cdr, .iso, .smi или .toast.";
+"Volume Name:" = "Имя Диска:";
+"Volume Size:" = "Размер Диска:";
+"untitled" = "без названия";
+
+/* ==== UNLOCALIZED ==== */
+
+"Disk Image Progress" = "Disk Image Progress";
+"Internet enable" = "Internet enable";
+"Read only zlib compressed" = "Read only zlib compressed";
+"Sparse" = "Sparse";

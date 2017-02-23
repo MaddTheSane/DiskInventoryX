@@ -1,0 +1,33 @@
+﻿"Automatic" = "자동";
+"Black" = "검정";
+"Blue" = "파랑";
+"Brown" = "갈색";
+"Cancel" = "취소";
+"Choose Application" = "응용 프로그램 선택";
+"Choose File" = "파일 선택";
+"Choose..." = "선택...";
+"Clear All" = "모두 지우기";
+"Cyan" = "사이안";
+"Encoding:" = "인코딩:";
+"Green" = "녹색";
+"Magenta" = "마젠타";
+"OK" = "승인";
+"Orange" = "귤색";
+"Purple" = "자주";
+"Red" = "빨강";
+"Select All" = "전체 선택";
+"Stop" = "중단";
+"Transparent" = "투명";
+"White" = "흰색";
+"Yellow" = "노랑";
+
+/* ==== UNLOCALIZED ==== */
+
+"Choose Image" = "Choose Image";
+"Edit Encodings Menu..." = "Edit Encodings Menu...";
+"Ignore HTML Commands" = "Ignore HTML Commands";
+"Ignore RTF Commands" = "Ignore RTF Commands";
+"Processed %d items to \"%@\"" = "Processed %d items to \"%@\"";
+"Revert to Default" = "Revert to Default";
+"Text Encodings" = "Text Encodings";
+"bytes" = "bytes";

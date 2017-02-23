@@ -1,0 +1,11 @@
+﻿"##INSTRUCTIONS##" = "1) Scegli il tuo paese\n2) Clicca su \"Vedi Stringhe non Tradotte\" per una lista delle stringhe da tradurre\n3) Digita la stringa in Inglese\n4) Digita la sua traduzione\n5) Batti Return o clicca sul pulsante \"Traduci\" per salvare la traduzione\n6) Per testare la traduzione devi chiudere e riaprire l'applicazione\n7) Le stringhe tradotte sono salvate all'interno dell'applicazione in CocoaTechStrings.framework.\n8) Per inviare la tua traduzione, clicca sul pulsante \"Invia Traduzione\". Questo comprimerà il Framework e lo invierà per email a Cocoatech.";
+"Close" = "Chiudi";
+"Email Localization" = "Invia Traduzione";
+"English:" = "Inglese:";
+"Help us Localize Path Finder!" = "Aiutaci a Tradurre Path Finder!";
+"If you find an unlocalized string in your language, please correct it and it will be included in the next release of Path Finder." = "Se trovi qualche parola non tradotta nella tua lingua, per favore correggila e verrà inclusa nella prossima versione di Path Finder.";
+"Localization" = "Localizzazione";
+"Localize" = "Traduci";
+"Localized:" = "Tradotto";
+"Region:" = "Paese:";
+"View Unlocalized Strings" = "Vedi Stringhe non Tradotte";

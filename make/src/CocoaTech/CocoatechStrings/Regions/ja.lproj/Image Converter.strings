@@ -1,0 +1,22 @@
+﻿"Background" = "バックグラウンド";
+"Black & White" = "白黒";
+"Cancel" = "キャンセル";
+"Choose..." = "選択...";
+"Compress" = "圧縮";
+"Convert Image..." = "画像イメージを変換...";
+"Crop" = "トリミング";
+"Format" = "フォーマット";
+"Height:" = "高さ：";
+"Image Converter" = "画像イメージコンバーター";
+"Image: " = "画像イメージ：";
+"Rotate Left" = "反時計回り";
+"Rotate Right" = "時計回り";
+"Save" = "保存";
+"Scale preview" = "スケールプレビュー";
+"Size" = "サイズ";
+"Width:" = "幅：";
+"untitled" = "名称未設定";
+
+/* ==== UNLOCALIZED ==== */
+
+"OK" = "OK";

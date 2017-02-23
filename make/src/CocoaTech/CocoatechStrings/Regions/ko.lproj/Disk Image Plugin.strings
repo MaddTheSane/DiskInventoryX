@@ -1,0 +1,39 @@
+﻿"AES-128 (recommended)" = "AES-128 (권장)";
+"Cancel" = "취소";
+"Convert" = "변환";
+"Create" = "생성";
+"Create..." = "생성...";
+"Disk Image" = "디스크 이미지";
+"Encryption:" = "암호화:";
+"Finished" = "완료됨";
+"Format:" = "포맷:";
+"Image Format" = "이미지 포맷";
+"Name:" = "이름:";
+"None" = "없음";
+"Read only" = "읽기 전용";
+"Read/Write" = "읽기/쓰기";
+"untitled" = "무제";
+
+/* ==== UNLOCALIZED ==== */
+
+"Burn Image..." = "Burn Image...";
+"Change Format..." = "Change Format...";
+"Converting Image..." = "Converting Image...";
+"Create Disk Image" = "Create Disk Image";
+"Create with directory:" = "Create with directory:";
+"Create with size:" = "Create with size:";
+"Creating Image..." = "Creating Image...";
+"DVD/CD-R master" = "DVD/CD-R master";
+"Disk Image Converter" = "Disk Image Converter";
+"Disk Image Converting" = "Disk Image Converting";
+"Disk Image Progress" = "Disk Image Progress";
+"Internet enable" = "Internet enable";
+"Megabytes" = "Megabytes";
+"Mount after creating" = "Mount after creating";
+"Mounting Image..." = "Mounting Image...";
+"Read only compressed" = "Read only compressed";
+"Read only zlib compressed" = "Read only zlib compressed";
+"Sparse" = "Sparse";
+"The file must have the .dmg, .img, .cdr, .iso, .smi or .toast extensions." = "The file must have the .dmg, .img, .cdr, .iso, .smi or .toast extensions.";
+"Volume Name:" = "Volume Name:";
+"Volume Size:" = "Volume Size:";

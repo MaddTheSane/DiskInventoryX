@@ -1,0 +1,37 @@
+﻿"Camera" = "Kamera";
+"DEVICES" = "Enheter";
+"FAVORITES" = "Favoriter";
+"PLACES" = "Platser";
+"RECENT DOCUMENTS" = "SENASTE FILER";
+"SEARCH FOR" = "Sök efter";
+"SHARED" = "Delade";
+"Tool" = "Verktyg";
+"add" = "lägg till";
+"commit" = "utför";
+"revert" = "återgå";
+"update" = "uppdatera";
+
+/* ==== UNLOCALIZED ==== */
+
+"Aggressive Samba search" = "Aggressive Samba search";
+"All..." = "All...";
+"Appearance" = "Appearance";
+"Clear Samba server cache" = "Clear Samba server cache";
+"Crop" = "Crop";
+"Flip" = "Flip";
+"Icon Size" = "Icon Size";
+"Info" = "Info";
+"Launch..." = "Launch...";
+"Recent Documents" = "Recent Documents";
+"Refresh Samba server list every:" = "Refresh Samba server list every:";
+"Repository" = "Repository";
+"Rotation" = "Rotation";
+"Shared" = "Shared";
+"Zoom" = "Zoom";
+"diff" = "diff";
+"minutes" = "minutes";
+"other" = "other";
+"raw" = "raw";
+"rm" = "rm";
+"status" = "status";
+"terminal" = "terminal";

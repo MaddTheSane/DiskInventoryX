@@ -1,0 +1,33 @@
+﻿"Automatic" = "Automat";
+"Black" = "Czarny";
+"Blue" = "Niebieski";
+"Brown" = "Brązowy";
+"Cancel" = "Porzuć";
+"Choose Application" = "Wybierz aplikację";
+"Choose File" = "Wybierz plik";
+"Choose Image" = "Wybierz obrazek";
+"Choose..." = "Wybierz...";
+"Clear All" = "Wyczyść wszystko";
+"Edit Encodings Menu..." = "Edytuj menu kodowania...";
+"Encoding:" = "Kodowanie:";
+"Green" = "Zielony";
+"Ignore HTML Commands" = "Ignoruj polecenia HTML";
+"Ignore RTF Commands" = "Ignoruj polecenia RTF";
+"Magenta" = "Purpura";
+"Orange" = "Pomarańczowy";
+"Purple" = "Fioletowy";
+"Red" = "Czerwony";
+"Revert to Default" = "Przywróć domyślne";
+"Select All" = "Wybierz wszystkie";
+"Text Encodings" = "Kodowanie tekstu";
+"Transparent" = "Transparentność";
+"White" = "Biały";
+"Yellow" = "Żółty";
+
+/* ==== UNLOCALIZED ==== */
+
+"Cyan" = "Cyan";
+"OK" = "OK";
+"Processed %d items to \"%@\"" = "Processed %d items to \"%@\"";
+"Stop" = "Stop";
+"bytes" = "bytes";

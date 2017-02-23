@@ -36,13 +36,14 @@
 
 - (BOOL) isPathSet
 {
-	return _path != nil;
+	return YES;
 }
 
 - (void) setPath: (NSString*) path
 {
-	[_path release];
-	_path = [[NTPath alloc] initWithPath: path];
+	//TODO: update/patch
+	//[_path release];
+	//_path = [[NTPath alloc] initWithPath: path];
 }
 
 @end

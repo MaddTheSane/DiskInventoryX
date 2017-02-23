@@ -1,0 +1,5 @@
+﻿"-47" = "O arquivo está em uso";
+"-5000" = "Privilégios de acesso insuficientes para esta operação";
+"-61" = "Privilégios de gravação insuficientes para esta operação";
+"-8081" = "O arquivo está em uso";
+"The operation could not be completed because the disk is in use" = "A operação não pode ser concluída porque o disco está em uso";
