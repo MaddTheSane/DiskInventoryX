@@ -1,0 +1,23 @@
+release notes
+=============
+
+
+0.8 (2004-03-18)
+----------------
+bug fixes:
+- program hanged sometimes while scanning folder (reason: overwritten or deleted files)
+
+new features:
+- a "move to trash" command
+- folders can be opened by dragging them on the application icon
+- switch between vertical and horizontal splitting in the main window
+- afrikaans translation by Marius van Wyk
+- french translation by Daniel Girod
+- german translation by me;-)
+- small interface enhancements
+- no more uncontrolled pouring of messages to console.log
+
+
+0.7 (2004-03-07)
+----------------
+initial public release

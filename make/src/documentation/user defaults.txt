@@ -1,0 +1,6 @@
+user defaults
+=============
+
+Key							Type		Desciption
+----------------------------------------------------------------------------------------
+EnableLogging				Boolean		enables/disables logging to the console.log

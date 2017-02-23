@@ -1,0 +1,8 @@
+/*menu command "split horizontally"*/
+"Split Horizontally" = "Split Horizontally";
+
+/*menu command "split vertically"*/
+"Split Vertically" = "Split Vertically";
+
+/*progress information while calculating file kind statistics*/
+"Classifying Files" = "Classifying Files";
