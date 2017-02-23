@@ -11,7 +11,7 @@
 #import <CocoaTechFoundation/NTFSRefObject.h>
 #import <NTFileDesc-AccessExtensions.h>
 #import "NTFSRefObject-AccessExtensions.h"
-#import <OmniFoundation/NSArray-OFExtensions.h>
+#import <OmniFoundation/NSMutableArray-OFExtensions.h>
 
 //for debugging and logging purposes
 unsigned g_fileCount;
@@ -37,6 +37,13 @@ static struct _BulkCatalogInfoRec {
 } g_BulkCatalogInfo;
 //typedef struct _BulkCatalogInfoRec BulkCatalogInfoRec;
 
+@implementation NSString (ComparisonAdditions)
+- (NSComparisonResult) compareAsFilesystemName: (NSString*) other
+{
+	return [self compare: other options: (NSNumericSearch | NSCaseInsensitiveSearch)];
+}
+@end
+
 //================ interface FSItem(Private) ======================================================
 
 @interface FSItem(Private)
@@ -45,17 +52,23 @@ static struct _BulkCatalogInfoRec {
 			 parent: (FSItem*) parent
 	  setKindString: (BOOL) setKindString
   ignoreCreatorCode: (BOOL) ignoreCreatorCode
+	usePhysicalSize: (BOOL) usePhysicalSize
 			  fsRef: (FSRef*) fsRef
 		catalogInfo: (FSCatalogInfo*) catalogInfo;
 
 - (void) setParent: (FSItem*) parent;
+- (void) onParentDealloc;
 
 - (NSComparisonResult) compareSizeDescendingly: (FSItem*) other; //compares sizes
 
-- (void) loadChildrenAndSetKindStrings: (BOOL) setKindStrings ignoreCreatorCode: (BOOL) ignoreCreatorCode;
+- (void) loadChildrenAndSetKindStrings: (BOOL) setKindStrings
+					 ignoreCreatorCode: (BOOL) ignoreCreatorCode
+					   usePhysicalSize: (BOOL) usePhysicalSize;
 
 - (void) setSize: (NSNumber*) size;
 - (void) setSizeValue: (unsigned long long) size;
+
+- (void) childChanged: (FSItem*) child oldSize: (unsigned long long) oldSize newSize: (unsigned long long) newSize;
 
 @end
 
@@ -65,7 +78,7 @@ static struct _BulkCatalogInfoRec {
 
 + (void) initialize
 {
-	//instantiate the dictionaries for global kind names cache and for our notifications user info
+	//instantiate the dictionaries for global kind names cache
 	g_kindNameDictionary = [[NSMutableDictionary alloc] init];
 }
 
@@ -82,8 +95,6 @@ static struct _BulkCatalogInfoRec {
 	
     _parent = nil; //we are the root item
 	
-    NSAssert1( [self isFolder], @"root item is no directory: %@", path );
-    
     return self;
 }
 
@@ -95,10 +106,10 @@ static struct _BulkCatalogInfoRec {
 	
 	_parent = parent; //weak reference
 	
-	NSString* hashString = [[parent path] stringByAppendingString: @"/OtherSpace"];
-	_hash = [hashString hash];
+	//NSString* hashString = [[parent path] stringByAppendingString: @"/OtherSpace"];
+	//_hash = [hashString hash];
 	
-	[self recalculateSize: NO];
+	[self recalculateSize: NO updateParent: NO];
 	
 	return self;
 }
@@ -111,10 +122,10 @@ static struct _BulkCatalogInfoRec {
 	
 	_parent = parent;
 	
-	NSString* hashString = [[parent path] stringByAppendingString: @"/FreeSpace"];
-	_hash = [hashString hash];
+	//NSString* hashString = [[parent path] stringByAppendingString: @"/FreeSpace"];
+	//_hash = [hashString hash];
 	
-	[self recalculateSize: NO];
+	[self recalculateSize: NO updateParent: NO];
 	
 	return self;
 }
@@ -131,12 +142,17 @@ static struct _BulkCatalogInfoRec {
 
 - (void) dealloc
 {
-    [_childs release];
+	if ( _childs != nil )
+	{
+		[_childs makeObjectsPerformSelector: @selector(onParentDealloc)];
+		[_childs release];
+	}
+	
     [_fileDesc release];
 	[_size release];
 	[_icons release];
     
-    //_parent no release!
+    //_parent and _delegate no release!
 	
     [super dealloc];
 }
@@ -148,7 +164,7 @@ static struct _BulkCatalogInfoRec {
 
 - (BOOL) isSpecialItem
 {
-	return [self type] != FileFolderItem;
+	return _type != FileFolderItem;
 }
 
 - (NTFileDesc *) fileDesc
@@ -168,20 +184,25 @@ static struct _BulkCatalogInfoRec {
 	_fileDesc = desc;
 }
 
-- (unsigned) hash
+/*- (unsigned) hash
 {
 	if ( _hash == 0 )
 		_hash = [[self path] hash];
 	
     return _hash;
 }
-
+*/
 - (BOOL) isEqual: (id) object
 {
-    FSItem *item = object;
+	//We don't check real equality here. This method is only intended to support NSSet.
+    return object == self;
+	//a better (but slower) version is:
+	/*
+	FSItem *item = object;
     return [item isKindOfClass: [FSItem class]]
-		&& [self type] == [item type]
-		&& [[self fileDesc] isEqual: [item fileDesc]];
+			&& [self type] == [item type]
+			&& [[self fileDesc] isEqualToDesc: [item fileDesc]];
+	*/
 }
 
 - (NSString *) description
@@ -230,7 +251,7 @@ static struct _BulkCatalogInfoRec {
 
 - (BOOL) isPackage
 {
-	if ( [self type] == FileFolderItem )
+	if ( ![self isSpecialItem] )
 		return [[self fileDesc] isPackage];
 	else
 		return NO;
@@ -254,7 +275,7 @@ static struct _BulkCatalogInfoRec {
 	//NSTFileDesc.exists checks it's FSRef and it's path, but the path might have been generated
 	//from the FSRef. But as we want to know if the file still exists at the place at the
 	//time we searched the file, we have to check the path that we store.
-	return [_fileDesc exists] && [NTFileUtilities validPath:[self path]];
+	return [NTFileUtilities validPath:[self path]] && [_fileDesc exists];
 }
 
 - (NSImage*) iconWithSize: (unsigned) iconSize
@@ -270,7 +291,9 @@ static struct _BulkCatalogInfoRec {
 	NSImage *icon = [_icons objectForKey: key];
 	if ( icon == nil )
 	{
-		icon = [NSImage imageForDesc:[self fileDesc] size: iconSize];
+		NTIcon *ntIcon = [[self fileDesc] icon];
+		icon = [ntIcon imageForSize: iconSize label: 0 select: NO];
+		
 		if ( icon == nil )
 			icon = (id) [NSNull null];
 		
@@ -304,41 +327,53 @@ static struct _BulkCatalogInfoRec {
 		return 0;
 }
 
-- (void) removeChild: (FSItem*) child
+- (void) removeChild: (FSItem*) child updateParent: (BOOL) updateParent
 {
 	NSAssert( ![self isSpecialItem], @"removeChild is illegal call for special item" );
 	
 	unsigned index = [_childs indexOfObjectIdenticalTo: child];
 	if ( index != NSNotFound )
 	{
-		[self setSizeValue: [self sizeValue] - [child sizeValue]];
+		unsigned long long myOldSize = [self sizeValue];
+		unsigned long long myNewSize = myOldSize - [child sizeValue];
+		
+		[self setSizeValue: myNewSize];
 		
 		[_childs removeObjectAtIndex: index];
+		
+		if ( updateParent && ![self isRoot] )
+			[[self parent] childChanged: self oldSize: myOldSize newSize: myNewSize];
 	}
 }
 
-- (void) insertChild: (FSItem*) newChild
+- (void) insertChild: (FSItem*) newChild updateParent: (BOOL) updateParent
 {
+	unsigned long long myOldSize = [self sizeValue];
+	
 	[newChild setParent: self];
 	
-	//find insert position (sorted by size)
-	unsigned i;
-	for ( i = 0; i < [self childCount] && [[self childAtIndex: i] sizeValue] > [newChild sizeValue]; i++ );
-	
-	if ( i >= [self childCount] )
-		[_childs addObject: newChild];
-	else
-		[_childs insertObject: newChild atIndex: i];
+	//insert child sorted by size
+	[_childs insertObject: newChild inArraySortedUsingSelector: @selector(compareSizeDescendingly:)];
 	
 	[self setSizeValue: [self sizeValue] + [newChild sizeValue]];
+	
+	if ( updateParent && ![self isRoot] )
+		[[self parent] childChanged: self oldSize: myOldSize newSize: [self sizeValue]];
 }
 
-- (void) replaceChild: (FSItem*) oldChild withItem: (FSItem*) newChild;
+- (void) replaceChild: (FSItem*) oldChild
+			 withItem: (FSItem*) newChild
+		 updateParent: (BOOL) updateParent
 {
 	if ( oldChild != newChild )
 	{
-		[self removeChild: oldChild];
-		[self insertChild: newChild];
+		unsigned long long myOldSize = [self sizeValue];
+		
+		[self removeChild: oldChild updateParent: NO];
+		[self insertChild: newChild updateParent: NO];
+		
+		if ( updateParent && ![self isRoot] )
+			[[self parent] childChanged: self oldSize: myOldSize newSize: [self sizeValue]];
 	}
 }
 
@@ -360,48 +395,9 @@ static struct _BulkCatalogInfoRec {
 		return [_fileDesc size];
 }
 
-//reloads everything
-- (BOOL) refresh
+- (void) recalculateSize: (BOOL) usePhysicalSize updateParent: (BOOL) updateParent
 {
-	//_hash remains unchanged as it depends on the path (which also remains unchanged)
-	
-	if ( [self isSpecialItem] )
-	{
-		[self recalculateSize: NO];
-	}
-	else
-	{
-		if ( ![self exists] )
-			return NO;
-		
-		//remember path as we will delete the NTFSRefObject which holds the path
-		NSString *myPath = [[[self path] retain] autorelease];
-
-		[_fileDesc autorelease];
-		_fileDesc = [[_fileDesc newDesc] retain];
-		
-		//set the path in the new NTFSRefObject
-		[[_fileDesc fsRefObject] setPath: myPath];
-		
-		[_size release];
-		_size = nil;
-		
-		[_icons release];
-		_icons = nil;
-		
-		[_childs release];
-		_childs = nil;
-		
-		//will calculate our size (if this is a file NTFileDesc knows the size)
-		if ( [self isFolder] )
-			[self loadChildren];
-	}
-	
-	return YES;
-}
-
-- (void) recalculateSize: (BOOL) usePhysicalSize
-{
+	unsigned long long oldSize = [self sizeValue];
 	unsigned long long size = 0;
 	
 	switch ( [self type] )
@@ -414,7 +410,7 @@ static struct _BulkCatalogInfoRec {
 				{
 					FSItem *child = [_childs objectAtIndex: i];
 					
-					[child recalculateSize: usePhysicalSize];
+					[child recalculateSize: usePhysicalSize updateParent: NO];
 						 
 					size += [child sizeValue];
 				}
@@ -444,6 +440,9 @@ static struct _BulkCatalogInfoRec {
 	}
 	
 	[self setSizeValue: size];
+	
+	if ( updateParent && ![self isRoot])
+		[[self parent] childChanged: self oldSize: oldSize newSize: size];
 }
 
 //get display string for kind ("Application", "Simple Text Document", ...)
@@ -629,7 +628,7 @@ static struct _BulkCatalogInfoRec {
 	switch ( [self type] )
 	{
 		case FileFolderItem:
-			return [[self fileDesc] displayName];
+			return [[self fileDesc] displayName_fast];
 		case FreeSpaceItem:
 			return NSLocalizedString( @"free space on drive", @"" );
 		case OtherSpaceItem:
@@ -666,15 +665,46 @@ static struct _BulkCatalogInfoRec {
 - (void) loadChildren
 {
 	BOOL ignoreCreatorCode = NO;
+	BOOL usePhysicalSize = NO;
 	
 	id delegate = [self delegate];
 	if ( [delegate respondsToSelector: @selector(fsItemShouldIgnoreCreatorCode:)] )
 		ignoreCreatorCode = [delegate fsItemShouldIgnoreCreatorCode: self];
 	
-	//use new optimized version of loadChilds
-	[self loadChildrenAndSetKindStrings: YES ignoreCreatorCode: ignoreCreatorCode];
+	if ( [delegate respondsToSelector: @selector(fsItemShouldUsePhysicalFileSize:)] )
+		usePhysicalSize = [delegate fsItemShouldUsePhysicalFileSize: self];
 	
-	NSLog (@"package check count: %d", g_packageCheckCount);
+	//use new optimized version of loadChilds
+	[self loadChildrenAndSetKindStrings: YES
+					  ignoreCreatorCode: ignoreCreatorCode
+						usePhysicalSize: usePhysicalSize];
+	
+	LOG (@"package check count: %d", g_packageCheckCount);
+}
+
+- (NSComparisonResult) compareSize: (FSItem*) other
+{
+	//if just one of the 2 FSItems (self xor other) is a special item, then the special item is considered to be
+	//smaller (so the special items are at the end of the child array)
+	if ( [self isSpecialItem] ^ [other isSpecialItem] )
+		return NSOrderedDescending;
+	
+	UInt64 mySize = [self sizeValue];
+	UInt64 otherSize = [other sizeValue];
+	
+	if ( mySize > otherSize )
+		return NSOrderedDescending;
+	if ( mySize < otherSize )
+		return NSOrderedAscending;
+	
+	//if both FSItems have the same size, order by their names
+	//(we don't use displayName here as this may result in a call to "LSCopyDisplayNameForRef")
+	return [[self name] compareAsFilesystemName: [other name]];
+}
+
+- (NSComparisonResult) compareDisplayName: (FSItem*) other
+{
+	return [[self displayName] compareAsFilesystemName: [other displayName]];
 }
 
 @end
@@ -687,17 +717,15 @@ static struct _BulkCatalogInfoRec {
 			 parent: (FSItem*) parent
 	  setKindString: (BOOL) setKindString
   ignoreCreatorCode: (BOOL) ignoreCreatorCode
+	usePhysicalSize: (BOOL) usePhysicalSize
 			  fsRef: (FSRef*) fsRef
 		catalogInfo: (FSCatalogInfo *)catalogInfo
 {
     self = [super init];
 	
 	_type = FileFolderItem;
-	
     _parent = parent;	//no retain
-	
-    _hash = 0;	//will be generated on demand (see FSItem.hash)
-	
+    //_hash = 0;	//will be generated on demand (see FSItem.hash
 	
 	NTFSRefObject *fsRefObject = [[NTFSRefObject alloc] initWithRef: fsRef
 													   catalogInfo: catalogInfo
@@ -711,7 +739,12 @@ static struct _BulkCatalogInfoRec {
 	BOOL isFolder = [_fileDesc isDirectory];
 
 	if ( !isFolder )
-		[self setSizeValue: catalogInfo->dataLogicalSize + catalogInfo->rsrcLogicalSize];
+	{
+		if ( usePhysicalSize )
+			[self setSizeValue: catalogInfo->dataPhysicalSize + catalogInfo->rsrcPhysicalSize];
+		else
+			[self setSizeValue: catalogInfo->dataLogicalSize + catalogInfo->rsrcLogicalSize];
+	}
 	
 	if ( setKindString )
 		[self setKindStringIgnoringCreatorCode: ignoreCreatorCode includeChilds: NO];
@@ -728,11 +761,19 @@ static struct _BulkCatalogInfoRec {
 {
 	_parent = parent; //weak reference (parents owns us)
 	
-	_hash = 0; //our hash is now invalid at it depends on the path
+	_delegate = nil; //we use our parent's delegate
+	
+	//_hash = 0; //our hash is now invalid as it depends on the path
+}
+
+- (void) onParentDealloc
+{
+	_parent = nil;
 }
 
 - (void) loadChildrenAndSetKindStrings: (BOOL) setKindStrings
 					 ignoreCreatorCode: (BOOL) ignoreCreatorCode
+					   usePhysicalSize: (BOOL) usePhysicalSize
 {
     if ( ![self isFolder] )
         return;
@@ -808,7 +849,7 @@ static struct _BulkCatalogInfoRec {
 														 parent: self
 												  setKindString: setKindStrings
 											  ignoreCreatorCode: ignoreCreatorCode
-														  fsRef: &g_BulkCatalogInfo.fsRefArray[i]
+												usePhysicalSize: usePhysicalSize														  fsRef: &g_BulkCatalogInfo.fsRefArray[i]
 													catalogInfo: &g_BulkCatalogInfo.catalogInfoArray[i] ];
 						if ( newChild != nil )
 							[_childs addObject: newChild];
@@ -855,7 +896,11 @@ static struct _BulkCatalogInfoRec {
 		NTFileDesc *childDesc = [child fileDesc];
 		
 		if ( [childDesc isDirectory] && ![childDesc isVolume] )
-			[child loadChildrenAndSetKindStrings: setKindStrings ignoreCreatorCode: ignoreCreatorCode];
+		{
+			[child loadChildrenAndSetKindStrings: setKindStrings
+							   ignoreCreatorCode: ignoreCreatorCode
+								 usePhysicalSize: usePhysicalSize];
+		}
 		
 		size += [child sizeValue];
 	}
@@ -877,22 +922,16 @@ static struct _BulkCatalogInfoRec {
 //compare the size of 2 FSItems
 - (NSComparisonResult) compareSizeDescendingly: (FSItem*) other
 {
-	//if just one of the 2 FSItems (self xor other) is a special item, then the special item is considered to be
-	//smaller (so the special items are at the end of the child array)
-	if ( [self isSpecialItem] ^ [other isSpecialItem] )
-		return NSOrderedDescending;
-		
-	UInt64 mySize = [self sizeValue];
-	UInt64 otherSize = [other sizeValue];
-	
-	//we want the sorting to be descending
-	if ( mySize < otherSize )
-		return NSOrderedDescending;
-	if ( mySize > otherSize )
-		return NSOrderedAscending;
-
-	//if both FSItems have the same size, order by their names
-	return [[self name] compare: [other name] options: NSNumericSearch];
+	//flip result of compareSize:
+	switch( [self compareSize: other] )
+	{
+		case NSOrderedDescending:
+			return NSOrderedAscending;
+		case NSOrderedAscending:
+			return NSOrderedDescending;
+		default:
+			return NSOrderedSame;
+	}
 }
 
 - (void) setSize: (NSNumber*) newSize
@@ -908,7 +947,7 @@ static struct _BulkCatalogInfoRec {
 
 - (void) setSizeValue: (unsigned long long) newSize
 {
-	//NTFileDesc keeps the size as a number and FSItems as a NSNumber object for key-value-coding
+	//NTFileDesc keeps the size as a 'long long' and FSItems as a NSNumber object for key-value-coding
 	//(if this is a special item, we don't set the size in our NTFileDesc object, as this
 	//points to the root's NTFileDesc! (see FSItem.fileDesc))
 	if ( ![self isSpecialItem] )
@@ -923,6 +962,29 @@ static struct _BulkCatalogInfoRec {
 		[self setSize: size];
 		[size release];
 	}
+}
+
+- (void) childChanged: (FSItem*) child
+			  oldSize: (unsigned long long) oldSize
+			  newSize: (unsigned long long) newSize
+{
+	if ( oldSize == newSize )
+		return;
+	
+	unsigned long long myOldSize = [self sizeValue];
+	unsigned long long myNewSize = myOldSize - oldSize + newSize;
+	
+	//child will be released by "removeChild", so prevent it from beeing freed
+	[[child retain] autorelease];
+	
+	//keep childs array sorted
+	[self removeChild: child updateParent: NO];
+	[self insertChild: child updateParent: NO];
+	
+	[self setSizeValue: myNewSize];
+	
+	if ( ![self isRoot] )
+		[[self parent] childChanged: self oldSize: myOldSize newSize: myNewSize];
 }
 
 @end

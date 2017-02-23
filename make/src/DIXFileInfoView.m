@@ -31,7 +31,7 @@
 	NSMutableArray *infoPairs = (NSMutableArray*) [super infoPairs];
 	OBPRECONDITION( [infoPairs isKindOfClass: [NSMutableArray class]] );
 
-	//NTInfoView shows the display name (possibly localized and hidden extension), but we want the "raw" name
+	//NTInfoView shows the display name (possibly localized and with hidden extension), but we want the "raw" name
 	//(the display name is shown above next to the image in the inspector panel)
 	if ( desc != nil )
 	{

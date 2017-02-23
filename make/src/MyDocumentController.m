@@ -11,6 +11,7 @@
 #import "Preferences.h"
 #import "PrefsPanelController.h"
 #import "FileSystemDoc.h"
+#import "DIXFinderCMInstaller.h"
 
 //global variable which enables/disables logging
 BOOL g_EnableLogging;
@@ -166,13 +167,17 @@ BOOL g_EnableLogging;
 }
 
 - (void) applicationDidFinishLaunching:(NSNotification *)notification
-{	
+{
 	//show donate message
 	if ( ![[NSUserDefaults standardUserDefaults] boolForKey: DontShowDonationMessage] )
 	{
 		[NSBundle loadNibNamed: @"DonationPanel" owner:self];
 		[_donationPanel setWorksWhenModal: YES];
 	}
+	
+//	DIXFinderCMInstaller *installer = [DIXFinderCMInstaller installer];
+//	if ( ![installer isInstalled] )
+//		[installer installToDomain: kUserDomain];
 }
 
 #pragma mark -----------------NSMenu delegates-----------------------

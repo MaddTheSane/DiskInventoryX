@@ -228,10 +228,10 @@ static NSMutableDictionary *g_toolbatStateImages = nil;
 		[toolbarItem setTarget: NSApp];
 	
 	//NSToolbarItem calls it's target to validate itself (through validateToolbarItem:).
-	//If the target is not self, then we have no control over the validation.
+	//If the target is not self we have no control over the validation.
 	//This "problem" can be solved to set ourself as the delegate. OAToolbarItem's delegate
 	//has the last word in the validation process.
-	//(OAToolbarWindowController does this only for items with custom view).
+	//(OAToolbarWindowController does this only for items with a custom view).
 	[(OAToolbarItem*)toolbarItem setDelegate: self];
 	
 	return toolbarItem;

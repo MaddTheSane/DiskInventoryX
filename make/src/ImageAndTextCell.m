@@ -50,6 +50,11 @@
 
 @implementation ImageAndTextCell
 
++ (id) cell
+{
+	return [[[[self class] alloc] init] autorelease];
+}
+
 - (void)dealloc
 {
     [_image release];
@@ -139,7 +144,8 @@
 		themeFont = kThemeSystemFont;
 	else if ( fontSize == [NSFont smallSystemFontSize] )
 		themeFont = kThemeSmallSystemFont;
-	else LOG( @"ImageTextCell can't determine appropriate truncating method" );
+	else
+		LOG( @"ImageTextCell can't determine appropriate truncating method" );
 
 	[self setStringValue: [[self stringValue] truncatedStringWithMaxWidth: NSWidth(cellFrame)
 															  themeFontID: themeFont

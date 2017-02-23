@@ -9,8 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #import "PrefsPageBase.h"
 
-@interface GeneralPrefPage : PrefsPageBase {
-
+@interface GeneralPrefPage : PrefsPageBase
+{
 }
 
 @end

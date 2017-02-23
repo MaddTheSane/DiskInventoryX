@@ -16,7 +16,7 @@
     static FileTypeColors * _instance = nil;
 
     if ( _instance == nil )
-        _instance = [[FileTypeColors alloc] init];
+        _instance = [[[self class] alloc] init];
 
     return _instance;
 }
@@ -56,6 +56,11 @@
     return self;
 }
 
+- (void) reset
+{
+	[_colors removeAllObjects];
+}
+
 - (void) dealloc
 {
     [_predefinedColors release];
@@ -75,17 +80,15 @@
 
     if ( color == nil )
     {
-        if ( [_predefinedColors count] > 0 )
+        if ( [_predefinedColors count] > [_colors count] )
         {
-            color = [_predefinedColors objectAtIndex: 0];
+            color = [_predefinedColors objectAtIndex: [_colors count]];
 
             [_colors setObject: color forKey: kind];
-            
-            [_predefinedColors removeObjectAtIndex: 0];
         }
         else
         {
-            float rgbComponent = 0.6 + [_colors count] * 0.1;
+            float rgbComponent = /*0.6 +*/ [_colors count] * 0.05;
             
             if ( rgbComponent > 0.9 )
                 rgbComponent = 0.9;

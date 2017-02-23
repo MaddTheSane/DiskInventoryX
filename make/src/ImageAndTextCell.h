@@ -14,6 +14,8 @@
     NSImage	*_image;
 }
 
++ (id) cell;
+
 - (void)setImage:(NSImage *)anImage;
 - (NSImage *)image;
 

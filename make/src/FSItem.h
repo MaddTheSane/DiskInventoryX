@@ -6,10 +6,12 @@
 //  Copyright (c) 2003 Tjark Derlien. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 extern unsigned g_fileCount;
 extern unsigned g_folderCount;
+
+@interface NSString (ComparisonAdditions)
+- (NSComparisonResult) compareAsFilesystemName: (NSString*) other;
+@end
 
 typedef enum
 {
@@ -21,17 +23,11 @@ typedef enum
 @interface FSItem : NSObject {
 	NTFileDesc *_fileDesc;
     FSItem *_parent;	//only valid for non-root items
-	
 	NSMutableDictionary *_icons; //holds icons in various sizes (see iconWithSize:)
-	
 	FSItemType _type;
-
     NSNumber *_size;
-
-    unsigned _hash;
-
+    //unsigned _hash;
     NSMutableArray *_childs;
-	
 	id _delegate;
 }
 
@@ -69,12 +65,12 @@ typedef enum
 - (FSItem*) childAtIndex: (unsigned) index;
 - (unsigned) childCount;
 
-- (void) removeChild: (FSItem*) child; //child will be released!
-- (void) insertChild: (FSItem*) newChild;
-- (void) replaceChild: (FSItem*) oldChild withItem: (FSItem*) newChild;
+- (void) removeChild: (FSItem*) child updateParent: (BOOL) updateParent; //child will be released!
+- (void) insertChild: (FSItem*) newChild updateParent: (BOOL) updateParent;
+- (void) replaceChild: (FSItem*) oldChild withItem: (FSItem*) newChild updateParent: (BOOL) updateParent;
 
-- (BOOL) refresh; //reloads everything; if item doesn't exist anymore, does nothing and returns NO
-- (void) recalculateSize: (BOOL) usePhysicalSize; //just recalculates size (no file system access)
+- (void) recalculateSize: (BOOL) usePhysicalSize updateParent: (BOOL) updateParent;
+	//just recalculates size (no file system access)
 
 - (void) setKindString; //will ask delegate whether to ignore creator codes
 - (void) setKindStringIgnoringCreatorCode: (BOOL) ignoreCreatorCode includeChilds: (BOOL) includeChilds;
@@ -91,7 +87,10 @@ typedef enum
 - (NSString *) displayPath; //path relative to root item, not "/"
 - (NSString *) kindName;
 
-- (unsigned) hash;
+- (NSComparisonResult) compareSize: (FSItem*) other;
+- (NSComparisonResult) compareDisplayName: (FSItem*) other;
+
+//- (unsigned) hash;
 @end
 
 /* optional delegate methods */
@@ -101,6 +100,7 @@ typedef enum
 - (BOOL) fsItemShouldIgnoreCreatorCode: (FSItem*) item; //default is NO (if not implemented by delegate)
 - (BOOL) fsItemShouldLookIntoPackages: (FSItem*) item; //set kind string in "loadChilds?";
 													   //default is NO (if not implemented by delegate)
+- (BOOL) fsItemShouldUsePhysicalFileSize: (FSItem*) item;
 @end
 
 //Exception raised by FSItem

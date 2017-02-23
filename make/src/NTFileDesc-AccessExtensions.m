@@ -39,7 +39,7 @@
 //(PathFinders spawns a thread to calculate a folder's size in the background)
 //We calculate the size during the folder traversal so we don't need the thread nor
 //"FSGetTotalForkSizes(..)".
-//(as we just add the logical sizes of the data and resource forks to get a file's size)
+//(we just add the logical sizes of the data and resource forks to get a file's size)
 - (void) setSize: (UInt64) size
 {
 	[_lock lock];
@@ -50,6 +50,44 @@
 	_folderSize = size;
 	
 	[_lock unlock];
+}
+
+- (NSString*) displayName_fast
+{
+	//this method tries to avoid to call LSCopyDisplayNameForRef (in NTFileDesc.displayName)
+	
+	//directories (especially packages) may have localized names
+	if ( _bools.displayName_initialized || [self isDirectory] )
+		return [self displayName];
+	
+	//if a file's name has no extension or if we know the extennsion is hidden, we can determine
+	//the display name without any help, otherwise call [self displayName]
+	BOOL nameHasExtension = NO;
+	
+	NSString *name = [self name];
+	
+	NSRange extensionRange = [name rangeOfString: @"." options: NSLiteralSearch | NSBackwardsSearch];
+	if ( extensionRange.location != NSNotFound && extensionRange.location > 0 )
+		// search for a space
+		nameHasExtension = [name rangeOfString:@" " options: NSLiteralSearch range: extensionRange].location == NSNotFound;
+	
+	if ( !nameHasExtension || _bools.itemInfo_initialized )
+	{
+		[_lock lock];
+		
+		if ( !nameHasExtension || !_bools.isExtensionHidden )
+			_displayName = [name retain];
+		else
+			_displayName = [[name substringToIndex: extensionRange.location] retain];
+		
+		_bools.displayName_initialized = YES;
+			
+		[_lock unlock];
+		
+		return _displayName;
+	}
+	else
+		return [self displayName];
 }
 
 @end

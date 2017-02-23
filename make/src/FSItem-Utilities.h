@@ -23,7 +23,7 @@
 - (NSArray*) fsItemPath;
 	//path from root to self as FSItems: <rootItem><child1><child2><self>
 - (NSArray*) fsItemPathFromAncestor: (FSItem*) ancestor;
-	//path from an specific ancestor to self as FSItems: <ancestor><child1><child2><self>
+	//path from a specific ancestor to self as FSItems: <ancestor><child1><child2><self>
 - (BOOL) isDescendantOf: (FSItem*) ancestor;
 	//return YES if receiver is a descendant of ancestor
 

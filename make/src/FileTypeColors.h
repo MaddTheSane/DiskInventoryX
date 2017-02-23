@@ -19,4 +19,6 @@
 - (NSColor *) colorForItem: (FSItem*) item;
 - (NSColor *) colorForKind: (NSString*) kind;
 
+- (void) reset;
+
 @end

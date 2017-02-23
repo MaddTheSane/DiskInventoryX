@@ -18,6 +18,8 @@
 
 - (void) setSize: (UInt64) size;
 
+- (NSString*) displayName_fast;
+
 @end
 
 @interface NTFileDesc(MakePublic)
