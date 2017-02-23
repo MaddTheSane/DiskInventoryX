@@ -16,8 +16,8 @@
 {
     NSPoint point = [self convertPoint: [evt locationInWindow] fromView: nil];
     
-    int columnIndex = [self columnAtPoint:point];
-    int rowIndex = [self rowAtPoint:point];
+    NSInteger columnIndex = [self columnAtPoint:point];
+    NSInteger rowIndex = [self rowAtPoint:point];
 	
     if ( rowIndex >= 0 && [self numberOfSelectedRows] <= 1)
         [self selectRow: rowIndex byExtendingSelection: NO];

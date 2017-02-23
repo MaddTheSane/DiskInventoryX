@@ -23,9 +23,9 @@
 
 - (id) initWithRect: (NSRect) rect colorDepth: (short) colorDepth
 {
-    self = [super init];
-
-    [self allocGWorldWithRect: rect colorDepth: colorDepth];
+	if (self = [super init]) {
+        [self allocGWorldWithRect: rect colorDepth: colorDepth];
+	}
 
     return self;
 }

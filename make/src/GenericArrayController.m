@@ -151,7 +151,7 @@ NSString *contentArrayBindingContext = @"contentArrayBindingContext";
 			newObjects = [[collection objectEnumerator] allObjects];
 		}
 		
-		_cachedObjects = [[self arrangeObjects: newObjects] retain];
+		_cachedObjects = [[self arrangeObjects: newObjects] mutableCopy];
 	}
 	
 	return _cachedObjects;
@@ -216,7 +216,7 @@ NSString *contentArrayBindingContext = @"contentArrayBindingContext";
 	}
 }
 
-- (BOOL)setSelectionIndex:(unsigned int)index
+- (BOOL)setSelectionIndex:(NSUInteger)index
 {
 	NSArray *allObjects = [self arrangedObjects];
 	if ( NSIsControllerMarker( allObjects ) )
@@ -238,7 +238,7 @@ NSString *contentArrayBindingContext = @"contentArrayBindingContext";
 	return YES;
 }
 
-- (unsigned int)selectionIndex
+- (NSUInteger)selectionIndex
 {
 	//returns NSNotFound if set is empty
 	return _mySelectionIndexes == nil ? NSNotFound : [_mySelectionIndexes firstIndex];
@@ -306,7 +306,7 @@ NSString *contentArrayBindingContext = @"contentArrayBindingContext";
 	
 	if ( !NSIsControllerMarker( allObjects ) && [_mySelectionIndexes count] > 0 )
 	{
-		unsigned index;
+		NSUInteger index;
 		for ( index = [_mySelectionIndexes firstIndex]; index != NSNotFound; index = [_mySelectionIndexes indexGreaterThanIndex: index] )
 			[selectedObjects addObject: [allObjects objectAtIndex: index]];
 	}
@@ -364,10 +364,10 @@ NSString *contentArrayBindingContext = @"contentArrayBindingContext";
 	
 	NSMutableIndexSet *indexes = [NSMutableIndexSet indexSet];
 	
-	unsigned int i;
+	NSUInteger i;
 	for ( i = 0; i < [objects count]; i++ )
 	{
-		unsigned int index = [allObjects indexOfObjectIdenticalTo: [objects objectAtIndex: i]];
+		NSUInteger index = [allObjects indexOfObjectIdenticalTo: [objects objectAtIndex: i]];
 		if ( index != NSNotFound )
 			[indexes addIndex: index];
 	}

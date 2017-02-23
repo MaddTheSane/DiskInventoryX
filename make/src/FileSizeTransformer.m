@@ -13,9 +13,9 @@
 
 - (id) init
 {
-	self = [super init];
-	
-	_sizeFormatter = [[FileSizeFormatter alloc] init];
+	if (self = [super init]) {
+		_sizeFormatter = [[NSByteCountFormatter alloc] init];
+	}
 	
 	return self;
 }

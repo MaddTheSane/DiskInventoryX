@@ -57,7 +57,6 @@ typedef enum NTThumbnailFrameStyle {
 // converts to new NSImage
 
 - (void)drawInRect:(NSRect)rect flipped:(BOOL)flipped;
-- (void)drawInRect:(NSRect)rect flipped:(BOOL)flipped selected:(BOOL)selected;
 
 - (void)drawInRect:(NSRect)rect
 		   flipped:(BOOL)flipped

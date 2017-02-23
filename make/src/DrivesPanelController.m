@@ -11,6 +11,7 @@
 #import "FileSizeFormatter.h"
 #import "VolumeNameTransformer.h"
 #import "VolumeUsageTransformer.h"
+#import "MyDocumentController.h"
 
 //============ interface DrivesPanelController(Private) ==========================================================
 
@@ -62,7 +63,7 @@
 		[_volumesTableView setDoubleAction: @selector(openVolume:)];
 		
 		//set FileSizeFormatter for the columns displaying sizes (capacity, free)
-		FileSizeFormatter *sizeFormatter = [[[FileSizeFormatter alloc] init] autorelease];
+		NSByteCountFormatter *sizeFormatter = [[[NSByteCountFormatter alloc] init] autorelease];
 		[[[_volumesTableView tableColumnWithIdentifier: @"totalSize"] dataCell] setFormatter: sizeFormatter];
 		[[[_volumesTableView tableColumnWithIdentifier: @"freeBytes"] dataCell] setFormatter: sizeFormatter];
 	}
@@ -226,11 +227,11 @@
 		if ( [progrInd superview] != tableView )
 			[tableView addSubview: progrInd];
 		
-		int colIndex = [tableView columnWithIdentifier: [tableColumn identifier]];
+		NSInteger colIndex = [tableView columnWithIdentifier: [tableColumn identifier]];
 		NSRect cellRect = [tableView frameOfCellAtColumn: colIndex row: row];
 		
-		const float progrIndThickness = NSProgressIndicatorPreferredLargeThickness; 
-		const float extraSpace = 16; //space before and after progress indicator (relative to left and right side of cell)
+		const CGFloat progrIndThickness = NSProgressIndicatorPreferredLargeThickness;
+		const CGFloat extraSpace = 16; //space before and after progress indicator (relative to left and right side of cell)
 		
 		//center it vertically in cell
 		NSAssert( NSHeight(cellRect) > progrIndThickness, @"rows need to be higher than progress indicator thickness" );

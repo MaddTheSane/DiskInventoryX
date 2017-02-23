@@ -34,7 +34,6 @@
 		FC26D54107F48B1300301D86 /* SelectionListTableController.h in Headers */ = {isa = PBXBuildFile; fileRef = FC26D53F07F48B1300301D86 /* SelectionListTableController.h */; };
 		FC26D54207F48B1300301D86 /* SelectionListTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = FC26D54007F48B1300301D86 /* SelectionListTableController.m */; };
 		FC27C272080728D90073CDF9 /* NTFileDesc-Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = FC27C270080728D90073CDF9 /* NTFileDesc-Utilities.h */; };
-		FC27C273080728D90073CDF9 /* NTFileDesc-Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = FC27C271080728D90073CDF9 /* NTFileDesc-Utilities.m */; };
 		FC2FB2C10744E0C500D2B466 /* VolumeUsageTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = FC2FB2BF0744E0C500D2B466 /* VolumeUsageTransformer.h */; };
 		FC2FB2C20744E0C500D2B466 /* VolumeUsageTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = FC2FB2C00744E0C500D2B466 /* VolumeUsageTransformer.m */; };
 		FC3112D90805853200075F08 /* FinderCMPreferencesPage.nib in Resources */ = {isa = PBXBuildFile; fileRef = FC3112D70805853200075F08 /* FinderCMPreferencesPage.nib */; };
@@ -87,7 +86,6 @@
 		FC6E8DCF0758F1EA00500E6F /* GeneralPreferences.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FC6E8DCE0758F1EA00500E6F /* GeneralPreferences.tiff */; };
 		FC755279054C3BFF00BBC68D /* TreeMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FC75525D054C3BFF00BBC68D /* TreeMapViewController.m */; };
 		FC75527A054C3BFF00BBC68D /* TreeMapViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = FC75525E054C3BFF00BBC68D /* TreeMapViewController.h */; };
-		FC755281054C3BFF00BBC68D /* OffscreenGWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = FC755265054C3BFF00BBC68D /* OffscreenGWorld.m */; };
 		FC755282054C3BFF00BBC68D /* OffscreenGWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = FC755266054C3BFF00BBC68D /* OffscreenGWorld.h */; };
 		FC755285054C3BFF00BBC68D /* MyDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = FC755269054C3BFF00BBC68D /* MyDocumentController.m */; };
 		FC755286054C3BFF00BBC68D /* MyDocumentController.h in Headers */ = {isa = PBXBuildFile; fileRef = FC75526A054C3BFF00BBC68D /* MyDocumentController.h */; };
@@ -535,7 +533,7 @@
 		FC6E8DCE0758F1EA00500E6F /* GeneralPreferences.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = GeneralPreferences.tiff; sourceTree = "<group>"; };
 		FC75525D054C3BFF00BBC68D /* TreeMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = TreeMapViewController.m; sourceTree = "<group>"; };
 		FC75525E054C3BFF00BBC68D /* TreeMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TreeMapViewController.h; sourceTree = "<group>"; };
-		FC755265054C3BFF00BBC68D /* OffscreenGWorld.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = OffscreenGWorld.m; sourceTree = "<group>"; };
+		FC755265054C3BFF00BBC68D /* OffscreenGWorld.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = OffscreenGWorld.m; sourceTree = "<group>"; usesTabs = 0; };
 		FC755266054C3BFF00BBC68D /* OffscreenGWorld.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = OffscreenGWorld.h; sourceTree = "<group>"; };
 		FC755269054C3BFF00BBC68D /* MyDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MyDocumentController.m; sourceTree = "<group>"; };
 		FC75526A054C3BFF00BBC68D /* MyDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MyDocumentController.h; sourceTree = "<group>"; };
@@ -993,8 +991,8 @@
 			children = (
 				FCB62FED070CAE5F00BA5FD4 /* Timing.c */,
 				FCB62FEE070CAE5F00BA5FD4 /* Timing.h */,
-				FC755265054C3BFF00BBC68D /* OffscreenGWorld.m */,
 				FC755266054C3BFF00BBC68D /* OffscreenGWorld.h */,
+				FC755265054C3BFF00BBC68D /* OffscreenGWorld.m */,
 				FCC564760615EA5E00C5884D /* FileSizeFormatter.h */,
 				FCC564770615EA5E00C5884D /* FileSizeFormatter.m */,
 				FC26D1F107F4559B00301D86 /* FileSizeTransformer.h */,
@@ -1417,7 +1415,6 @@
 			files = (
 				8D15AC320486D014006FF6A4 /* main.m in Sources */,
 				FC755279054C3BFF00BBC68D /* TreeMapViewController.m in Sources */,
-				FC755281054C3BFF00BBC68D /* OffscreenGWorld.m in Sources */,
 				55AABB221D19BE83002E4D16 /* NTTitledInfoPair.m in Sources */,
 				FC755285054C3BFF00BBC68D /* MyDocumentController.m in Sources */,
 				FC755287054C3BFF00BBC68D /* MainWindowController.m in Sources */,
@@ -1456,7 +1453,6 @@
 				FC79F14B07FD45A4000BEBFA /* FSItemIndex.m in Sources */,
 				FC6D4B240804040600E21F6D /* DIXFinderCMInstaller.m in Sources */,
 				FC3112E30805857B00075F08 /* FinderCMPrefPage.m in Sources */,
-				FC27C273080728D90073CDF9 /* NTFileDesc-Utilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

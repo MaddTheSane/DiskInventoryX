@@ -15,6 +15,7 @@
 @interface FileKindStatistic(AllKinds)
 - (BOOL) isAllFileKindsItem;
 @end
+
 @interface NSDictionary(AllKinds)
 - (BOOL) isAllFileKindsItem;
 @end

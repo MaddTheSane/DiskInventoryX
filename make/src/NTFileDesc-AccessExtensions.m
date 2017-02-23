@@ -54,6 +54,7 @@
 
 - (NSString*) displayName_fast
 {
+#if 0
 	//this method tries to avoid to call LSCopyDisplayNameForRef (in NTFileDesc.displayName)
 	
 	//directories (especially packages) may have localized names
@@ -88,6 +89,9 @@
 	}
 	else
 		return [self displayName];
+#else 
+	return [self displayName];
+#endif
 }
 
 @end

@@ -40,10 +40,9 @@ typedef enum
 - (id) initAsOtherSpaceItemForParent: (FSItem*) parent;
 - (id) initAsFreeSpaceItemForParent: (FSItem*) parent;
 
-- (id) delegate;
-- (void) setDelegate: (id) delegate;
+@property (assign) id<FSItemDelegate> delegate;
 
-- (FSItemType) type;
+@property (readonly) FSItemType type;
 - (BOOL) isSpecialItem;
 
 - (NTFileDesc *) fileDesc;
@@ -66,8 +65,8 @@ typedef enum
 - (NSImage*) iconWithSize: (unsigned) iconSize;
 
 - (NSEnumerator *) childEnumerator;
-- (FSItem*) childAtIndex: (unsigned) index;
-- (unsigned) childCount;
+- (FSItem*) childAtIndex: (NSUInteger) index;
+- (NSUInteger) childCount;
 
 - (void) removeChild: (FSItem*) child updateParent: (BOOL) updateParent; //child will be released!
 - (void) insertChild: (FSItem*) newChild updateParent: (BOOL) updateParent;
@@ -75,12 +74,13 @@ typedef enum
 
 - (void) recalculateSize: (BOOL) usePhysicalSize updateParent: (BOOL) updateParent;
 	//just recalculates size (no file system access)
+- (void) recalculateSize: (BOOL) usePhysicalSize;
 
 - (void) setKindString; //will ask delegate whether to ignore creator codes
 - (void) setKindStringIgnoringCreatorCode: (BOOL) ignoreCreatorCode includeChilds: (BOOL) includeChilds;
 
-- (NSNumber*) size;
-- (unsigned long long) sizeValue;
+@property (readonly, retain) NSNumber *size;
+@property (readonly) unsigned long long sizeValue;
 
 - (NSString *) name;
 - (NSString *) path;
@@ -99,16 +99,17 @@ typedef enum
 
 /* optional delegate methods */
 @protocol FSItemDelegate<NSObject>
-- (BOOL) fsItemEnteringFolder: (FSItem*) item; //delegate may return NO to stop loading in "loadChilds"
+- (BOOL) fsItemEnteringFolder: (FSItem*) item; //!< delegate may return \c NO to stop loading in "loadChilds"
 - (BOOL) fsItemExittingFolder: (FSItem*) item;
-- (BOOL) fsItemShouldIgnoreCreatorCode: (FSItem*) item; //default is NO (if not implemented by delegate)
-- (BOOL) fsItemShouldLookIntoPackages: (FSItem*) item; //set kind string in "loadChilds?";
-													   //default is NO (if not implemented by delegate)
+- (BOOL) fsItemShouldIgnoreCreatorCode: (FSItem*) item; //!< default is \c NO (if not implemented by delegate)
+//! set kind string in "loadChilds?";
+//! default is \c NO (if not implemented by delegate)
+- (BOOL) fsItemShouldLookIntoPackages: (FSItem*) item;
 - (BOOL) fsItemShouldUsePhysicalFileSize: (FSItem*) item;
 @end
 
 //Exception raised by FSItem
-//delegate canceled the loading (see above)
+//! delegate canceled the loading (see above)
 extern NSString* FSItemLoadingCanceledException;
-//error while enumerating files/folders (e.g. volume has been ejected (unmounted)) 
+//! error while enumerating files/folders (e.g. volume has been ejected (unmounted)) 
 extern NSString* FSItemLoadingFailedException;

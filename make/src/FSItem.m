@@ -311,7 +311,7 @@ static struct _BulkCatalogInfoRec {
 		return nil;
 }
 
-- (FSItem*) childAtIndex: (unsigned) index
+- (FSItem*) childAtIndex: (NSUInteger) index
 {
 	if ( ![self isSpecialItem] )
 		return [_childs objectAtIndex: index];
@@ -319,7 +319,7 @@ static struct _BulkCatalogInfoRec {
 		return nil;
 }
 
-- (unsigned) childCount
+- (NSUInteger) childCount
 {
 	if ( ![self isSpecialItem] )
 		return [_childs count];
@@ -331,7 +331,7 @@ static struct _BulkCatalogInfoRec {
 {
 	NSAssert( ![self isSpecialItem], @"removeChild is illegal call for special item" );
 	
-	unsigned index = [_childs indexOfObjectIdenticalTo: child];
+	NSUInteger index = [_childs indexOfObjectIdenticalTo: child];
 	if ( index != NSNotFound )
 	{
 		unsigned long long myOldSize = [self sizeValue];
@@ -395,6 +395,11 @@ static struct _BulkCatalogInfoRec {
 		return [_fileDesc size];
 }
 
+- (void) recalculateSize: (BOOL) usePhysicalSize
+{
+	[self recalculateSize:usePhysicalSize updateParent:YES];
+}
+
 - (void) recalculateSize: (BOOL) usePhysicalSize updateParent: (BOOL) updateParent
 {
 	unsigned long long oldSize = [self sizeValue];
@@ -405,7 +410,7 @@ static struct _BulkCatalogInfoRec {
 		case FileFolderItem:
 			if ( [self isFolder] )
 			{
-				unsigned i = [_childs count];
+				NSUInteger i = [_childs count];
 				while ( i-- )
 				{
 					FSItem *child = [_childs objectAtIndex: i];
@@ -570,7 +575,7 @@ static struct _BulkCatalogInfoRec {
 	//let our childs do the same
 	if ( includeChilds && [self isFolder] )
 	{
-		unsigned i = [self childCount];
+		NSUInteger i = [self childCount];
 		while ( i-- )
 			[[self childAtIndex: i] setKindStringIgnoringCreatorCode: ignoreCreatorCode includeChilds: YES];
 	}

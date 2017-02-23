@@ -14,7 +14,7 @@
 #import "MainWindowController.h"
 #import "Preferences.h"
 
-@interface FilesOutlineViewController(Private)
+@interface FilesOutlineViewController()
 
 - (void) onDocumentSelectionChanged;
 - (void) reloadPackages: (FSItem*) parent;
@@ -56,7 +56,7 @@
     [[_outlineView outlineTableColumn] setDataCell: [ImageAndTextCell cell]];
 	
 	//set FileSizeFormatter for the size column
-	FileSizeFormatter *sizeFormatter = [[[FileSizeFormatter alloc] init] autorelease];
+	NSByteCountFormatter *sizeFormatter = [[[NSByteCountFormatter alloc] init] autorelease];
 	[[[_outlineView tableColumnWithIdentifier: @"size"] dataCell] setFormatter: sizeFormatter];
         
 	[[NSUserDefaultsController sharedUserDefaultsController] addObserver: self
@@ -92,7 +92,7 @@
 
 #pragma mark --------NSOutlineView datasource-----------------
 
-- (id) outlineView: (NSOutlineView *) outlineView child: (int) index ofItem: (id) item
+- (id) outlineView: (NSOutlineView *) outlineView child: (NSInteger) index ofItem: (id) item
 {
 	FSItem *fsItem = (item == nil) ? [self rootItem] : item;
 
@@ -104,7 +104,7 @@
     return [[self document] itemIsNode: item];
 }
 
-- (int) outlineView: (NSOutlineView *) outlineView numberOfChildrenOfItem: (id) item
+- (NSInteger) outlineView: (NSOutlineView *) outlineView numberOfChildrenOfItem: (id) item
 {
 	FSItem *fsItem = (item == nil) ? [self rootItem] : item;
 	
@@ -208,10 +208,6 @@ objectValueForTableColumn: (NSTableColumn *) tableColumn
 	
 	[[NSNotificationCenter defaultCenter] removeObserver: self];
 }
-
-@end
-
-@implementation FilesOutlineViewController(Private)
 
 - (void)observeValueForKeyPath:(NSString*)keyPath
 					  ofObject:(id)object

@@ -209,7 +209,7 @@
 						  nil,
 						  @selector(moveToTrashSheetDidDismiss: returnCode: contextInfo:),
 						  selectedItem,
-						  [NTLocalizedString localize: @"Would you like to delete it immediately?"]);
+						  @"%@", [NTLocalizedString localize: @"Would you like to delete it immediately?"]);
 	}
 	else
 	{

@@ -65,13 +65,13 @@
 		
 	[arrangedObjects sortUsingDescriptors: [self sortDescriptors]];
 
-	unsigned totalFileCount = 0;
-	unsigned i = [arrangedObjects count];
+	NSUInteger totalFileCount = 0;
+	NSUInteger i = [arrangedObjects count];
 	while ( i-- )
 		totalFileCount += [(FileKindStatistic*) [arrangedObjects objectAtIndex: i] fileCount];
 			
 	NSString *fakedItemTitle = NSLocalizedString( @"(all kinds)", @"" );
-	fakedItemTitle = [fakedItemTitle stringByAppendingFormat: @"  (%u)", totalFileCount];
+	fakedItemTitle = [fakedItemTitle stringByAppendingFormat: @"  (%lu)", (unsigned long)totalFileCount];
 
 	[arrangedObjects insertObject: [NSDictionary dictionaryWithObject: fakedItemTitle forKey: @"kindName"] atIndex: 0];
 	
@@ -80,7 +80,7 @@
 
 - (void) rearrangeObjects
 {
-	unsigned oldSelectionIndex = [self selectionIndex];
+	NSUInteger oldSelectionIndex = [self selectionIndex];
 	
 	[super rearrangeObjects];
 	
@@ -157,10 +157,10 @@
 	NSArray *kindStatistics = [self arrangedObjects];
 	NSArray *popupItems = [_kindsPopUpButton itemArray];
 	
-	unsigned i;
+	NSUInteger i;
 	for ( i = 0; i < [popupItems count]; i++ )
 	{
-		id<NSMenuItem> menuItem = [popupItems objectAtIndex: i];
+		NSMenuItem *menuItem = [popupItems objectAtIndex: i];
 		//the menu item's represented object is a NSNumber giving an array index of our arranged objects
 		NSNumber *index = [menuItem representedObject];
 		FileKindStatistic *stat = [kindStatistics objectAtIndex: [index unsignedIntValue]];
@@ -182,7 +182,7 @@
 			//set image in menu item
 			[menuItem setImage: image];
 			
-			NSString *title = [[stat kindName] stringByAppendingFormat: @"  (%u)", [stat fileCount]];
+			NSString *title = [[stat kindName] stringByAppendingFormat: @"  (%lu)", (unsigned long)[stat fileCount]];
 			[menuItem setTitle: title];
 		}
 	}

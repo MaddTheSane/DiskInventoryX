@@ -177,7 +177,7 @@ static NSMutableDictionary *g_toolbatStateImages = nil;
 			{
 				//delete periods at end of title (e.g. "Preferences...")
 				NSString *title = [menuItem title];
-				unsigned numOfRemainingChars = [title length];
+				NSUInteger numOfRemainingChars = [title length];
 				unichar lastChar;
 				do
 				{

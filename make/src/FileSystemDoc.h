@@ -18,7 +18,7 @@
 {
     NSString *_kindName;
 	unsigned long long _size;
-	NSMutableSet *_items;
+	NSMutableSet<FSItem*> *_items;
 }
 
 - (id) initWithItem: (FSItem*) item;
@@ -29,18 +29,18 @@
 - (NSString*) kindName;
 - (NSString*) description;
 
-- (unsigned) fileCount;		//# of files of this kind
+- (NSUInteger) fileCount;		//# of files of this kind
 - (unsigned long long) size; //sum of sizes of files of this kind
 - (void) recalculateSize;
 
-- (NSSet*) items;
-- (NSEnumerator*) itemEnumerator;
+- (NSSet<FSItem*>*) items;
+- (NSEnumerator<FSItem*>*) itemEnumerator;
 
 - (NSComparisonResult) compareSizeDescendingly: (FileKindStatistic*) other;
 
 @end
 
-@interface FileSystemDoc : NSDocument
+@interface FileSystemDoc : NSDocument <FSItemDelegate>
 {
     FSItem *_rootItem;
     FSItem *_selectedItem;

@@ -15,7 +15,7 @@
 {
 	NSArray *fsRefPath = [self FSRefPath];
 	NSString *displayPath = NSOpenStepRootDirectory();
-	unsigned i = [fsRefPath count];
+	NSUInteger i = [fsRefPath count];
 	while ( i-- )
 	{
 		NTFSRefObject *fsRef = [fsRefPath objectAtIndex: i];

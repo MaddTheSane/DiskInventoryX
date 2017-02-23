@@ -12,7 +12,7 @@
 #import "MainWindowController.h"
 #import "FileKindsPopupController.h"
 
-@interface SelectionListTableController : NSObject
+@interface SelectionListTableController : NSObject <NSTableViewDelegate>
 {
     IBOutlet NSTableView *_tableView;
     IBOutlet MainWindowController *_windowController;

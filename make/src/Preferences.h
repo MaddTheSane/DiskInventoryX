@@ -26,21 +26,12 @@ extern NSString *ShareKindColors;
 
 @interface NSMutableDictionary(DocumentPreferences)
 
-- (id) initWithDefaults;
+- (instancetype) initWithDefaults;
 
-- (BOOL) showPackageContents;
-- (void) setShowPackageContents: (BOOL) value;
-
-- (BOOL) showFreeSpace;
-- (void) setShowFreeSpace: (BOOL) value;
-
-- (BOOL) showOtherSpace;
-- (void) setShowOtherSpace: (BOOL) value;
-
-- (BOOL) ignoreCreatorCode;
-- (void) setIgnoreCreatorCode: (BOOL) value;
-
-- (BOOL) showPhysicalFileSize;
-- (void) setShowPhysicalFileSize: (BOOL) value;
+@property BOOL showPackageContents;
+@property BOOL showFreeSpace;
+@property BOOL showOtherSpace;
+@property BOOL ignoreCreatorCode;
+@property BOOL showPhysicalFileSize;
 
 @end

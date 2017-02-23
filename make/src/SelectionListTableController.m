@@ -9,7 +9,7 @@
 #import "SelectionListTableController.h"
 #import "ImageAndTextCell.h"
 
-@interface SelectionListTableController(Privat)
+@interface SelectionListTableController()
 
 - (void) setTableViewFont;
 - (void) onDocumentSelectionChanged;
@@ -76,7 +76,7 @@
 - (void) tableView: (NSTableView *) tableView
    willDisplayCell: (id) cell
 	forTableColumn: (NSTableColumn *) tableColumn
-			   row: (int) row
+			   row: (NSInteger) row
 {
     if ( [[tableColumn identifier] isEqualToString: @"displayName"] )
     {
@@ -89,7 +89,7 @@
     }
 }
 
-- (NSMenu*) tableView: (NSTableView *) tableView menuForTableColumn: (NSTableColumn*) column row: (int) row
+- (NSMenu*) tableView: (NSTableView *) tableView menuForTableColumn: (NSTableColumn*) column row: (NSInteger) row
 {
 	return [tableView menu];
 }
@@ -132,10 +132,6 @@
 }
 
 #pragma mark --------drawer notifications-----------------
-
-@end
-
-@implementation SelectionListTableController(Privat)
 
 - (void) setTableViewFont
 {
@@ -183,7 +179,7 @@
 		{
 			FileKindStatistic *selectedStat = [_kindStatisticsArrayController selection];
 			NSAssert( !NSIsControllerMarker( selectedStat ), @"kind statistics popup button should always have a valid selection" );
-			if ( ![selectedStat isAllFileKindsItem] && ![[selectedStat kindName] isEqualToString: [item kindName]]
+			if ( (![selectedStat isAllFileKindsItem] && ![[selectedStat kindName] isEqualToString: [item kindName]])
 				 || [[self document] itemIsNode: item] )
 				item = nil;
 		}

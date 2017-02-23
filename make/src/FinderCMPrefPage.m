@@ -9,7 +9,7 @@
 #import "FinderCMPrefPage.h"
 #import "DIXFinderCMInstaller.h"
 #import <OmniFoundation/NSString-OFExtensions.h>
-#import <CocoaTechFoundation/NTUsersAndGroups.h>
+//#import <CocoaTechFoundation/NTUsersAndGroups.h>
 #import "NTFileDesc-Utilities.h"
 
 @implementation FinderCMPrefPage

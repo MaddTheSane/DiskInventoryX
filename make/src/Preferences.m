@@ -35,9 +35,9 @@ NSString *ShareKindColors				= @"ShareKindColors";
 
 - (id) initWithDefaults
 {
-	self = [self init];
-	
-	[self copyValuesFromSharedDefaults];
+	if (self = [self init]) {
+		[self copyValuesFromSharedDefaults];
+	}
 	
 	return self;
 }

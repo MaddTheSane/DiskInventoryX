@@ -19,8 +19,9 @@
 
 @interface FileKindsTableController(Private)
 
-- (NSImage*) colorImageForRow: (int) row column: (NSTableColumn*) column;
+- (NSImage*) colorImageForRow: (NSInteger) row column: (NSTableColumn*) column;
 - (void) setTableViewFont;
+- (void) documentSelectionChanged: (NSNotification*) notification;
 
 @end
 
@@ -80,12 +81,12 @@
 
 - (IBAction) showFilesInSelectionList: (id) sender
 {
-	int selectionListDrawerState = [[_windowController selectionListDrawer] state];
+	NSInteger selectionListDrawerState = [[_windowController selectionListDrawer] state];
 	
 	if ( selectionListDrawerState == NSDrawerClosingState || selectionListDrawerState == NSDrawerClosedState )
 		[[_windowController selectionListDrawer] toggle: self];
 	
-	int selectedRow = [_tableView selectedRow];
+	NSInteger selectedRow = [_tableView selectedRow];
 	NSAssert( selectedRow >= 0, @"kinds tableview should have a selection" );
 	
 	FileKindStatistic *kindStat = [(NSArray*)[_kindsTableArrayController arrangedObjects] objectAtIndex: selectedRow];
@@ -140,7 +141,7 @@
 @implementation FileKindsTableController(Private)
 
 //returns a cushion image for a given row in the tableview
-- (NSImage*) colorImageForRow: (int) row column: (NSTableColumn*) column
+- (NSImage*) colorImageForRow: (NSInteger) row column: (NSTableColumn*) column
 {
 	if ( _cushionImages == nil )
 		_cushionImages = [[NSMutableDictionary alloc] init];

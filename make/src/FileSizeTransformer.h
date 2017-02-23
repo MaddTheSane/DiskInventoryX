@@ -6,13 +6,12 @@
 //  Copyright 2005 __MyCompanyName__. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-#import "FileSizeFormatter.h"
+#import <Foundation/Foundation.h>
 
 
 @interface FileSizeTransformer : NSValueTransformer
 {
-	FileSizeFormatter *_sizeFormatter;
+	NSByteCountFormatter *_sizeFormatter;
 }
 
 + (id) transformer;

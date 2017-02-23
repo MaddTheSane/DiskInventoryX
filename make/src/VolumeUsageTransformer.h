@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "FileSizeFormatter.h"
 
 //created an attributed string to be displayed in the volume usage column
 @interface VolumeUsageTransformer : NSValueTransformer

@@ -148,6 +148,7 @@
 #import <CocoatechCore/NTMobileMe.h>
 #import <CocoatechCore/NTMessageProxy.h>
 #import <CocoatechCore/NTBGHUDPopUpButton.h>
+#import <CocoatechCore/NTAquaButtonCell.h>
 
 // some common defines
 #define kFinderApplicationName @"Finder.app"

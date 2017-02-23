@@ -9,7 +9,6 @@
 #import "FileSystemDoc.h"
 #import "MainWindowController.h"
 #import "DrivesPanelController.h"
-#import "FileSizeFormatter.h"
 #import "Timing.h"
 #import "InfoPanelController.h"
 #import "NTDefaultDirectory-Utilities.h"
@@ -65,7 +64,7 @@ NSString *CollectFileKindStatisticsCanceledException = @"CollectFileKindStatisti
 
 - (NSString*) description
 {
-    return [[self kindName] stringByAppendingFormat: @" {%u files; %.1f kB}", [self fileCount], (float) [self size]/1024]; 
+    return [[self kindName] stringByAppendingFormat: @" {%lu files; %.1f kB}", (unsigned long)[self fileCount], (float) [self size]/1024]; 
 }
 
 - (NSString*) kindName
@@ -74,7 +73,7 @@ NSString *CollectFileKindStatisticsCanceledException = @"CollectFileKindStatisti
 }
 
 //# of files of this kind
-- (unsigned) fileCount
+- (NSUInteger) fileCount
 {
 	return [_items count];
 }
@@ -762,10 +761,10 @@ NSString *OldItem = @"OldItem";
     }
     else
     {
-        unsigned itemIndex = [_zoomStack indexOfObjectIdenticalTo: item];
+        NSUInteger itemIndex = [_zoomStack indexOfObjectIdenticalTo: item];
         if ( itemIndex != NSNotFound )
         {
-            unsigned itemsToRemove = [_zoomStack count] - itemIndex - 1;
+            NSUInteger itemsToRemove = [_zoomStack count] - itemIndex - 1;
             for ( ; itemsToRemove > 0; itemsToRemove-- )
                 [_zoomStack removeLastObject];
         }
@@ -821,7 +820,7 @@ NSString *OldItem = @"OldItem";
 {
     NSString *displayName = [[self zoomedItem] displayName];
 	
-	FileSizeFormatter *sizeFormatter = [[[FileSizeFormatter alloc] init] autorelease];
+	NSByteCountFormatter *sizeFormatter = [[[NSByteCountFormatter alloc] init] autorelease];
 
     displayName = [displayName stringByAppendingFormat: @" (%@)", [sizeFormatter stringForObjectValue: [[self zoomedItem] size]]];
 
@@ -1011,7 +1010,7 @@ NSString *OldItem = @"OldItem";
 	else if ( includingChilds )
 	{
 		//if the item is a folder, recurse through it's childs
-        unsigned i = [item childCount];
+        NSUInteger i = [item childCount];
         while ( i-- )
             [self addItemToFileKindStatistic: [item childAtIndex: i] includingChilds: YES];
     }
@@ -1032,7 +1031,7 @@ NSString *OldItem = @"OldItem";
 	else if ( includingChilds )
 	{
 		//if the item is a folder, recurse through it's childs
-        unsigned i = [item childCount];
+        NSUInteger i = [item childCount];
         while ( i-- )
             [self removeItemFromFileKindStatistic: [item childAtIndex: i] includingChilds: YES];		
     }
@@ -1063,7 +1062,7 @@ NSString *OldItem = @"OldItem";
 	if ( [self itemIsNode: item] )
 	{
 		//if the item is a folder, recurse through it's childs
-		unsigned i = [item childCount];
+		NSUInteger i = [item childCount];
 		while ( i-- )
 			[self removePackagesFromFileKindStatistic: [item childAtIndex: i]];
 	}
@@ -1093,7 +1092,7 @@ NSString *OldItem = @"OldItem";
 	if ( [self itemIsNode: item] )
 	{
 		//if the item is a folder, recurse through it's childs
-		unsigned i = [item childCount];
+		NSUInteger i = [item childCount];
 		while ( i-- )
 			[self addPackagesToFileKindStatistic: [item childAtIndex: i]];
 	}

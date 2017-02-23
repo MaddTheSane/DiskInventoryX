@@ -10,7 +10,7 @@
 
 
 @interface NSObject(NSTableViewDelegateContextMenu)
-- (NSMenu*) tableView: (NSTableView *) tableView menuForTableColumn: (NSTableColumn*) column row: (int) row;
+- (NSMenu*) tableView: (NSTableView *) tableView menuForTableColumn: (NSTableColumn*) column row: (NSInteger) row;
 		//delegate will be asked what menu to show (if not implemented by delegate [self menu] is used)
 @end
 
