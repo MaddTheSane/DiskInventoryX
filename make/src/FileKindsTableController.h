@@ -2,6 +2,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "FileSystemDoc.h"
+#import "FileSizeFormatter.h"
 
 @interface FileKindsTableController : NSObject
 {
@@ -9,7 +10,6 @@
     IBOutlet FileSystemDoc *_document;
     IBOutlet NSWindowController *_windowController;
 
-    NSImageCell *_cushionImageCell;
     NSMutableArray *_cushionImages;
     NSMutableArray *_kinds;
 }

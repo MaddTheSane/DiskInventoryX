@@ -31,8 +31,14 @@
             ACTIONS = {
                 changeSplitting = id; 
                 moveToTrash = id; 
+                performLayoutBenchmark = id; 
+                performRenderBenchmark = id; 
+                refresh = id; 
                 selectParentItem = id; 
+                showFreeSpace = id; 
                 showInFinder = id; 
+                showInformationPanel = id; 
+                showOtherSpace = id; 
                 showPackageContents = id; 
                 toggleFileKindsDrawer = id; 
                 zoomIn = id; 
@@ -40,7 +46,12 @@
             }; 
             CLASS = MainWindowController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {"_kindsDrawer" = NSDrawer; "_splitter" = NSSplitView; }; 
+            OUTLETS = {
+                "_filesOutlineView" = NSOutlineView; 
+                "_kindsDrawer" = NSDrawer; 
+                "_splitter" = NSSplitView; 
+                "_treeMapView" = TreeMapView; 
+            }; 
             SUPERCLASS = NSWindowController; 
         }, 
         {CLASS = NSObject; LANGUAGE = ObjC; }, 
@@ -48,7 +59,7 @@
             CLASS = TreeMapView; 
             LANGUAGE = ObjC; 
             OUTLETS = {dataSource = id; delegate = id; }; 
-            SUPERCLASS = NSQuickDrawView; 
+            SUPERCLASS = NSView; 
         }, 
         {
             CLASS = TreeMapViewController; 

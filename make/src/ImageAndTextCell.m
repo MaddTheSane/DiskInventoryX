@@ -43,6 +43,7 @@
 */
 
 #import "ImageAndTextCell.h"
+#import <OmniAppKit/NSString-OAExtensions.h>
 
 #define TEXT_OFFSET	10	//space between image and text
 #define IMAGE_OFFSET	5	//space between left side of cell rect and image
@@ -130,6 +131,19 @@
 
         [_image compositeToPoint:imageFrame.origin operation:NSCompositeSourceOver];
     }
+	
+	ThemeFontID themeFont = kThemeSystemFont;
+	float fontSize = [[self font] pointSize];
+	
+	if ( fontSize == [NSFont systemFontSize] )
+		themeFont = kThemeSystemFont;
+	else if ( fontSize == [NSFont smallSystemFontSize] )
+		themeFont = kThemeSmallSystemFont;
+	else LOG( @"ImageTextCell can't determine appropriate truncating method" );
+
+	[self setStringValue: [[self stringValue] truncatedStringWithMaxWidth: NSWidth(cellFrame)
+															  themeFontID: themeFont
+														   truncationMode: truncEnd]];
     [super drawWithFrame:cellFrame inView:controlView];
 }
 

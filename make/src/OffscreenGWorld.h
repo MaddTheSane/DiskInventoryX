@@ -18,8 +18,8 @@
 //         [newGWorld release];
 //
 //
-//  Created by Doom on Thu Oct 09 2003.
-//  Copyright (c) 2003 __MyCompanyName__. All rights reserved.
+//  Created by Tjark Derlien on Thu Oct 09 2003.
+//  Copyright (c) 2003 Tjark Derlien. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

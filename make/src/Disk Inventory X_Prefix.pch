@@ -4,8 +4,11 @@
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
+	#import <CocoaTechFoundation/CocoaTechFoundation.h>
+
+	#import <OmniBase/OmniBase.h>
 
 	//global variable which enables/disables logging
 	extern BOOL g_EnableLogging;
-	#define LOG(x, args...) if (g_EnableLogging) NSLog(x, ## args)
+	#define LOG(x, args...) { if (g_EnableLogging) NSLog(x, ## args); }
 #endif

@@ -9,6 +9,9 @@
     IBOutlet id _fileSizeTextField;
     IBOutlet id _treeMapView;
     IBOutlet FileSystemDoc *_document;
+	
+	FSItem *_otherSpaceItem;
+	FSItem *_freeSpaceItem;
 }
 
 - (FileSystemDoc*) document;

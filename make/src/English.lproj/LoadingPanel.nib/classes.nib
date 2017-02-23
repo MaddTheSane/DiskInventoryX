@@ -2,9 +2,11 @@
     IBClasses = (
         {CLASS = FileKindStatistic; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
+            ACTIONS = {cancelScanningFolder = id; }; 
             CLASS = FileSystemDoc; 
             LANGUAGE = ObjC; 
             OUTLETS = {
+                "_loadingCancelButton" = id; 
                 "_loadingPanel" = id; 
                 "_loadingProgressIndicator" = id; 
                 "_loadingTextField" = id; 
@@ -12,6 +14,18 @@
             SUPERCLASS = NSDocument; 
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {cancel = id; }; 
+            CLASS = LoadingPanelController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                "_loadingCancelButton" = id; 
+                "_loadingPanel" = id; 
+                "_loadingProgressIndicator" = id; 
+                "_loadingTextField" = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
         {CLASS = NibLifetimeLogger; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {CLASS = "java.lang.Object"; LANGUAGE = Java; }
     ); 

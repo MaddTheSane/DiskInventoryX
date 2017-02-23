@@ -1,6 +1,22 @@
 release notes
 =============
 
+1.0 beta (2004-06-12)
+---------------------
+- now runs only under Mac OS X 10.3+; 10.2 is no longer supported!
+
+new features:
+- the scanning process is now 3 times faster (thanks to Dave Payne from Apple)
+- show the free space and the space occupied by not shown files (on the selected volume) and like a file in the treemap
+- show physical (# of used clusters) or logical (size of content) file size
+- ignore creator code (so all those PDF files are shown as "PDF File" and not as "Acrobat PDF File" or "PDF File")
+- option to use a small font in the file list and the file kind statistic drawer
+- refresh (reload) all or an individual file or folder
+- preferences
+- toolbar
+
+The source code for the tree map is now a separate framework to be easily integrated into other applications.
+
 
 0.8 (2004-03-18)
 ----------------

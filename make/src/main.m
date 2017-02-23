@@ -2,8 +2,8 @@
 //  main.m
 //  Disk Accountant
 //
-//  Created by Doom on Sun Oct 26 2003.
-//  Copyright (c) 2003 __MyCompanyName__. All rights reserved.
+//  Created by Tjark Derlien on Sun Oct 26 2003.
+//  Copyright (c) 2003 Tjark Derlien. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

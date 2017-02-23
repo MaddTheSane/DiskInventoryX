@@ -11,11 +11,20 @@
         {
             ACTIONS = {
                 changeSplitting = id; 
+                ignoreCreatorCode = id; 
                 moveToTrash = id; 
                 myAction1 = id; 
+                performLayoutBenchmark = id; 
+                performRenderBenchmark = id; 
+                refresh = id; 
+                refreshAll = id; 
                 selectParentItem = id; 
+                showFreeSpace = id; 
                 showInFinder = id; 
+                showInformationPanel = id; 
+                showOtherSpace = id; 
                 showPackageContents = id; 
+                showPhysicalSizes = id; 
                 toggleFileKindsDrawer = id; 
                 zoomIn = id; 
                 zoomOut = id; 
@@ -27,8 +36,11 @@
         {
             ACTIONS = {
                 changeSplitting = id; 
+                moveToTrash = id; 
                 selectParentItem = id; 
+                showFreeSpace = id; 
                 showInFinder = id; 
+                showOtherSpace = id; 
                 showPackageContents = id; 
                 toggleFileKindsDrawer = id; 
                 zoomIn = id; 
@@ -36,12 +48,14 @@
             }; 
             CLASS = MainWindowController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {"_kindsDrawer" = NSDrawer; }; 
+            OUTLETS = {"_kindsDrawer" = NSDrawer; "_splitter" = NSSplitView; }; 
             SUPERCLASS = NSWindowController; 
         }, 
         {
+            ACTIONS = {closeDonationPanel = id; gotoHomepage = id; showPreferencesPanel = id; }; 
             CLASS = MyDocumentController; 
             LANGUAGE = ObjC; 
+            OUTLETS = {"_donationPanel" = NSPanel; "_zoomStackMenu" = NSMenu; }; 
             SUPERCLASS = NSDocumentController; 
         }
     ); 

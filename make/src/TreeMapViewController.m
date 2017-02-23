@@ -1,7 +1,25 @@
+//
+//  FSItem.m
+//  Disk Inventory X
+//
+//  Created by Tjark Derlien on Mon Sep 29 2003.
+//  Copyright (c) 2003 Tjark Derlien. All rights reserved.
+//
+
 #import "TreeMapViewController.h"
-#import "TreeMapView.h"
+#import <TreeMapView/TreeMapView.h>
 #import "FileTypeColors.h"
 #import "MainWindowController.h"
+#import "FileSizeFormatter.h"
+#import "FSItem-Utilities.h"
+
+@interface TreeMapViewController(Private)
+
+- (void)observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context;
+- (void) onDocumentSelectionChanged;
+- (void) reloadData;
+
+@end
 
 @implementation TreeMapViewController
 
@@ -9,33 +27,48 @@
 {
 	FileSystemDoc *doc = [self document];
 	
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(globalSelectionChanged:)
-                                                 name: GlobalSelectionChangedNotification
-                                               object: nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(zoomedItemChanged:)
-                                                 name: ZoomedItemChangedNotification
-                                               object: doc];
-
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(showPackageContentsChanged:)
-                                                 name: ShowPackageContentsChangedNotification
-                                               object: doc];
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 	
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(itemsChanged:)
-                                                 name: FSItemsChanged
-                                               object: doc];
-
+    [notificationCenter addObserver: self
+						   selector: @selector(zoomedItemChanged:)
+							   name: ZoomedItemChangedNotification
+							 object: doc];
+	
+    [notificationCenter addObserver: self
+						   selector: @selector(viewOptionChanged:)
+							   name: ViewOptionChangedNotification
+							 object: doc];
+	
+    [notificationCenter addObserver: self
+						   selector: @selector(itemsChanged:)
+							   name: FSItemsChangedNotification
+							 object: doc];
+	
+    [notificationCenter addObserver: self
+						   selector: @selector(windowWillClose:)
+							   name: NSWindowWillCloseNotification
+							 object: [_treeMapView window]];
+	
     [_fileNameTextField setStringValue: @""];
     [_fileSizeTextField setStringValue: @""];
+	
+	//set up KVO
+	[doc addObserver: self forKeyPath: DocKeySelectedItem options: NSKeyValueChangeSetting context: nil];
+	
+	//create "free space" and "other space" items
+	//(don't use [self rootItem] as we want the root, not the zoomed item)
+	FSItem *rootItem =  [[self document] rootItem];
+	
+	_otherSpaceItem = [[FSItem alloc] initAsOtherSpaceItemForParent: rootItem];
+	_freeSpaceItem = [[FSItem alloc] initAsFreeSpaceItemForParent: rootItem];
+	
+	[self reloadData];
 }
 
 - (void) dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver: self];
+	[_otherSpaceItem release];
+	[_freeSpaceItem release];
     
     [super dealloc];
 }
@@ -53,36 +86,71 @@
     return [[self document] zoomedItem];
 }
 
-// TableMapViewDataSource
+#pragma mark --------TreeMapView data source-----------------
+
 - (id) treeMapView: (TreeMapView*) view child: (unsigned) index ofItem: (id) item
 {
     FSItem *fsItem = ( item == nil ? [self rootItem] : item );
-
-    return [fsItem childAtIndex: index];
+	
+	if ( fsItem == [self rootItem]
+		 && index >= [fsItem childCount] )
+	{
+		if ( ( index - [fsItem childCount] ) == 0 )
+			return [[self document] showOtherSpace] ? _otherSpaceItem : _freeSpaceItem;
+		else
+			return _freeSpaceItem;
+	}
+	else
+		return [fsItem childAtIndex: index];
 }
 
 - (BOOL) treeMapView: (TreeMapView*) view isNode: (id) item
 {
     FSItem *fsItem = ( item == nil ? [self rootItem] : item );
 
-    return [[self document] itemIsNode: fsItem];
+    return ![fsItem isSpecialItem] && [[self document] itemIsNode: fsItem];
 }
 
 - (unsigned) treeMapView: (TreeMapView*) view numberOfChildrenOfItem: (id) item
 {
     FSItem *fsItem = ( item == nil ? [self rootItem] : item );
 
-    return [fsItem childCount];
+    unsigned childCount = [fsItem childCount];
+	
+	//items representing other space and free space
+	if ( fsItem == [self rootItem] )
+	{
+		FileSystemDoc *doc = [self document];
+		if ( [doc showFreeSpace] )
+			childCount ++;
+		if ( [doc showOtherSpace] )
+			childCount ++;
+	}
+	
+	return childCount;
 }
 
 - (unsigned long long) treeMapView: (TreeMapView*) view weightByItem: (id) item
 {
     FSItem *fsItem = ( item == nil ? [self rootItem] : item );
 
-    return [fsItem size];
+	unsigned long long size = [fsItem sizeValue];
+	
+	//add sizes of items representing other space and free space
+	if ( fsItem == [self rootItem] )
+	{
+		FileSystemDoc *doc = [self document];
+		if ( [doc showFreeSpace] )
+			size += [_freeSpaceItem sizeValue];
+		if ( [doc showOtherSpace] )
+			size += [_otherSpaceItem sizeValue];
+	}
+	
+    return size;
 }
 
-// TableMapViewDelegate
+#pragma mark --------TreeMapView delegates-----------------
+
 - (NSString*) treeMapView: (TreeMapView*) view getToolTipByItem: (id) item
 {
     FSItem *fsItem = ( item == nil ? [self rootItem] : item );
@@ -90,17 +158,29 @@
     return [fsItem displayName];
 }
 
-- (void) treeMapView: (TreeMapView*) view willDisplayItem: (id) item withRenderer: (TMVItemRenderer*) renderer
+- (void) treeMapView: (TreeMapView*) view willDisplayItem: (id) item withRenderer: (TMVItem*) renderer
 {
     FSItem *fsItem = ( item == nil ? [self rootItem] : item );
-
-    if ( ![self treeMapView: view isNode: fsItem] )
-    {
-        NSColor *color = [[FileTypeColors instance] colorForItem: fsItem];
-
-        [renderer setCushionColor: color];
-    }
-
+	
+	NSColor *color = nil;
+	
+	switch ( [fsItem type] )
+	{
+		case FileFolderItem:
+			color = [[FileTypeColors instance] colorForItem: fsItem];
+			break;
+		case FreeSpaceItem:
+			color = [NSColor colorWithCalibratedWhite: 1 alpha: 1];
+			//color = [NSColor colorWithCalibratedRed: 0 green: 0 blue: 0 alpha: 1];
+			color = [TMVCushionRenderer normalizeColor: color];
+			break;
+		case OtherSpaceItem:
+			color = [NSColor colorWithCalibratedRed: 0.2 green: 0.2 blue: 0.2 alpha: 1];
+			color = [TMVCushionRenderer normalizeColor: color];
+			break;
+	}
+	
+	[renderer setCushionColor: color];
 }
 
 - (void) treeMapView: (TreeMapView*) view willShowMenuForEvent: (NSEvent*) event
@@ -114,19 +194,21 @@
 
         TMVCellId cell = [_treeMapView cellIdByPoint: point inViewCoords: NO];
         NSAssert1( cell != nil, @"No item at %@", NSStringFromPoint(point) );
+		
+		FSItem *fsItem = [_treeMapView itemByCellId: cell];
 
-        FileSystemDoc *document = [self document];
-
-        [document setSelectedItem: [_treeMapView itemByCellId: cell]];
-
-        //post notification that the global selection has changed
-        //we send our document as 'object' as we want to be callbacked by the notification so that
-        //the selection in the TreeMap is changed (see globalSelectionChanged:)
-        [[NSNotificationCenter defaultCenter] postNotificationName: GlobalSelectionChangedNotification object: document userInfo: nil];
+		if ( ![fsItem isSpecialItem] )
+		{
+			FileSystemDoc *document = [self document];
+			[document setSelectedItem: fsItem];
+		}
+		
+		[self onDocumentSelectionChanged];
     }
 }
 
-//TableMapViewNotifications
+#pragma mark --------TreeMapView notifications-----------------
+
 - (void)treeMapViewItemTouched: (NSNotification*) notification
 {
     FSItem *fsItem = [[notification userInfo] objectForKey: TMVTouchedItem];
@@ -139,11 +221,22 @@
     else
     {
         NSString *displayName = [fsItem displayName];
-        displayName = [displayName stringByAppendingFormat: @" (%@)", [fsItem displayFolderName]];
-        
+		FileSizeFormatter *sizeFormatter = [[[FileSizeFormatter alloc] init] autorelease];
+		NSString *size = [sizeFormatter stringForObjectValue: [fsItem size]];
+		
+		if ( ![fsItem isSpecialItem] )
+		{
+			displayName = [displayName stringByAppendingFormat: @" (%@)", [fsItem displayFolderName]];        			
+			
+			[_fileSizeTextField setStringValue: [NSString stringWithFormat: @"%@, %@", [fsItem kindName], size]];
+		}
+		else
+		{
+			[_fileSizeTextField setStringValue: @""];
+			[_fileSizeTextField setStringValue: size];
+		}
+			
         [_fileNameTextField setStringValue: displayName];
-
-        [_fileSizeTextField setStringValue: [NSString stringWithFormat: @"%@, %@", [fsItem kindName], [fsItem displaySize]]];
     }
 }
 
@@ -154,64 +247,115 @@
     FileSystemDoc *doc = [self document];
 
     //if we are notified about the selection change after we've set the selection by ourself
-    //(e.g. in 'globalSelectionChanged:') we don't want to post any notification
-    if ( [doc selectedItem] != item )
+    //(e.g. in 'onDocumentSelectionChanged') we don't want to post any notification
+    if ( [doc selectedItem] != item
+		 && ![item isSpecialItem] )
     {
         [doc setSelectedItem: item];
-
-        //post notification that the global selection has changed
-        [[NSNotificationCenter defaultCenter] postNotificationName: GlobalSelectionChangedNotification object: self userInfo: nil];
     }
 }
 
 #pragma mark --------document notifications-----------------
 
-- (void) globalSelectionChanged: (NSNotification*) notification
-{
-    if ( [notification object] == self )
-        return;
-
-    FSItem *item = [[self document] selectedItem];
-
-    if ( item == nil )
-    {
-        [_treeMapView selectItemByCellId: nil];
-    }
-    else
-    {
-        //put path from root item to selected item in an array
-        NSMutableArray *pathToSelectedItem = [NSMutableArray array];
-        [pathToSelectedItem insertObject: item atIndex: 0];
-
-        do
-        {
-            item = [item parent];
-            if ( item != nil )
-                [pathToSelectedItem insertObject: item atIndex: 0];
-        }
-        while ( item != nil && item != [self rootItem]);
-
-        [_treeMapView selectItemByPathToItem: pathToSelectedItem];
-    }
-}
-
 - (void) itemsChanged: (NSNotification*) notification
 {
-    [_treeMapView reloadData];
+	//create new "free space" and "other space" items
+	//(don't use [self rootItem] as we want the root, not the zoomed item)
+	FSItem *rootItem =  [[self document] rootItem];
+	
+	[_otherSpaceItem release];
+	_otherSpaceItem = [[FSItem alloc] initAsOtherSpaceItemForParent: rootItem];
+	[_freeSpaceItem release];
+	_freeSpaceItem = [[FSItem alloc] initAsFreeSpaceItemForParent: rootItem];
+	
+    [self reloadData];
 }
 
 - (void) zoomedItemChanged: (NSNotification*) notification
 {
-    [_treeMapView reloadData];
+	//just do a reload if animated zooming is turned off
+	if ( ![[NSUserDefaults standardUserDefaults] boolForKey: AnimatedZooming] )
+	{
+		[self reloadData];
+	}
+	else
+	{
+		FSItem *oldZoomedItem = [[notification userInfo] objectForKey: OldItem];
+		FSItem *newZoomedItem = [[notification userInfo] objectForKey: NewItem];
+		NSAssert( newZoomedItem == [self rootItem], @"invalid new zoomed item" );
+		
+		//did we zoom in or out?
+		BOOL didZoomedIn = [newZoomedItem isDescendantOf: oldZoomedItem];
+		
+		if ( didZoomedIn )
+		{
+			NSArray *itemPath = [newZoomedItem fsItemPathFromAncestor: oldZoomedItem];
+			[_treeMapView reloadAndPerformZoomIntoItem: itemPath];
+		}
+		else
+		{
+			NSArray *itemPath = [oldZoomedItem fsItemPathFromAncestor: newZoomedItem];
+			[_treeMapView reloadAndPerformZoomOutofItem: itemPath];
+		}
+	}
 }
 
-- (void) showPackageContentsChanged: (NSNotification*) notification
+- (void) viewOptionChanged: (NSNotification*) notification
 {
-    [_treeMapView reloadData];
+	NSString *theOption = [[notification userInfo] objectForKey:ChangedViewOption];
+	
+	if ( [theOption isEqualToString: ShowPackageContents]
+		 || [theOption isEqualToString: ShowPhysicalFileSize]
+		 || [theOption isEqualToString: IgnoreCreatorCode]
+		 || [theOption isEqualToString: ShowOtherSpace]
+		 || [theOption isEqualToString: ShowFreeSpace] )
+	{
+		[self reloadData];
+		
+		//restore selection
+		[self onDocumentSelectionChanged];
+	}
+}
 
-    //restore selection
-    [self globalSelectionChanged: [NSNotification notificationWithName: GlobalSelectionChangedNotification
-                                                                object: nil]];
+#pragma mark --------window notifications-----------------
+
+- (void) windowWillClose: (NSNotification*) notification
+{
+	[[self document] removeObserver: self forKeyPath: DocKeySelectedItem];
+	
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
+}
+
+@end
+
+@implementation TreeMapViewController(Private)
+
+- (void)observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context
+{
+	if ( object == [self document] )
+	{
+		if ( [keyPath isEqualToString: DocKeySelectedItem] )
+			[self onDocumentSelectionChanged];
+	}
+}
+
+- (void) onDocumentSelectionChanged
+{
+	FSItem *item = [[self document] selectedItem];
+	
+	if ( item == (FSItem*) [_treeMapView selectedItem] )
+		return;
+
+	if ( item == nil )
+		[_treeMapView selectItemByCellId: nil];
+	else
+		[_treeMapView selectItemByPathToItem: [item fsItemPathFromAncestor: [self rootItem]]];
+}
+
+- (void) reloadData;
+{
+	[_treeMapView reloadData];
+	[self onDocumentSelectionChanged];
 }
 
 @end

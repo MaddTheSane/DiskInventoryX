@@ -1,7 +1,16 @@
+//
+//  FSItem.m
+//  Disk Inventory X
+//
+//  Created by Tjark Derlien on Mon Sep 29 2003.
+//  Copyright (c) 2003 Tjark Derlien. All rights reserved.
+//
+
 #import "FilesOutlineViewController.h"
 #import "FSItem.h"
-#import "NSImage-ScaleExtension.h"
+#import <CocoaTechFoundation/NSImage-NTExtensions.h>
 #import "MainWindowController.h"
+#import "Preferences.h"
 
 #pragma mark ----------------NSOutlineView context menu extension---------------------
 
@@ -37,8 +46,20 @@
     if ( columnIndex >= 0 && rowIndex >= 0
          && [delegate respondsToSelector:@selector(outlineView:menuForTableColumn:item:)] )
     {
+		//get context menu
         NSTableColumn *column = [[self tableColumns] objectAtIndex: columnIndex];
-        return [delegate outlineView:self menuForTableColumn: column item: [self itemAtRow: rowIndex]];
+        NSMenu *contextMenu = [delegate outlineView:self menuForTableColumn: column item: [self itemAtRow: rowIndex]];
+
+		//set first responder if we will show a context menu
+		//(isn't nessecary for proper function, but makes sense as the user opens the context menu)
+		if ( contextMenu != nil
+			 && [self acceptsFirstResponder]
+			 && [[self window] firstResponder] != self )
+		{
+			[[self window] makeFirstResponder: self];
+		}
+		
+		return contextMenu;
     }
     else
         return NULL;
@@ -50,9 +71,11 @@
 
 @interface FilesOutlineViewController(Private)
 
-- (NSImage*) iconForItem: (FSItem*) item withSize: (int) size;
+- (void) onDocumentSelectionChanged;
 - (void) reloadPackages: (FSItem*) parent;
 - (void) reloadData;
+- (void) setOutlineViewFont;
+- (void) observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context;
 
 @end
 
@@ -62,43 +85,50 @@
 {
 	FileSystemDoc *doc = [self document];
 	
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(globalSelectionChanged:)
-                                                 name: GlobalSelectionChangedNotification
-                                               object: nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(zoomedItemChanged:)
-                                                 name: ZoomedItemChangedNotification
-                                               object: doc];
-
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(showPackageContentsChanged:)
-                                                 name: ShowPackageContentsChangedNotification
-                                               object: doc];
-
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(itemsChanged:)
-                                                 name: FSItemsChanged
-                                               object: doc];
+	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 	
-    _cell = [[ImageAndTextCell alloc] init];
-
-    _fileIcons = [[NSMutableDictionary alloc] init];
-    
-    [[_outlineView outlineTableColumn] setDataCell: _cell];
+    [center addObserver: self
+			   selector: @selector(zoomedItemChanged:)
+				   name: ZoomedItemChangedNotification
+				 object: doc];
+	
+    [center addObserver: self
+			   selector: @selector(viewOptionChanged:)
+				   name: ViewOptionChangedNotification
+				 object: doc];
+	
+    [center addObserver: self
+			   selector: @selector(itemsChanged:)
+				   name: FSItemsChangedNotification
+				 object: doc];
+	
+    [center addObserver: self
+			   selector: @selector(windowWillClose:)
+				   name: NSWindowWillCloseNotification
+				 object: [_outlineView window]];
+	
+	//set ImageAndTextCell as the data cell for the first (outline) column
+    [[_outlineView outlineTableColumn] setDataCell: [[[ImageAndTextCell alloc] init] autorelease]];
+	
+	//set FileSizeFormatter for the size column
+	FileSizeFormatter *sizeFormatter = [[[FileSizeFormatter alloc] init] autorelease];
+	[[[_outlineView tableColumnWithIdentifier: @"size"] dataCell] setFormatter: sizeFormatter];
         
+	//set up KVO
+	[[NSUserDefaults standardUserDefaults] addObserver: self
+											forKeyPath: UseSmallFontInFilesView
+											   options: NSKeyValueChangeSetting
+											   context: nil];
+	[doc addObserver: self forKeyPath: DocKeySelectedItem options: NSKeyValueChangeSetting context: nil];
+	
+	//set small font for all for all columns if needed
+	[self setOutlineViewFont];
+    
     [self reloadData];
 }
 
 - (void) dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver: self];
-    
-    [_cell release];
-
-    [_fileIcons release];
-    
     [super dealloc];
 }
 
@@ -117,17 +147,11 @@
 
 #pragma mark --------NSOutlineView datasource-----------------
 
-- (NSMenu*) outlineView: (NSOutlineView *) outlineView menuForTableColumn: (NSTableColumn*) column item: (id) item
-{
-     return _contextMenu;
-}
-
 - (id) outlineView: (NSOutlineView *) outlineView child: (int) index ofItem: (id) item
 {
-    if ( item == nil )
-        item = [self rootItem];
+	FSItem *fsItem = (item == nil) ? [self rootItem] : item;
 
-    return [item childAtIndex: index];
+    return [fsItem childAtIndex: index];
 }
 
 - (BOOL) outlineView: (NSOutlineView *) outlineView isItemExpandable: (id) item
@@ -137,10 +161,9 @@
 
 - (int) outlineView: (NSOutlineView *) outlineView numberOfChildrenOfItem: (id) item
 {
-    if ( item == nil )
-        item = [self rootItem];
-
-    return [item childCount];
+	FSItem *fsItem = (item == nil) ? [self rootItem] : item;
+	
+    return [fsItem childCount];
 }
 
 - (id) outlineView: (NSOutlineView *) outlineView
@@ -149,24 +172,8 @@ objectValueForTableColumn: (NSTableColumn *) tableColumn
 {
     NSString *columnTag = [tableColumn identifier];
     FSItem *fsItem = item;
-
-    if ( [columnTag isEqualToString: @"name"] )
-    {
-        return [fsItem displayName];
-    }
-    else if ( [columnTag isEqualToString: @"size"] )
-    {
-        return [fsItem displaySize];
-    }
-    else if ( [columnTag isEqualToString: @"kindName"] )
-    {
-        return [fsItem kindName];
-    }
-    else
-    {
-        NSAssert( NO, @"value for unknown column requested" );
-        return @"";
-    }
+	
+	return [fsItem valueForKey: columnTag];
 }
 
 - (BOOL) outlineView: (NSOutlineView *) outlineView
@@ -183,11 +190,17 @@ objectValueForTableColumn: (NSTableColumn *) tableColumn
       forTableColumn: (NSTableColumn *) tableColumn
                 item: (id) item
 {
-    if ( [[tableColumn identifier] isEqualToString: @"name"] )
+    if ( [[tableColumn identifier] isEqualToString: @"displayName"] )
     {
-        NSImage *icon = [self iconForItem: item withSize: 16];
+		//row height for default font is 17 pixels, so subtract 1
+        NSImage *icon = [item iconWithSize: ( [outlineView rowHeight] -1 )];
         [cell setImage: icon];
     }
+}
+
+- (NSMenu*) outlineView: (NSOutlineView *) outlineView menuForTableColumn: (NSTableColumn*) column item: (id) item
+{	
+	return _contextMenu;
 }
 
 #pragma mark --------NSOutlineView notifications-----------------
@@ -199,25 +212,86 @@ objectValueForTableColumn: (NSTableColumn *) tableColumn
     FileSystemDoc *doc = [self document];
 
     //if we are notified about the selection change after we've set the selection by ourself
-    //(e.g. in 'globalSelectionChanged:') we don't want to post any notification
+    //(e.g. in 'onDocumentSelectionChanged') we don't want to post any notification
     if ( item != [doc selectedItem] )
-    {
         [doc setSelectedItem: item];
-
-        //post notification that the global selection has changed
-        [[NSNotificationCenter defaultCenter] postNotificationName: GlobalSelectionChangedNotification object: self userInfo: nil];
-    }
 }
 
 #pragma mark --------document notifications-----------------
 
-- (void) globalSelectionChanged: (NSNotification*) notification
+- (void) zoomedItemChanged: (NSNotification*) notification
 {
-    if ( [notification object] == self )
-        return;
+    [self reloadData];
+}
 
+- (void) viewOptionChanged: (NSNotification*) notification
+{
+	NSString *theOption = [[notification userInfo] objectForKey:ChangedViewOption];
+	
+	if ( [theOption isEqualToString: ShowPackageContents] )
+	{
+		//save current selection
+		id selectedItem = [_outlineView selectedItem];
+		[_outlineView deselectAll: self];
+		
+		[self reloadPackages: nil];
+		
+		//try to restore selection
+		int row = [_outlineView rowForItem: selectedItem];
+		if ( row >= 0 )
+			[_outlineView selectRow: row byExtendingSelection: NO];
+		
+		//the view doesn't redraw properly, so invalidate it
+		[_outlineView setNeedsDisplay: YES];
+	}
+	else if ( [theOption isEqualToString: ShowPhysicalFileSize] )
+		[self reloadData];
+}
+
+- (void) itemsChanged: (NSNotification*) notification
+{
+    [self reloadData];
+}
+
+#pragma mark --------window notifications-----------------
+
+- (void) windowWillClose: (NSNotification*) notification
+{
+	[[self document] removeObserver: self forKeyPath: DocKeySelectedItem];
+	
+	[[NSUserDefaults standardUserDefaults] removeObserver: self forKeyPath: UseSmallFontInFilesView];
+	
+	[[NSNotificationCenter defaultCenter] removeObserver: self];
+}
+
+@end
+
+@implementation FilesOutlineViewController(Private)
+
+- (void)observeValueForKeyPath:(NSString*)keyPath
+					  ofObject:(id)object
+						change:(NSDictionary*)change
+					   context:(void*)context
+{
+	if ( object == [NSUserDefaults standardUserDefaults] )
+	{
+		if ( [keyPath isEqualToString: UseSmallFontInFilesView] )
+			[self setOutlineViewFont];
+	}
+	else if ( object == [self document] )
+	{
+		if ( [keyPath isEqualToString: DocKeySelectedItem] )
+			[self onDocumentSelectionChanged];
+	}
+}
+
+- (void) onDocumentSelectionChanged
+{
     FSItem *item = [[self document] selectedItem];
-
+	
+	if ( item == (FSItem*) [_outlineView selectedItem] )
+		return;
+	
     if ( item == nil )
         [_outlineView deselectAll: nil];
     else
@@ -252,7 +326,7 @@ objectValueForTableColumn: (NSTableColumn *) tableColumn
                     //(e.g. item is a pckage, but package contents aren't shown)
                     if ( ![[self document] itemIsNode: [path objectAtIndex: i]] )
                         break;
-                        
+					
                     [_outlineView expandItem: [path objectAtIndex: i]];
                 }
             }
@@ -271,40 +345,32 @@ objectValueForTableColumn: (NSTableColumn *) tableColumn
     }
 }
 
-- (void) zoomedItemChanged: (NSNotification*) notification
+- (void) setOutlineViewFont
 {
-    [self reloadData];
-}
-
-- (void) showPackageContentsChanged: (NSNotification*) notification
-{
-	//save current selection
-	id selectedItem = [_outlineView selectedItem];
-	[_outlineView deselectAll: self];
+	float fontSize = 0;
+	if ( [[NSUserDefaults standardUserDefaults] boolForKey: UseSmallFontInFilesView] )
+		fontSize = [NSFont smallSystemFontSize];
+	else
+		fontSize = [NSFont systemFontSize];
 	
-    [self reloadPackages: nil];
+	NSFont *font = [NSFont systemFontOfSize: fontSize];
 	
-	//try to restore selection
-	int row = [_outlineView rowForItem: selectedItem];
-	if ( row >= 0 )
-		[_outlineView selectRow: row byExtendingSelection: NO];
+	NSEnumerator *columnEnum = [[_outlineView tableColumns] objectEnumerator];
+	NSTableColumn *column;
+	while ( (column = [columnEnum nextObject]) != nil )
+	{
+		NSCell *cell = [column dataCell];
+		if ( [cell type] == NSTextCellType )
+			[cell setFont: font];
+	}
 	
-	//the view doesn't redraw properly, so invalidate it
-	[_outlineView setNeedsDisplay: YES];
+	[_outlineView setRowHeight: fontSize +4];
 }
-
-- (void) itemsChanged: (NSNotification*) notification
-{
-    [self reloadData];
-}
-
-@end
-
-@implementation FilesOutlineViewController(Private)
 
 - (void) reloadData
 {
     [_outlineView reloadData];
+	[self onDocumentSelectionChanged];
 }
 
 - (void) reloadPackages: (FSItem*) parent
@@ -336,25 +402,6 @@ objectValueForTableColumn: (NSTableColumn *) tableColumn
 				[self reloadPackages: child];
         }
     }
-}
-
-- (NSImage*) iconForItem: (FSItem*) item withSize: (int) size
-{
-    id key = [item hashObject];
-    NSImage *icon = [_fileIcons objectForKey: key];
-
-    if ( icon == nil )
-    {
-        icon = [[NSWorkspace sharedWorkspace] iconForFile: [item path]];
-        if ( icon == nil )
-            icon = (NSImage*) [NSNull null];
-        else
-            icon = [icon sizeIcon: size];
-
-        [_fileIcons setObject: icon forKey: key];
-    }
-
-    return ( icon == (NSImage*) [NSNull null] ) ? nil : icon;
 }
 
 @end
