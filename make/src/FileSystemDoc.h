@@ -13,7 +13,7 @@
 #import "LoadingPanelController.h"
 #import "FileTypeColors.h"
 
-//holds information about the count and size of the files of one kind (e.g. MP3 files)
+//! holds information about the count and size of the files of one kind (e.g. MP3 files)
 @interface FileKindStatistic : NSObject
 {
     NSString *_kindName;
@@ -21,19 +21,19 @@
 	NSMutableSet<FSItem*> *_items;
 }
 
-- (id) initWithItem: (FSItem*) item;
+- (instancetype) initWithItem: (FSItem*) item;
 
 - (void) addItem: (FSItem* )item;
 - (void) removeItem: (FSItem* )item;
 
-- (NSString*) kindName;
+@property (readonly, copy) NSString* kindName;
 - (NSString*) description;
 
-- (NSUInteger) fileCount;		//# of files of this kind
-- (unsigned long long) size; //sum of sizes of files of this kind
+@property (readonly) NSUInteger fileCount;		//!< # of files of this kind
+@property (readonly) unsigned long long size; //!< sum of sizes of files of this kind
 - (void) recalculateSize;
 
-- (NSSet<FSItem*>*) items;
+@property (readonly, copy) NSSet<FSItem*>* items;
 - (NSEnumerator<FSItem*>*) itemEnumerator;
 
 - (NSComparisonResult) compareSizeDescendingly: (FileKindStatistic*) other;
@@ -45,7 +45,7 @@
     FSItem *_rootItem;
     FSItem *_selectedItem;
     NSMutableArray *_zoomStack;
-    NSMutableDictionary *_fileKindStatistics;	//dictionary: kind name -> FileKindStatistic
+    NSMutableDictionary *_fileKindStatistics;	//!<dictionary: kind name -> FileKindStatistic
 	NSMutableDictionary *_viewOptions;
 	FileTypeColors *_kindColors;
 	
@@ -54,32 +54,27 @@
 	NSMutableArray *_directoryStack;
 }
 
-- (BOOL) showPhysicalFileSize;
-- (void) setShowPhysicalFileSize: (BOOL) show;
-- (BOOL) showPackageContents;
-- (void) setShowPackageContents: (BOOL) show;
-- (BOOL) showFreeSpace;
-- (void) setShowFreeSpace: (BOOL) show;
-- (BOOL) showOtherSpace;
-- (void) setShowOtherSpace: (BOOL) show;
-- (BOOL) ignoreCreatorCode;
-- (void) setIgnoreCreatorCode: (BOOL) ignoreIt;
+@property BOOL showPhysicalFileSize;
+@property BOOL showPackageContents;
+@property BOOL showFreeSpace;
+@property BOOL showOtherSpace;
+@property BOOL ignoreCreatorCode;
 
-- (BOOL) itemIsNode: (FSItem*) item; //helper method; returns YES/NO for packages depending on the showPackageContents-Flag
+- (BOOL) itemIsNode: (FSItem*) item; //!<helper method; returns YES/NO for packages depending on the showPackageContents-Flag
 
-- (FSItem*) rootItem;
+@property (readonly, retain) FSItem *rootItem;
 
-- (BOOL) moveItemToTrash: (FSItem*) item;//will post a "FSItemsChangedNotification"
-- (void) refreshItem: (FSItem*) item;//will post a "FSItemsChangedNotification"
+- (BOOL) moveItemToTrash: (FSItem*) item;//!<will post a "FSItemsChangedNotification"
+- (void) refreshItem: (FSItem*) item;//!<will post a "FSItemsChangedNotification"
 
 - (FSItem*) zoomedItem;
-- (void) zoomIntoItem: (FSItem*) item; //will post a "ZoomedItemChangedNotification"
+- (void) zoomIntoItem: (FSItem*) item; //!<will post a "ZoomedItemChangedNotification"
 - (void) zoomOutToItem: (FSItem*) item;
 - (void) zoomOutOneStep;
 - (NSArray*) zoomStack;
 
 - (FSItem*) selectedItem;
-- (void) setSelectedItem: (FSItem*) item; //will post a "GlobalSelectionChangedNotification"
+- (void) setSelectedItem: (FSItem*) item; //!<will post a "GlobalSelectionChangedNotification"
 
 - (FileKindStatistic*) kindStatisticForItem: (FSItem*) item;
 - (FileKindStatistic*) kindStatisticForKind: (NSString*) kindName;
@@ -95,10 +90,10 @@
 extern NSString *DocKeySelectedItem;
 
 /* FileSystemDoc Notifications */
-extern NSString *GlobalSelectionChangedNotification; //userInfo contains new and old selection
-extern NSString *ZoomedItemChangedNotification; //userInfo contains new and old zoomed item
-extern NSString *FSItemsChangedNotification; //some items are modified, deleted or added; userInfo is nil
-extern NSString *ViewOptionChangedNotification; //the name of the changed option is stored in userInfo for key ChangedViewOption (see next line)
+extern NSString *GlobalSelectionChangedNotification; //!<userInfo contains new and old selection
+extern NSString *ZoomedItemChangedNotification; //!<userInfo contains new and old zoomed item
+extern NSString *FSItemsChangedNotification; //!<some items are modified, deleted or added; userInfo is nil
+extern NSString *ViewOptionChangedNotification; //!<the name of the changed option is stored in userInfo for key \c ChangedViewOption (see next line)
 extern NSString *ChangedViewOption;
 extern NSString *NewItem;
 extern NSString *OldItem;

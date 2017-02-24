@@ -129,7 +129,7 @@
 			if (isVolume)
 				isBootVolume = [self isBootVolume];
 			
-			int i, cnt = [mutableResult count];
+			NSInteger i, cnt = [mutableResult count];
 			BOOL remove;
 			NTFileDesc* resolvedDesc;
 			
@@ -344,7 +344,7 @@
 				directoryPath = [directoryPath stringByAppendingString:@"/"];
 			
 			[directoryPath getFileSystemRepresentation:pathBuffer maxLength:PATH_MAX-1];
-			int dirPathLen = strlen(pathBuffer);
+			size_t dirPathLen = strlen(pathBuffer);
 			
 			for (;;)
 			{
@@ -428,7 +428,7 @@
 				directoryPath = [directoryPath stringByAppendingString:@"/"];
 			
 			[directoryPath getFileSystemRepresentation:pathBuffer maxLength:PATH_MAX-1];
-			int dirPathLen = strlen(pathBuffer);
+			size_t dirPathLen = strlen(pathBuffer);
 			
 			ftsent = fts_read(ftsp);
 			ftsent = fts_children(ftsp, 0);

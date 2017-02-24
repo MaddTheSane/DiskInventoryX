@@ -157,7 +157,7 @@
 
 - (void)overwrite;
 {
-	u_int32_t i;
+	ssize_t i;
 	off_t count = 0;
 	
 	lseek(mFile, 0, SEEK_SET);

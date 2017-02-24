@@ -12,6 +12,7 @@
 #import "PrefsPanelController.h"
 #import "FileSystemDoc.h"
 #import "DIXFinderCMInstaller.h"
+#import "MainWindowController.h"
 
 //global variable which enables/disables logging
 BOOL g_EnableLogging;

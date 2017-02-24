@@ -44,7 +44,7 @@ static NSURL* findURL(NSString* string);
             // Apply underline style and link color
             linkAttr = [NSDictionary dictionaryWithObjectsAndKeys:
                 foundURL, NSLinkAttributeName,
-                [NSNumber numberWithInteger:NSSingleUnderlineStyle], NSUnderlineStyleAttributeName,
+                @(NSUnderlineStyleSingle), NSUnderlineStyleAttributeName,
                 linkColor, NSForegroundColorAttributeName, NULL ];
             [self addAttributes:linkAttr range:scanRange];
         }

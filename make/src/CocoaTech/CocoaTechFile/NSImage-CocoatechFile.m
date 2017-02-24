@@ -249,11 +249,11 @@
 	
 	if (!image)
 	{
-		int theSize = MIN(maxSize.width, maxSize.height);
+		NSInteger theSize = MIN(maxSize.width, maxSize.height);
 						
 		theSize = MIN([[desc icon] maxSizeAvailable], theSize);
 		
-		image = [NSImage iconRef:[[desc icon] iconRef] toImage:theSize];
+		image = [NSImage iconRef:[[desc icon] iconRef] toImage:(int)theSize];
 	}
 	
 	return image;	

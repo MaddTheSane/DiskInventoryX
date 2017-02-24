@@ -185,7 +185,7 @@
 		
 	if (matchOrder)
 	{
-		int i, cnt = [self count];
+		NSInteger i, cnt = [self count];
 
 		// same items, same order?
 		for (i=0;i<cnt;i++)
@@ -209,7 +209,7 @@
 		{
 			BOOL found=NO;
 			
-			int i, cnt = [rightDescs count];
+			NSInteger i, cnt = [rightDescs count];
 			for (i=0;i<cnt;i++)
 			{
 				right = [rightDescs objectAtIndex:i];

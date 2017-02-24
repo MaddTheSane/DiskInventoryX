@@ -16,7 +16,7 @@
 #import "NTDefaultDirectory-Utilities.h"
 
 @interface MainWindowController(Private)
-- (void) moveToTrashSheetDidDismiss: (NSWindow*) sheet returnCode: (int) returnCode contextInfo: (void*) contextInfo;
+- (void) moveToTrashSheetDidDismiss: (NSWindow*) sheet returnCode: (NSInteger) returnCode contextInfo: (void*) contextInfo;
 @end
 
 @implementation MainWindowController
@@ -447,7 +447,7 @@
 @implementation MainWindowController(Private)
 
 - (void) moveToTrashSheetDidDismiss: (NSWindow *) sheet
-						 returnCode: (int) returnCode
+						 returnCode: (NSInteger) returnCode
 						contextInfo: (void*) contextInfo
 {
 	if ( returnCode != NSAlertAlternateReturn )

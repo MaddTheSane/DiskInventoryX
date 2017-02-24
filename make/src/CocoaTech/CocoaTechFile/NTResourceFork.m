@@ -53,7 +53,7 @@
         {
             if ( [[aPath stringByDeletingLastPathComponent] getFSRef:&theParentFsRef] )
             {
-                unsigned int theNameLength;
+                NSUInteger theNameLength;
                 unichar theUnicodeName[PATH_MAX];
                 NSString *theName;
 
@@ -188,7 +188,7 @@
 
 - (BOOL)addString:(NSString *)aString type:(ResType)aType Id:(short)anID name:(NSString *)aName
 {
-    unsigned int theLength;
+    NSUInteger theLength;
 
     theLength = [aString length];
 

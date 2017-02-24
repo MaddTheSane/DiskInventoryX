@@ -142,7 +142,7 @@ NTSINGLETONOBJECT_STORAGE;
 	return [[self labelsModel] buildID];
 }
 
-- (int)labelAtIndex:(int)index;
+- (int)labelAtIndex:(NSInteger)index;
 {
 	if (index < [[self labelOrder] count])
 		return [[[self labelOrder] objectAtIndex:index] intValue];
@@ -150,7 +150,7 @@ NTSINGLETONOBJECT_STORAGE;
 	return 0;
 }
 
-- (int)indexForLabel:(int)label;
+- (NSInteger)indexForLabel:(int)label;
 {
 	NSInteger result = [[self labelOrder] indexOfObject:[NSNumber numberWithInt:label]];
 	
@@ -269,7 +269,7 @@ NTSINGLETONOBJECT_STORAGE;
 {
     NSMenu* menu = [[[NSMenu alloc] init] autorelease];
     NSMenuItem* item;
-    int i, x, cnt = MIN(7, [[self labelsModel] count]); // safety since we have the order array below
+    int i, x, cnt = MIN(7, (int)[[self labelsModel] count]); // safety since we have the order array below
 
     // build in the proper order
     int order[7] = {6,7,5,2,4,3,1};
@@ -284,7 +284,7 @@ NTSINGLETONOBJECT_STORAGE;
         
         if (forMenuBar)
         {
-            [item setRepresentedObject:[NSNumber numberWithInt:i+1]];
+            [item setRepresentedObject:@(i+1)];
             
             [item setAction:@selector(labelAction:)];
             [item setTarget:nil];

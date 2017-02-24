@@ -57,8 +57,8 @@
 // converts a POSIX path to a Windows path
 - (NSString*)windowsPath;
 
-- (BOOL)isEndOfWordAtIndex:(NSUInteger)index;
-- (BOOL)isStartOfWordAtIndex:(NSUInteger)index;
+- (BOOL)isEndOfWordAtIndex:(NSInteger)index;
+- (BOOL)isStartOfWordAtIndex:(NSInteger)index;
 
 - (NSString*)stringByTruncatingToLength:(NSUInteger)length;
 

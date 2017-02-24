@@ -57,7 +57,7 @@
 			NSNumber* oldFreespace = [self.previousCache objectForKey:[[volumeSpec mountPoint] dictionaryKey]];
 			if (oldFreespace)
 			{
-				if (abs([newFreespace unsignedLongLongValue] - [oldFreespace unsignedLongLongValue]) > (1024*512)) // must be greater than .5MB
+				if (llabs((long long)[newFreespace unsignedLongLongValue] - (long long)[oldFreespace unsignedLongLongValue]) > (1024*512)) // must be greater than .5MB
 					[theChangedVolumeSpecs addObject:volumeSpec];
 			}
 		}

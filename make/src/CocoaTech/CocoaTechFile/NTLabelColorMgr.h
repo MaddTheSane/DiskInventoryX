@@ -32,8 +32,8 @@
 - (NTGradientDraw*)gradient:(int)label;
 - (NSString*)label:(int)label;
 
-- (int)labelAtIndex:(int)label;
-- (int)indexForLabel:(int)label;
+- (int)labelAtIndex:(NSInteger)label;
+- (NSInteger)indexForLabel:(int)label;
 - (NSArray *)labelOrder;
 
 - (NSComparisonResult)compare:(int)label1 label2:(int)label2;

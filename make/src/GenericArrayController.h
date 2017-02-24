@@ -23,7 +23,7 @@
 	} _updateSuspensionInfo;
 }
 
-- (BOOL) suspendingArrangedObjectsUpdates;
+@property (readonly) BOOL suspendingArrangedObjectsUpdates;
 - (void) suspendArrangedObjectsUpdates;
 - (void) resumeArrangedObjectsUpdates;
 

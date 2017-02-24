@@ -109,7 +109,7 @@
 		{
 			NSRange range;
 			NSString* last = [components objectAtIndex:[components count]-1];
-			int i, cnt = [components count];
+			NSInteger i, cnt = [components count];
 			
 			// see if the last component is a number
 			range = [last rangeOfCharacterFromSet:[NSCharacterSet decimalDigitCharacterSet]];
@@ -166,7 +166,7 @@
 // private functions don't lock, since they are used within locked code
 - (BOOL)isNameReserved:(NSString*)path;
 {
-    int i, cnt;
+    NSInteger i, cnt;
     BOOL reserved = NO;
 	
     // can be called from threads, keep them from overlapping in this code

@@ -697,16 +697,16 @@
 				FC528AC6076079B500374589 /* LoadingPanelController.m */,
 				FC84DD64074D61EF00E252C8 /* FSItem-Utilities.h */,
 				FC84DD65074D61EF00E252C8 /* FSItem-Utilities.m */,
-				FC755269054C3BFF00BBC68D /* MyDocumentController.m */,
 				FC75526A054C3BFF00BBC68D /* MyDocumentController.h */,
-				FC75526B054C3BFF00BBC68D /* MainWindowController.m */,
+				FC755269054C3BFF00BBC68D /* MyDocumentController.m */,
 				FC75526C054C3BFF00BBC68D /* MainWindowController.h */,
+				FC75526B054C3BFF00BBC68D /* MainWindowController.m */,
 				FC755270054C3BFF00BBC68D /* FSItem.h */,
 				FC75526F054C3BFF00BBC68D /* FSItem.m */,
-				FC755271054C3BFF00BBC68D /* FileTypeColors.m */,
 				FC755272054C3BFF00BBC68D /* FileTypeColors.h */,
-				FC755273054C3BFF00BBC68D /* FileSystemDoc.m */,
+				FC755271054C3BFF00BBC68D /* FileTypeColors.m */,
 				FC755274054C3BFF00BBC68D /* FileSystemDoc.h */,
+				FC755273054C3BFF00BBC68D /* FileSystemDoc.m */,
 			);
 			name = "Main Classes";
 			sourceTree = "<group>";
@@ -927,8 +927,8 @@
 				FC79EEAC07FC3822000BEBFA /* NSTableViewWithContextMenu.m */,
 				FC6ADCC807F99934006FE39B /* NSOutlineView-ContextMenuExtension.h */,
 				FC6ADCC907F99934006FE39B /* NSOutlineView-ContextMenuExtension.m */,
-				FC26D09507F4326E00301D86 /* GenericArrayController.m */,
 				FC26D09607F4326E00301D86 /* GenericArrayController.h */,
+				FC26D09507F4326E00301D86 /* GenericArrayController.m */,
 				FC75526E054C3BFF00BBC68D /* ImageAndTextCell.h */,
 				FC75526D054C3BFF00BBC68D /* ImageAndTextCell.m */,
 			);
@@ -1000,8 +1000,8 @@
 		FCBEF4D1054C3F14007ABD71 /* FileKindsTableView Classes */ = {
 			isa = PBXGroup;
 			children = (
-				FC755277054C3BFF00BBC68D /* FileKindsTableController.m */,
 				FC755278054C3BFF00BBC68D /* FileKindsTableController.h */,
+				FC755277054C3BFF00BBC68D /* FileKindsTableController.m */,
 			);
 			name = "FileKindsTableView Classes";
 			sourceTree = "<group>";
@@ -1009,8 +1009,8 @@
 		FCBEF4D4054C3F30007ABD71 /* TreeMapView Classes */ = {
 			isa = PBXGroup;
 			children = (
-				FC75525D054C3BFF00BBC68D /* TreeMapViewController.m */,
 				FC75525E054C3BFF00BBC68D /* TreeMapViewController.h */,
+				FC75525D054C3BFF00BBC68D /* TreeMapViewController.m */,
 			);
 			name = "TreeMapView Classes";
 			sourceTree = "<group>";
@@ -1786,7 +1786,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SYMROOT = ./../build/debug;
@@ -1817,7 +1817,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				SDKROOT = macosx;
 				SYMROOT = ./../build/release;
 			};

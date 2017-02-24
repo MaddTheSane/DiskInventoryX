@@ -193,7 +193,7 @@
 	UInt32 ignoreNodes[[nodeIDs count]+1];
 
 	int index=0;
-	ignoreNodes[index++] = [nodeIDs count];  // first item is count
+	ignoreNodes[index++] = (int)[nodeIDs count];  // first item is count
 	for (NSNumber* nodeID in nodeIDs)
 		ignoreNodes[index++] = [nodeID unsignedIntValue];
 	

@@ -355,7 +355,7 @@ typedef NSString*(* string_IMP)(id,SEL,...);
         if (posixRef)
         {
             // copy into an autoreleased NSString
-            posixPath = (NSString*)CFBridgingRelease(CFBridgingRetain(posixPath));
+            posixPath = (NSString*)CFBridgingRelease(posixRef);
         }
 
         CFRelease(fileURL);
@@ -419,7 +419,7 @@ typedef NSString*(* string_IMP)(id,SEL,...);
     return [self substringToIndex:[self length] - [suffix length]];
 }
 
-- (BOOL)isEndOfWordAtIndex:(NSUInteger)index;
+- (BOOL)isEndOfWordAtIndex:(NSInteger)index;
 {
     if (index == [self length])
         return YES;
@@ -442,7 +442,7 @@ typedef NSString*(* string_IMP)(id,SEL,...);
     return NO;
 }
 
-- (BOOL)isStartOfWordAtIndex:(NSUInteger)index;
+- (BOOL)isStartOfWordAtIndex:(NSInteger)index;
 {
     if (index == 0)
         return YES;

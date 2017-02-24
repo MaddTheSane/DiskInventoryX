@@ -273,7 +273,7 @@
 		case bHasDirectIO:
 			[self initVolumeParams];
 			
-			UInt32 bitField = (1L << param);
+			UInt32 bitField = (1u << param);
 			return ((mv_volumeAttributes & bitField) == bitField);
 			break;
 	}
@@ -316,7 +316,7 @@
 		case bSupportsExtendedFileSecurity:
 			[self initVolumeParams];
 			
-			UInt32 bitField = (1L << param);
+			UInt32 bitField = (1u << param);
 			return ((mv_volumeExtendedAttributes & bitField) == bitField);
 			break;
 	}

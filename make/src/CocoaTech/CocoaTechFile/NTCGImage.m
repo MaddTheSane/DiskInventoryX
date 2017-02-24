@@ -28,7 +28,7 @@
 		
 		if (imageSource) 
 		{
-			int i, cnt = CGImageSourceGetCount(imageSource);
+			size_t i, cnt = CGImageSourceGetCount(imageSource);
 			if (cnt)
 			{
 				for (i=0;i<cnt;i++)

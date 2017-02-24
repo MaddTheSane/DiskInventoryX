@@ -9,17 +9,16 @@
 #import <Cocoa/Cocoa.h>
 #import "FileSystemDoc.h"
 
-typedef enum
-{
+typedef NS_OPTIONS(unsigned short, FSItemIndexType) {
 	FSItemIndexName = 1,
 	FSItemIndexKind = 2,
 	FSItemIndexPath = 4,
 	FSItemIndexAll = 0xffff
-} FSItemIndexType;
+};
 
-//this class let search FSItems by their display names, kinds and path
-//(I implemented this with SearchKit, but it is so damn slow that I replaced it with
-//a stupid simple but still faster implementation)
+//! this class let search FSItems by their display names, kinds and path
+//! (I implemented this with SearchKit, but it is so damn slow that I replaced it with
+//! a stupid simple but still faster implementation)
 @interface FSItemIndex : NSObject
 {
 	NSMutableDictionary *_displayNameIndex;
@@ -37,7 +36,7 @@ typedef enum
 - (id) initWithKindStatistics: (NSDictionary*) kindStatistics;
 
 - (void) addItem: (FSItem*) item;
-- (void) addItemsFromArray: (NSArray*) items;
+- (void) addItemsFromArray: (NSArray<FSItem*>*) items;
 
 - (NSArray*) searchItems: (NSString*) searchString inIndex: (FSItemIndexType) indexesToSearch;
 

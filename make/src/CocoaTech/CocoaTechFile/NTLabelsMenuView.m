@@ -52,7 +52,7 @@
 {
 	[super encodeWithCoder:aCoder];
 	
-	[aCoder encodeInt:self.labelIndex forKey:@"labelIndex"];
+	[aCoder encodeInteger:self.labelIndex forKey:@"labelIndex"];
 	[aCoder encodeBool:self.enabled forKey:@"enabled"];
 	[aCoder encodeBool:self.selected forKey:@"selected"];
 	[aCoder encodeBool:self.mouseInside forKey:@"mouseInside"];
@@ -62,7 +62,7 @@
 {
 	self = [super initWithCoder:aDecoder];
 	
-	self.labelIndex = [aDecoder decodeIntForKey:@"labelIndex"];
+	self.labelIndex = [aDecoder decodeIntegerForKey:@"labelIndex"];
 	self.enabled = [aDecoder decodeBoolForKey:@"enabled"];
 	self.selected = [aDecoder decodeBoolForKey:@"selected"];
 	self.mouseInside = [aDecoder decodeBoolForKey:@"mouseInside"];

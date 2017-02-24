@@ -21,6 +21,8 @@ NSString *CollectFileKindStatisticsCanceledException = @"CollectFileKindStatisti
 //============ implementation FileKindStatistic ==========================================================
 
 @implementation FileKindStatistic
+@synthesize kindName = _kindName;
+@synthesize size = _size;
 
 - (id) initWithItem: (FSItem*) item
 {
@@ -67,21 +69,10 @@ NSString *CollectFileKindStatisticsCanceledException = @"CollectFileKindStatisti
     return [[self kindName] stringByAppendingFormat: @" {%lu files; %.1f kB}", (unsigned long)[self fileCount], (float) [self size]/1024]; 
 }
 
-- (NSString*) kindName
-{
-    return _kindName;
-}
-
 //# of files of this kind
 - (NSUInteger) fileCount
 {
 	return [_items count];
-}
-
-//sum of sizes of files of this kind
-- (unsigned long long) size
-{
-	return _size;
 }
 
 - (void) recalculateSize
@@ -162,6 +153,7 @@ NSString *NewItem = @"NewItem";
 NSString *OldItem = @"OldItem";
 
 @implementation FileSystemDoc
+@synthesize rootItem = _rootItem;
 
 - (id)init
 {

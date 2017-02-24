@@ -11,13 +11,13 @@
 
 @implementation FSItem(Utilities)
 
-- (unsigned) deepFileCountIncludingPackages: (BOOL) lookInPackages
+- (NSUInteger) deepFileCountIncludingPackages: (BOOL) lookInPackages
 {
 	if ( [self isSpecialItem] )
 		return 0;
 	
-	int i;
-	unsigned deepChildCount = 0;
+	NSInteger i;
+	NSUInteger deepChildCount = 0;
 	for ( i = 0; i < [self childCount]; i++ )
 	{
 		FSItem *child = [self childAtIndex: i];
@@ -45,7 +45,7 @@
 		return nil; //path defines no child
 	
 	//get relative child path (relative to self)
-	unsigned childPathStartIndex = [myPath length];
+	NSUInteger childPathStartIndex = [myPath length];
 	if ( ![myPath isEqualToString: NSOpenStepRootDirectory()] ) // should just be @"/"
 		childPathStartIndex++;
 	
