@@ -1094,7 +1094,6 @@
 				8D15AC300486D014006FF6A4 /* Sources */,
 				8D15AC330486D014006FF6A4 /* Frameworks */,
 				FC57018B070602290032DFE9 /* CopyFiles */,
-				FC6185750760E98C00C27B42 /* ShellScript */,
 				FC6D4BA2080413BE00E21F6D /* CopyFiles */,
 			);
 			buildRules = (
@@ -1423,22 +1422,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		FC6185750760E98C00C27B42 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ $BUILD_STYLE = \"Release\" ]\nthen\nSEARCH_DIR=\"${TARGET_BUILD_DIR}\"\n\necho \"Deleting PrivateHeaders (files, dirs and links) from \\\"${SEARCH_DIR}/${FRAMEWORKS_FOLDER_PATH}\\\"...\"\n\nfind \"$SEARCH_DIR/$FRAMEWORKS_FOLDER_PATH\" -name Headers -exec rm -rf {} \\;\nfind \"$SEARCH_DIR/$FRAMEWORKS_FOLDER_PATH\" -name PrivateHeaders -exec rm -rf {} \\;\n\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D15AC300486D014006FF6A4 /* Sources */ = {

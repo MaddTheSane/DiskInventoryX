@@ -146,6 +146,7 @@
 	else
 		extensionPath = [self extensionPathForDomain: domain];
 	
+#if 0
 	//copy extension
 	if ( [[NTFileCopyManager sharedInstance] copy: NO //syncronous
 												src: builtInExtensionDesc
@@ -155,6 +156,7 @@
 		return YES;
 	}
 	else
+#endif
 		return NO;
 }
 
@@ -163,22 +165,16 @@
 	NTFileDesc *installedExtensionDesc = [self installedExtensionDesc];
 	if ( installedExtensionDesc != nil )
 	{
-		//try to delete it
-		if ( ![[NTFileCopyManager sharedInstance] destroy: NO //syncronous
-												src: installedExtensionDesc] )
-			
+		//deleting didn't work, so try to move it to trash
+		NSArray *filesToTrash = [NSArray arrayWithObject: [installedExtensionDesc name]];
+		NSInteger tag = 0;
+		if (![[NSWorkspace sharedWorkspace] performFileOperation: NSWorkspaceRecycleOperation
+														  source: [installedExtensionDesc parentPath: NO]
+													 destination: @""
+														   files: filesToTrash
+															 tag: &tag])
 		{
-			//deleting didn't work, so try to move it to trash
-			NSArray *filesToTrash = [NSArray arrayWithObject: [installedExtensionDesc name]];
-			int tag = 0;
-			if ( ![[NSWorkspace sharedWorkspace] performFileOperation: NSWorkspaceRecycleOperation
-															  source: [installedExtensionDesc parentPath: NO]
-														 destination: @""
-															   files: filesToTrash
-																 tag: &tag] )
-			{
-				return NO;
-			}
+			return NO;
 		}
 		return YES;
 	}
